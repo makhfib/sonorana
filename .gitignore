@@ -1,3 +1,7 @@
+# Expo
+.expo
+.expo-shared
+
 # Xcode
 !**/*.xcodeproj
 !**/*.pbxproj

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+import LogIn from './src/screens/auth/LogIn'
 
 export default class App extends Component {
   render() {
     return (
-      <View>
-        <Text> textInComponent </Text>
-      </View>
+      <SafeAreaProvider>
+          <LogIn />
+      </SafeAreaProvider>
+      
     )
   }
 }
