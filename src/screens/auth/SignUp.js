@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
-import { Image, Text, View, StyleSheet, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/Colors'
 import Layout from '../../constants/Layout'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import ActionButton from '../../components/ActionButton'
+import NavigationBar from '../../components/NavigationBar';
 
-export default class LogIn extends Component {
+export default class SignUp extends Component {
     render() {
         return (
             <SafeAreaView style={custom.container}>
-
-                <ImageBackground style={custom.imageBackground}
+                <ImageBackground style={[custom.imageBackground]}
                     resizeMode='cover'
                     source={require('../../assets/images/background.png')}
                 >
+                    <NavigationBar 
+                        leftIcon={require('../../assets/icons/navigation/icon-back.png')}
+                        leftIconTintColor={textColor}
+                        leftIconOnPress={() => this.props.navigation.goBack()}
+                        />
                     <View style={custom.titleContainer}>
                         <Image
                             source={require('../../assets/icons/text-logo.png')}
@@ -23,11 +28,18 @@ export default class LogIn extends Component {
                     </View>
                     <View style={custom.formContainer} behavior="padding">
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Username or email</Text>
+                            <Text style={custom.inputLabel}>Username</Text>
+                            <TextInput
+                                style={custom.input}
+                                textContentType={'nickname'}
+                                selectionColor={textColor}
+                            />
+                            <View style={custom.separator} />
+                            <Text style={custom.inputLabel}>Email</Text>
                             <TextInput
                                 style={custom.input}
                                 textContentType={'emailAddress'}
-                                selectionColor={Colors.notwhite}
+                                selectionColor={textColor}
                             />
                             <View style={custom.separator} />
                             <Text style={custom.inputLabel}>Password</Text>
@@ -35,28 +47,28 @@ export default class LogIn extends Component {
                                 style={custom.input}
                                 secureTextEntry={true}
                                 textContentType={'password'}
-                                selectionColor={Colors.notwhite}
+                                selectionColor={textColor}
                             />
                         </View>
-                        <TouchableOpacity>
-                            <Text style={custom.normalText}>Forgot your password?</Text>
-                        </TouchableOpacity>
+                        <Text style={custom.normalText}>
+                            By creating an account, you agree to our
+                            <Text
+                                style={[{ fontWeight: 'bold' }]}
+                                onPress={() => null}
+                            > Terms
+                            </Text>.
+                            Check our
+                            <Text
+                                style={[{ fontWeight: 'bold' }]}
+                                onPress={() => null}
+                            > Data Policy
+                            </Text> to learn how we use your data.
+                            You can opt out anytime.
+                        </Text>
                         <ActionButton
                             icon={require('../../assets/icons/icon-logo.png')}
-                            text={'Log in'}
-                            onPress={() => null}
+                            text={'Create account'}
                         />
-                        <View style={custom.alternativeContainer}>
-                            <Text style={custom.normalText}>
-                                Haven't got an account yet?
-                                <Text
-                                    style={[{ fontWeight: 'bold' }]}
-                                    onPress={() => this.props.navigation.navigate('Auth', { screen: 'SignUp' })}
-                                > Sign up
-                                </Text>
-                            </Text>
-
-                        </View>
                     </View>
                 </ImageBackground>
             </SafeAreaView>
@@ -64,7 +76,7 @@ export default class LogIn extends Component {
     }
 }
 
-const textColor = Colors.background
+const textColor = Colors.background;
 const formColor = '#0E245075'
 
 const custom = StyleSheet.create({
@@ -91,7 +103,7 @@ const custom = StyleSheet.create({
     form: {
         backgroundColor: formColor,
         opacity: 1,
-        height: 120,
+        height: 180,
         borderRadius: 4,
     },
     inputLabel: {
@@ -116,9 +128,5 @@ const custom = StyleSheet.create({
         height: 0,
         borderBottomWidth: 1,
         borderBottomColor: Colors.notwhite,
-    },
-    alternativeContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center'
     },
 });

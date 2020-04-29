@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Text } from 'react-native'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
-import LogIn from './src/screens/auth/LogIn'
+import { NavigationContainer } from '@react-navigation/native'
+import Switcher from './src/navigation'
 
 export default class App extends Component {
   render() {
     return (
       <SafeAreaProvider>
-          <LogIn />
+        <NavigationContainer>
+          <Switcher />
+        </NavigationContainer>
       </SafeAreaProvider>
       
     )

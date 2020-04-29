@@ -9,7 +9,10 @@ export default class ActionButton extends Component {
     render() {
         return (
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, this.props.buttonStyle]}>
+                <TouchableOpacity 
+                    style={[styles.button, this.props.buttonStyle]}
+                    onPress={this.props.onPress}
+                    >   
                     {
                         this.props.icon &&
                         <Image 
@@ -27,6 +30,7 @@ export default class ActionButton extends Component {
 ActionButton.propTypes = {
     icon: PropTypes.number,
     text: PropTypes.string.isRequired,
+    onPress: PropTypes.func.isRequired,
     buttonStyle: PropTypes.object,
     iconStyle: PropTypes.object,
     textStyle: PropTypes.object,
@@ -36,6 +40,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignSelf: 'center',
         justifyContent: 'center',
+        height: 80,
     },
     button: {
         height: 40,

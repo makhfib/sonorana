@@ -7,9 +7,9 @@ export const Colors = {
   default: '#a1a1a1',
   active: tint,
   
-  inputBackground: '#a1a1a150', // 50 refers to 50% opacity
+  inputBackground: '#a1a1a150',
   
   notwhite: '#f8f8f8',
   background: '#fff',
-  antagonist: '#fff'
+  antagonist: '#000'
 };
