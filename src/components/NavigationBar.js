@@ -15,7 +15,7 @@ export default class NavigationBar extends Component {
                 top: 0,
                 left: Layout.paddingHorizontal,
                 height: 60,
-                position: 'absolute',
+                position: this.props.position === null ? 'relative' : this.props.position,
                 justifyContent: 'flex-end',
                 paddingBottom: 5,
             }}>

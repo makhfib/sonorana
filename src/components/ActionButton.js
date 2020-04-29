@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { Text, View, StyleSheet, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
 import PropTypes from 'prop-types'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ActionButton extends Component {
-    
-
     render() {
         return (
             <View style={styles.buttonContainer}>
@@ -51,13 +50,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     textButton: {
-        color: Colors.notwhite,
+        color: Colors.background,
         fontWeight: 'bold',
     },
     icon: {
         height: 20,
         width: 20,
-        tintColor: Colors.notwhite,
+        tintColor: Colors.background,
         resizeMode: 'contain',
         marginRight: 10
     }   

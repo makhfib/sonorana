@@ -7,9 +7,9 @@ export const Colors = {
   default: '#a1a1a1',
   active: tint,
   
-  inputBackground: '#a1a1a150',
+  inputBackground: '#f8f8f8',
   
-  notwhite: '#f8f8f8',
+  notwhite: '#DEDEDE',
   background: '#fff',
   antagonist: '#000'
 };

@@ -38,7 +38,9 @@ export default class LogIn extends Component {
                                 selectionColor={Colors.notwhite}
                             />
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress={() => this.props.navigation.navigate('Auth', { screen: 'ResetPassword' })}
+                        >
                             <Text style={custom.normalText}>Forgot your password?</Text>
                         </TouchableOpacity>
                         <ActionButton
@@ -47,7 +49,10 @@ export default class LogIn extends Component {
                             onPress={() => null}
                         />
                         <View style={custom.alternativeContainer}>
-                            <Text style={custom.normalText}>
+                            <Text 
+                                style={custom.normalText}
+                                onPress={() => this.props.navigation.navigate('Auth', { screen: 'SignUp' })}
+                            >
                                 Haven't got an account yet?
                                 <Text
                                     style={[{ fontWeight: 'bold' }]}

@@ -15,11 +15,12 @@ export default class SignUp extends Component {
                     resizeMode='cover'
                     source={require('../../assets/images/background.png')}
                 >
-                    <NavigationBar 
+                     <NavigationBar 
                         leftIcon={require('../../assets/icons/navigation/icon-back.png')}
                         leftIconTintColor={textColor}
                         leftIconOnPress={() => this.props.navigation.goBack()}
-                        />
+                        position={'absolute'}
+                    />
                     <View style={custom.titleContainer}>
                         <Image
                             source={require('../../assets/icons/text-logo.png')}
@@ -68,6 +69,7 @@ export default class SignUp extends Component {
                         <ActionButton
                             icon={require('../../assets/icons/icon-logo.png')}
                             text={'Create account'}
+                            onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
                         />
                     </View>
                 </ImageBackground>
