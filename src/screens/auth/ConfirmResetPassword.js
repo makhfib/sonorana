@@ -43,7 +43,7 @@ export default class ConfirmResetPassword extends Component {
                                 secureTextEntry={true}
                                 selectionColor={textColor}
                             />
-                            <View style={{alignSelf: 'flex-start'}}>
+                            <View style={[custom.buttonContainer]}>
                                  <ActionButton 
                                     text={'Confirm'}
                                     onPress={() => null}
@@ -52,7 +52,7 @@ export default class ConfirmResetPassword extends Component {
                             <TouchableOpacity
                                 onPress={() => null}
                             >
-                                <Text style={[{ color: Colors.tint }]}>
+                                <Text style={[custom.normalText, {color: Colors.tint}]}>
                                     Resend code
                                 </Text>
                             </TouchableOpacity>

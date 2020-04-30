@@ -30,7 +30,7 @@ export default class ResetPassword extends Component {
                                 textContentType={'emailAddress'}
                                 selectionColor={textColor}
                             />
-                            <View style={{alignSelf: 'flex-start'}}>
+                            <View style={[custom.buttonContainer, {alignSelf: 'flex-start'}]}>
                                  <ActionButton 
                                     text={'Send code'}
                                     onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmResetPassword' })}

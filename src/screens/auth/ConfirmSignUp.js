@@ -35,7 +35,7 @@ export default class ConfirmSignUp extends Component {
                                 textContentType={'oneTimeCode'}
                                 selectionColor={textColor}
                             />
-                            <View style={{alignSelf: 'flex-start'}}>
+                            <View style={[custom.buttonContainer]}>
                                  <ActionButton 
                                     text={'Confirm'}
                                     onPress={() => null}

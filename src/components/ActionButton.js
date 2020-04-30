@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
+import TextStyle from '../constants/TextStyle'
 import PropTypes from 'prop-types'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -37,9 +38,6 @@ ActionButton.propTypes = {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        height: 80,
     },
     button: {
         height: 40,
@@ -52,6 +50,7 @@ const styles = StyleSheet.create({
     textButton: {
         color: Colors.background,
         fontWeight: 'bold',
+        fontSize: TextStyle.sizeTwo
     },
     icon: {
         height: 20,

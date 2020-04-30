@@ -23,7 +23,7 @@ export default class SignUp extends Component {
                         style={custom.content}>
                         <View style={custom.titleContainer}>
                             <Image
-                                source={require('../../assets/icons/text-logo.png')}
+                                source={require('../../assets/brand/text-logo.png')}
                                 style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                             />
                         </View>
@@ -53,24 +53,26 @@ export default class SignUp extends Component {
                             </View>
                             <Text style={custom.normalText}>
                                 By creating an account, you agree to our
-                            <Text
-                                    style={[{ fontWeight: 'bold' }]}
-                                    onPress={() => null}
-                                > Terms
-                            </Text>.
-                            Check our
-                            <Text
-                                    style={[{ fontWeight: 'bold' }]}
-                                    onPress={() => null}
-                                > Data Policy
-                            </Text> to learn how we use your data.
-                            You can opt out anytime.
-                        </Text>
-                            <ActionButton
-                                icon={require('../../assets/icons/icon-logo.png')}
-                                text={'Create account'}
-                                onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
-                            />
+                                <Text
+                                        style={[{ fontWeight: 'bold' }]}
+                                        onPress={() => null}
+                                    > Terms
+                                </Text>.
+                                Check our
+                                <Text
+                                        style={[{ fontWeight: 'bold' }]}
+                                        onPress={() => null}
+                                    > Data Policy
+                                </Text> to learn how we use your data.
+                                You can opt out anytime.
+                            </Text>
+                            <View style={custom.buttonContainer}>
+                                <ActionButton
+                                    icon={require('../../assets/brand/icon-logo.png')}
+                                    text={'Create account'}
+                                    onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
+                                />
+                            </View>
                         </View>
                     </View>
 

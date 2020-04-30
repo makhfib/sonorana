@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image } from 'react-native'
+import { Text, View, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
 import Styles from '../constants/Styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -34,11 +34,12 @@ export default class BottomTab extends Component {
                     />)
                 }} />
                 <Tab.Screen name='Create' component={Create} options={{
-                    tabBarIcon: ({ color }) => (<Image
+                    tabBarIcon: ({ color }) => (
+                    <Image
                         source={require('../assets/icons/navigation/icon-create.png')}
                         style={[Styles.icon, { tintColor: color }]}
                     />),
-                    tabBarVisible: false,
+                    
                 }} />
                 <Tab.Screen name='Chat' component={Chat} options={{
                     tabBarIcon: ({ color }) => (<Image

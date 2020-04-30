@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import BottomTab from './BottomTab'
+import Create from '../screens/main/tab/Create';
 
 const Stack = createStackNavigator();
 

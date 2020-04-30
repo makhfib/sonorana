@@ -9,14 +9,13 @@ export default class LogIn extends Component {
     render() {
         return (
             <SafeAreaView style={custom.container}>
-
                 <ImageBackground style={custom.imageBackground}
                     resizeMode='cover'
                     source={require('../../assets/images/background.png')}
                 >
                     <View style={custom.titleContainer}>
                         <Image
-                            source={require('../../assets/icons/text-logo.png')}
+                            source={require('../../assets/brand/text-logo.png')}
                             style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                         />
                     </View>
@@ -37,18 +36,20 @@ export default class LogIn extends Component {
                                 selectionColor={textColor}
                             />
                         </View>
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('Auth', { screen: 'ResetPassword' })}
                         >
                             <Text style={custom.normalText}>Forgot your password?</Text>
                         </TouchableOpacity>
-                        <ActionButton
-                            icon={require('../../assets/icons/icon-logo.png')}
-                            text={'Log in'}
-                            onPress={() => null}
-                        />
+                        <View style={custom.buttonContainer}>
+                            <ActionButton
+                                icon={require('../../assets/brand/icon-logo.png')}
+                                text={'Log in'}
+                                onPress={() => null}
+                            />
+                        </View>
                         <View style={custom.alternativeContainer}>
-                            <Text 
+                            <Text
                                 style={custom.normalText}
                                 onPress={() => this.props.navigation.navigate('Auth', { screen: 'SignUp' })}
                             >

@@ -12,7 +12,7 @@ export default class NavigationBar extends Component {
     render() {
         return (
             <View style={{
-                left: Layout.paddingHorizontal,
+                paddingHorizontal: Layout.paddingHorizontal,
                 height: 60,
                 justifyContent: 'flex-end',
                 paddingBottom: 5,
