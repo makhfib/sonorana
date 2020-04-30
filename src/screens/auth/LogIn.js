@@ -15,7 +15,7 @@ export default class LogIn extends Component {
                 >
                     <View style={custom.titleContainer}>
                         <Image
-                            source={require('../../assets/brand/text-logo.png')}
+                            source={require('../../assets/brand/text.png')}
                             style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                         />
                     </View>
@@ -43,7 +43,7 @@ export default class LogIn extends Component {
                         </TouchableOpacity>
                         <View style={custom.buttonContainer}>
                             <ActionButton
-                                icon={require('../../assets/brand/icon-logo.png')}
+                                icon={require('../../assets/brand/icon.png')}
                                 text={'Log in'}
                                 onPress={() => null}
                             />

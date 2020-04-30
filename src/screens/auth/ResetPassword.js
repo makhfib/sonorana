@@ -12,7 +12,7 @@ export default class ResetPassword extends Component {
             <SafeAreaView style={custom.container}>
                 <View style={custom.subcontainer}>
                     <NavigationBar
-                        leftIcon={require('../../assets/icons/navigation/icon-back.png')}
+                        leftIcon={require('../../assets/icons/navigation/back.png')}
                         leftIconTintColor={Colors.tint}
                         leftIconOnPress={() => this.props.navigation.goBack()}
                     />

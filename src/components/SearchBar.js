@@ -12,7 +12,7 @@ export default class SearchBar extends Component {
             <View style={custom.container}>
                 <View style={custom.searchContainer}>
                     <Image
-                        source={require('../assets/icons/icon-search.png')}
+                        source={require('../assets/icons/search.png')}
                         style={[Styles.icon, {alignSelf: 'center', }]}
                     />
                     <TextInput
@@ -21,6 +21,8 @@ export default class SearchBar extends Component {
                         selectionColor={Colors.tint}
                         placeholder={'Search...'}
                         placeholderTextColor={Colors.tint}
+                        onChangeText={(text) => this.props.onChangeText(text)}
+                        onSubmitEditing={() => this.props.onSubmit()}
                     />
                 </View>
                 <TouchableOpacity
@@ -30,7 +32,7 @@ export default class SearchBar extends Component {
                     }}
                 >
                     <Image
-                        source={require('../assets/brand/icon-logo.png')}
+                        source={require('../assets/brand/icon.png')}
                         style={[Styles.icon, { tintColor: Colors.tint, width: 30, height: 30 }]}
                     />
                 </TouchableOpacity>
@@ -41,5 +43,7 @@ export default class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
+    onSubmit: PropTypes.func,
+    onChangeText: PropTypes.func,
     rightIconOnPress: PropTypes.func,
 }

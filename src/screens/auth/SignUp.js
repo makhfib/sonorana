@@ -15,7 +15,7 @@ export default class SignUp extends Component {
                     source={require('../../assets/images/background.png')}
                 >
                     <NavigationBar
-                        leftIcon={require('../../assets/icons/navigation/icon-back.png')}
+                        leftIcon={require('../../assets/icons/navigation/back.png')}
                         leftIconTintColor={textColor}
                         leftIconOnPress={() => this.props.navigation.goBack()}
                     />
@@ -23,7 +23,7 @@ export default class SignUp extends Component {
                         style={custom.content}>
                         <View style={custom.titleContainer}>
                             <Image
-                                source={require('../../assets/brand/text-logo.png')}
+                                source={require('../../assets/brand/text.png')}
                                 style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                             />
                         </View>
@@ -68,7 +68,7 @@ export default class SignUp extends Component {
                             </Text>
                             <View style={custom.buttonContainer}>
                                 <ActionButton
-                                    icon={require('../../assets/brand/icon-logo.png')}
+                                    icon={require('../../assets/brand/icon.png')}
                                     text={'Create account'}
                                     onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
                                 />
