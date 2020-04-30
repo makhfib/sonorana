@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput } from 'react-native'
+import { Text, View, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/Colors'
-import Layout from '../../constants/Layout'
+import { textColor, custom } from './css/ResetPassword.css'
 import NavigationBar from '../../components/NavigationBar';
 import ActionButton from '../../components/ActionButton';
 
@@ -43,45 +43,3 @@ export default class ResetPassword extends Component {
         )
     }
 }
-
-const textColor = Colors.antagonist;
-const formColor = Colors.inputBackground
-
-const custom = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    subcontainer: {
-        flex: 1,
-        backgroundColor: Colors.background,
-    },
-    content: {
-        paddingTop: 40,
-        paddingHorizontal: Layout.paddingHorizontal
-    },
-    title: {
-        fontSize: 36,
-    },
-    normalText: {
-        color: textColor,
-        marginVertical: 10,
-    },
-    form: {
-        backgroundColor: formColor,
-        opacity: 1,
-        height: 60,
-        borderRadius: 4,
-    },
-    inputLabel: {
-        marginTop: 5,
-        color: textColor,
-        fontWeight: 'bold',
-        paddingLeft: 10,
-    },
-    input: {
-        color: textColor,
-        fontSize: 14,
-        height: 35,
-        paddingLeft: 10,
-    },
-});

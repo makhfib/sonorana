@@ -5,11 +5,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-function switcher(props) {
+function switcher() {
     return (
         <Stack.Navigator headerMode='none'>
             {
-                false ? (
+                true ? (
                     <Stack.Screen name='Main' component={Main}/>
                 ) : (
                     <Stack.Screen name='Auth' component={Auth}/>
