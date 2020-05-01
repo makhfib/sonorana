@@ -4,14 +4,16 @@ import SearchBar from '../../../components/SearchBar';
 import Post from '../../../components/Post';
 import { FlatList } from 'react-native-gesture-handler';
 import SamplePosts from '../../../data/Posts'
-import { Keyboard } from 'react-native';
+import { View, Keyboard } from 'react-native';
 
 export default class Home extends Component {
 
     state = {
+        value: undefined,
         search: false,
         searchText: '',
     }
+
 
     componentDidMount() {
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
@@ -21,11 +23,15 @@ export default class Home extends Component {
         this.keyboardDidHideListener.remove();
     }
 
+    _resetState() {
+        this.setState({ search: false, value: undefined, searchText: '' })
+    }
+
     _keyboardDidHide() {
         const { searchText } = this.state;
         
         if (searchText.trim().length == 0) {
-            this.setState({ search: false })
+            this._resetState()
         }
 
         Keyboard.dismiss()
@@ -44,25 +50,28 @@ export default class Home extends Component {
     }
 
     _handleSearchLeftIconOnPress() {
-        this.setState({ search: false })
+        this._resetState()
+        
         Keyboard.dismiss()
     }
 
     render() {
-        const { search } = this.state;
+        const { search, value } = this.state;
 
         return (
-            <SafeAreaView>
+            <SafeAreaView style={{flex: 1}}>
                 <SearchBar
                     back={search}
                     onFocus={this._handleSearchOnFocus.bind(this)}
                     onSubmit={this._handleSearchOnSubmit.bind(this)}
                     onChangeText={this._handleSearchOnChangeText.bind(this)}
                     leftIconOnPress={this._handleSearchLeftIconOnPress.bind(this)}
+                    value={value}
                 />
                 {
                     !search
-                        ? (<FlatList
+                        ? (
+                                <FlatList
                             data={SamplePosts}
                             renderItem={({ item }) =>
                                 <Post
@@ -74,7 +83,8 @@ export default class Home extends Component {
                                 />
                             }
                             keyExtractor={item => item.id}
-                        />) : (
+                        />
+                        ) : (
                             <>
                             </>
                         )

@@ -41,6 +41,7 @@ export default class SearchBar extends Component {
                         onFocus={() => this.props.onFocus()}
                         onChangeText={(text) => this.props.onChangeText(text)}
                         onSubmitEditing={() => this.props.onSubmit()}
+                        value={this.props.value}
                     />
                     
                 </View>
@@ -63,6 +64,7 @@ export default class SearchBar extends Component {
 
 SearchBar.propTypes = {
     back: PropTypes.bool,
+    value: PropTypes.string,
     onFocus: PropTypes.func,
     onSubmit: PropTypes.func,
     onChangeText: PropTypes.func,

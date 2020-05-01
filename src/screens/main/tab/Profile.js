@@ -10,7 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 export default class Profile extends Component {
     render() {
         return (
-            <SafeAreaView>
+            <SafeAreaView style={{flex: 1}}>
                 <View style={{
                     backgroundColor: Colors.background
                 }}>
