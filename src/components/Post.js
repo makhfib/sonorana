@@ -4,6 +4,7 @@ import ActionButton from './ActionButton'
 import { custom } from './css/Post.css';
 import PropTypes from 'prop-types'
 import { Colors } from '../constants/Colors';
+import TextStyle from '../constants/TextStyle'
 
 export default class Post extends Component {
 
@@ -46,7 +47,7 @@ export default class Post extends Component {
                     />
                     <View style={custom.headerTextContainer}>
                         <Text numberOfLines={1} style={custom.username}>{username}</Text>
-                        <Text numberOfLines={1} style={custom.datetime}>{datetime}</Text>
+                        <Text numberOfLines={1} style={[TextStyle.postDate, custom.datetime]}>{datetime}</Text>
                     </View>
                     <ActionButton
                         icon={
@@ -57,7 +58,7 @@ export default class Post extends Component {
                         text={duration}
                         buttonStyle={custom.playButton}
                         iconStyle={[custom.playIcon]}
-                        textStyle={custom.playText}
+                        textStyle={[TextStyle.postInteraction, custom.playText]}
                         onPress={() => this._handlePlayButton()}
                     />
                 </View>
@@ -74,7 +75,7 @@ export default class Post extends Component {
                             text={'Like'}
                             buttonStyle={custom.interactionButton}
                             iconStyle={[custom.interactionIcon, {tintColor: liked ? Colors.like : Colors.default}]}
-                            textStyle={[custom.interactionText, {color: liked ? Colors.like : Colors.default}]}
+                            textStyle={[TextStyle.postInteraction, custom.interactionText, {color: liked ? Colors.like : Colors.default}]}
                             onPress={() => this._handleLike()}
                         />
                         <ActionButton
@@ -82,14 +83,14 @@ export default class Post extends Component {
                             text={'Comment'}
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}
-                            textStyle={custom.interactionText}
+                            textStyle={[TextStyle.postInteraction, custom.interactionText]}
                         />
                         <ActionButton
                             icon={require('../assets/icons/interaction/echo.png')}
                             text={'Echo'}
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}
-                            textStyle={custom.interactionText}
+                            textStyle={[TextStyle.postInteraction, custom.interactionText]}
                         />
                         
                 </View>

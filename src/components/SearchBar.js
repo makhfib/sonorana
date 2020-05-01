@@ -1,32 +1,51 @@
 import React, { Component } from 'react'
-import { View, Image, TextInput } from 'react-native'
+import { View, Image, TextInput, TouchableHighlightComponent } from 'react-native'
 import { Colors } from '../constants/Colors'
 import { custom } from './css/Search.css'
 import Styles from '../constants/Styles'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import PropTypes from 'prop-types'
 
 export default class SearchBar extends Component {
     render() {
+        const { back } = this.props;
+
         return (
             <View style={custom.container}>
+                {back &&
+                    <TouchableOpacity
+                        onPress={this.props.leftIconOnPress}
+                        style={{
+                            marginBottom: 5,
+                            marginRight: 15,
+                        }}
+                    >
+                        <Image
+                            source={require('../assets/icons/navigation/back.png')}
+                            style={[Styles.icon, { tintColor: Colors.tint, height: 30, }]}
+                        />
+                    </TouchableOpacity>
+                }
+
                 <View style={custom.searchContainer}>
                     <Image
                         source={require('../assets/icons/search.png')}
-                        style={[Styles.icon, {alignSelf: 'center', }]}
+                        style={[Styles.icon, { alignSelf: 'center', }]}
                     />
-                    <TextInput
+                        <TextInput
                         style={custom.input}
                         textContentType={'name'}
                         selectionColor={Colors.tint}
                         placeholder={'Search...'}
                         placeholderTextColor={Colors.tint}
+                        onFocus={() => this.props.onFocus()}
                         onChangeText={(text) => this.props.onChangeText(text)}
                         onSubmitEditing={() => this.props.onSubmit()}
                     />
+                    
                 </View>
                 <TouchableOpacity
-                    onPress={this.props.rightIconOnPress}
+                    onPress={null}
                     style={{
                         marginBottom: 5,
                     }}
@@ -43,7 +62,9 @@ export default class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
+    back: PropTypes.bool,
+    onFocus: PropTypes.func,
     onSubmit: PropTypes.func,
     onChangeText: PropTypes.func,
-    rightIconOnPress: PropTypes.func,
+    leftIconOnPress: PropTypes.func,
 }

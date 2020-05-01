@@ -24,7 +24,6 @@ export const custom = StyleSheet.create({
     normalText: {
         color: textColor,
         marginVertical: 10,
-        fontSize: TextStyle.sizeTwo
     },
     form: {
         backgroundColor: formColor,
@@ -37,11 +36,9 @@ export const custom = StyleSheet.create({
         color: textColor,
         fontWeight: 'bold',
         paddingLeft: 10,
-        fontSize: TextStyle.sizeTwo
     },
     input: {
         color: textColor,
-        fontSize: TextStyle.sizeTwo,
         height: 35,
         paddingLeft: 10,
     },

@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
-import TextStyle from '../../../constants/TextStyle'
 
 export const textColor = Colors.antagonist;
 export const formColor = Colors.inputBackground
@@ -24,7 +23,6 @@ export const custom = StyleSheet.create({
     normalText: {
         color: textColor,
         marginVertical: 10,
-        fontSize: TextStyle.sizeTwo
     },
     form: {
         backgroundColor: formColor,
@@ -37,11 +35,9 @@ export const custom = StyleSheet.create({
         color: textColor,
         fontWeight: 'bold',
         paddingLeft: 10,
-        fontSize: TextStyle.sizeTwo
     },
     input: {
         color: textColor,
-        fontSize: TextStyle.sizeTwo,
         height: 35,
         paddingLeft: 10,
     },

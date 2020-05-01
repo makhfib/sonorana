@@ -1,26 +1,51 @@
 import React, { Component } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SearchBar from '../../../components/SearchBar';
-import Post from '../../../components/Post'
-import SamplePosts from '../../../data/Posts'
-import User from '../../../components/User'
+import Post from '../../../components/Post';
 import { FlatList } from 'react-native-gesture-handler';
-import SampleResults from '../../../data/SearchResults';
-// check FlatList component https://reactnative.dev/docs/flatlist
+import SamplePosts from '../../../data/Posts'
+import { Keyboard } from 'react-native';
 
 export default class Home extends Component {
 
     state = {
         search: false,
-        searchText: ''
+        searchText: '',
     }
 
-    _handleSearchOnChange(text) {
-        this.setState({ searchText: text });
+    componentDidMount() {
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
     }
 
-    _handleSearch() {
-        this.setState({ search: true });
+    componentWillUnmount() {
+        this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidHide() {
+        const { searchText } = this.state;
+        
+        if (searchText.trim().length == 0) {
+            this.setState({ search: false })
+        }
+
+        Keyboard.dismiss()
+    }
+
+    _handleSearchOnFocus() {
+        this.setState({ search: true })
+    }
+
+    _handleSearchOnChangeText(text) {
+        this.setState({ searchText: text })
+    }
+
+    _handleSearchOnSubmit() {
+
+    }
+
+    _handleSearchLeftIconOnPress() {
+        this.setState({ search: false })
+        Keyboard.dismiss()
     }
 
     render() {
@@ -28,32 +53,32 @@ export default class Home extends Component {
 
         return (
             <SafeAreaView>
-                <SearchBar 
-                    onChangeText={this._handleSearchOnChange.bind(this)} 
-                    onSubmit={this._handleSearch.bind(this)}
+                <SearchBar
+                    back={search}
+                    onFocus={this._handleSearchOnFocus.bind(this)}
+                    onSubmit={this._handleSearchOnSubmit.bind(this)}
+                    onChangeText={this._handleSearchOnChangeText.bind(this)}
+                    leftIconOnPress={this._handleSearchLeftIconOnPress.bind(this)}
                 />
-                <FlatList
-                    data={search ? SampleResults : SamplePosts}
-                    renderItem={({ item }) =>
-                        item.duration !== undefined ? (
-                            <Post
-                                photo={item.photo}
-                                username={item.username}
-                                datetime={item.datetime}
-                                description={item.description}
-                                duration={item.duration}
-                            />
-                        ) : (
-                            <User
-                                photo={item.photo}
-                                username={item.username}
-                                following={item.following}
-                            />
+                {
+                    !search
+                        ? (<FlatList
+                            data={SamplePosts}
+                            renderItem={({ item }) =>
+                                <Post
+                                    photo={item.photo}
+                                    username={item.username}
+                                    datetime={item.datetime}
+                                    description={item.description}
+                                    duration={item.duration}
+                                />
+                            }
+                            keyExtractor={item => item.id}
+                        />) : (
+                            <>
+                            </>
                         )
-
-                    }
-                    keyExtractor={item => item.id}
-                />
+                }
             </SafeAreaView>
         )
     }

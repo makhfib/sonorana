@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-import TextStyle from '../../constants/TextStyle'
 import Layout from '../../constants/Layout'
 import { Colors } from '../../constants/Colors'
 
@@ -23,7 +22,6 @@ export const custom = StyleSheet.create({
     },
     input: {
         color: Colors.tint,
-        fontSize: TextStyle.sizeTwo,
         height: 40,
         paddingLeft: 10,
         flex: 1,

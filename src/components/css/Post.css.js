@@ -1,22 +1,19 @@
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../constants/Colors'
-import TextStyle from '../../constants/TextStyle'
 
-const headerHeight = 60;
+const headerHeight = 40;
 
 export const custom = StyleSheet.create({
     container: {
         backgroundColor: Colors.background,
         paddingHorizontal: 20,
         paddingVertical: 10,
-        borderBottomColor: Colors.notwhite,
-        borderBottomWidth: 0.5,
     },
     header: {
         flexDirection: 'row',
         backgroundColor: Colors.background,
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 5,
     },
     headerTextContainer: {
         flex: 1,
@@ -30,35 +27,32 @@ export const custom = StyleSheet.create({
         borderRadius: headerHeight / 2 
     },
     username: { 
-        fontSize: TextStyle.sizeOne, 
         fontWeight: 'bold' 
     },
     datetime: { 
-        fontSize: TextStyle.sizeTwo, 
         fontWeight: 'normal', 
         color: Colors.default 
     },
     description: { 
-        fontSize: TextStyle.sizeOne, 
         color: Colors.antagonist 
     },
     playButton: {
+        height: 30,
         borderWidth: 1,
         borderColor: Colors.tint,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         backgroundColor: Colors.background,
     },
     playIcon: {
-        width: 15,
-        height: 15,
+        width: 10,
+        height: 10,
         tintColor: Colors.tint,
     },
     playText: {
-        fontSize: TextStyle.sizeThree,
         color: Colors.tint,
     },
     interactionsContainer: {
-        marginTop: 20,
+        marginTop: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -72,6 +66,5 @@ export const custom = StyleSheet.create({
     },
     interactionText: {
         color: Colors.default,
-        fontSize: TextStyle.sizeThree
     }
 });
