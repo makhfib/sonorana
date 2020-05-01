@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 1904,
-  "expoServerNgrokUrl": "https://de-e7q.anonymous.bluesiren.exp.direct",
-  "packagerNgrokUrl": "https://packager.de-e7q.anonymous.bluesiren.exp.direct",
-  "ngrokPid": 9316,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }

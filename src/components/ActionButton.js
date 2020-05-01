@@ -30,9 +30,9 @@ ActionButton.propTypes = {
     icon: PropTypes.number,
     text: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    buttonStyle: PropTypes.object,
-    iconStyle: PropTypes.object,
-    textStyle: PropTypes.object,
+    buttonStyle: PropTypes.any,
+    iconStyle: PropTypes.any,
+    textStyle: PropTypes.any,
 }
 
 const styles = StyleSheet.create({

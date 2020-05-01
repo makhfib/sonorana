@@ -6,13 +6,35 @@ import ActionButton from './ActionButton';
 import { Colors } from '../constants/Colors';
 
 export default class FollowButton extends Component {
+
+    state = {
+        following: this.props.following,
+    }
+
+    _handleFollowButton() {
+        const { following } = this.state
+        this.setState({ following: !following })
+    }
+
     render() {
+        const { 
+            following
+        } = this.state;
+
+        var icon = following ? 'done' : 'add';
+        var text = following ? 'Following' : 'Follow';
+        var color = following ? Colors.safety : Colors.tint;
+
         return (
             <ActionButton 
-                icon={this.props.icon}
-                text={this.props.text}
-                onPress={this.props.onPress}
-                buttonStyle={[custom.followButton, {backgroundColor: this.props.backgroundColor}]}
+                icon={
+                    icon === 'done'
+                        ? require('../assets/icons/interaction/done.png')
+                        : require('../assets/icons/interaction/add.png')
+                }
+                text={text}
+                onPress={() => this._handleFollowButton()}
+                buttonStyle={[custom.followButton, {backgroundColor: color}]}
                 iconStyle={custom.followIcon}
                 textStyle={[TextStyle.postInteraction, custom.followText]}
             />

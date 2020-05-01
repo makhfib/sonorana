@@ -29,7 +29,7 @@ export default class Home extends Component {
 
     _keyboardDidHide() {
         const { searchText } = this.state;
-        
+
         if (searchText.trim().length == 0) {
             this._resetState()
         }
@@ -51,7 +51,7 @@ export default class Home extends Component {
 
     _handleSearchLeftIconOnPress() {
         this._resetState()
-        
+
         Keyboard.dismiss()
     }
 
@@ -59,7 +59,7 @@ export default class Home extends Component {
         const { search, value } = this.state;
 
         return (
-            <SafeAreaView style={{flex: 1}}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <SearchBar
                     back={search}
                     onFocus={this._handleSearchOnFocus.bind(this)}
@@ -71,21 +71,21 @@ export default class Home extends Component {
                 {
                     !search
                         ? (
-                                <FlatList
-                            data={SamplePosts}
-                            renderItem={({ item }) =>
-                                <Post
-                                    id={item.id}
-                                    photo={item.photo}
-                                    username={item.username}
-                                    datetime={item.datetime}
-                                    description={item.description}
-                                    duration={item.duration}
-                                    navigation={this.props.navigation}
-                                />
-                            }
-                            keyExtractor={item => item.id}
-                        />
+                            <FlatList
+                                data={SamplePosts}
+                                renderItem={({ item }) =>
+                                    <Post
+                                        id={item.id}
+                                        photo={item.photo}
+                                        username={item.username}
+                                        datetime={item.datetime}
+                                        description={item.description}
+                                        duration={item.duration}
+                                        navigation={this.props.navigation}
+                                    />
+                                }
+                                keyExtractor={item => item.id}
+                            />
                         ) : (
                             <>
                             </>

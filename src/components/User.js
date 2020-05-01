@@ -25,10 +25,6 @@ export default class User extends Component {
             following
         } = this.state;
 
-        var icon = following ? 'done' : 'add';
-        var text = following ? 'Following' : 'Follow';
-        var color = following ? Colors.safety : Colors.tint;
-
         return (
             <View style={custom.container}>
                 <View
@@ -43,14 +39,7 @@ export default class User extends Component {
                     {
                         username !== 'makhfib' &&
                         <FollowButton
-                            icon={
-                                icon === 'done'
-                                    ? require('../assets/icons/interaction/done.png')
-                                    : require('../assets/icons/interaction/add.png')
-                            }
-                            text={text}
-                            onPress={() => this._handleFollowButton()}
-                            backgroundColor={color}
+                            following={following}
                         />
                     }
 
@@ -61,7 +50,6 @@ export default class User extends Component {
 }
 
 User.propTypes = {
-    me: PropTypes.bool,
     photo: PropTypes.string,
     username: PropTypes.string,
     following: PropTypes.bool

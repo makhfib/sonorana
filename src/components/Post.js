@@ -115,7 +115,7 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.string,
     photo: PropTypes.string,
     username: PropTypes.string,
     datetime: PropTypes.string,
