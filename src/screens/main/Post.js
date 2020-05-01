@@ -5,7 +5,7 @@ export default class Post extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <Text> {console.log(this.props.route.params)} </Text>
             </View>
         )
     }

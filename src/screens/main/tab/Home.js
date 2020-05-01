@@ -75,11 +75,13 @@ export default class Home extends Component {
                             data={SamplePosts}
                             renderItem={({ item }) =>
                                 <Post
+                                    id={item.id}
                                     photo={item.photo}
                                     username={item.username}
                                     datetime={item.datetime}
                                     description={item.description}
                                     duration={item.duration}
+                                    navigation={this.props.navigation}
                                 />
                             }
                             keyExtractor={item => item.id}

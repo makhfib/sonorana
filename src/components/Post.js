@@ -5,6 +5,7 @@ import { custom } from './css/Post.css';
 import PropTypes from 'prop-types'
 import { Colors } from '../constants/Colors';
 import TextStyle from '../constants/TextStyle'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Post extends Component {
 
@@ -24,12 +25,13 @@ export default class Post extends Component {
     }
 
     render() {
-        const { 
-            photo, 
-            username, 
-            datetime, 
-            description, 
-            duration 
+        const {
+            id,
+            photo,
+            username,
+            datetime,
+            description,
+            duration
         } = this.props;
 
         const {
@@ -51,9 +53,9 @@ export default class Post extends Component {
                     </View>
                     <ActionButton
                         icon={
-                            playing 
-                            ? require('../assets/icons/audio/pause.png')
-                            : require('../assets/icons/audio/play.png')
+                            playing
+                                ? require('../assets/icons/audio/pause.png')
+                                : require('../assets/icons/audio/play.png')
                         }
                         text={duration}
                         buttonStyle={custom.playButton}
@@ -62,37 +64,49 @@ export default class Post extends Component {
                         onPress={() => this._handlePlayButton()}
                     />
                 </View>
-                <Text style={custom.description}>
-                    {description}
-                </Text>
+                <TouchableOpacity
+                    onPress={() =>
+                        this.props.navigation.navigate('Post', {
+                            id,
+                            photo,
+                            username,
+                            datetime,
+                            description,
+                            duration
+                        })}>
+                    <Text style={custom.description}>
+                        {description}
+                    </Text>
+                </TouchableOpacity>
+
                 <View style={custom.interactionsContainer}>
-                        <ActionButton
-                            icon={
-                                liked 
+                    <ActionButton
+                        icon={
+                            liked
                                 ? require('../assets/icons/interaction/heart-filled.png')
                                 : require('../assets/icons/interaction/heart.png')
-                            }
-                            text={'Like'}
-                            buttonStyle={custom.interactionButton}
-                            iconStyle={[custom.interactionIcon, {tintColor: liked ? Colors.like : Colors.default}]}
-                            textStyle={[TextStyle.postInteraction, custom.interactionText, {color: liked ? Colors.like : Colors.default}]}
-                            onPress={() => this._handleLike()}
-                        />
-                        <ActionButton
-                            icon={require('../assets/icons/interaction/comment.png')}
-                            text={'Comment'}
-                            buttonStyle={custom.interactionButton}
-                            iconStyle={custom.interactionIcon}
-                            textStyle={[TextStyle.postInteraction, custom.interactionText]}
-                        />
-                        <ActionButton
-                            icon={require('../assets/icons/interaction/echo.png')}
-                            text={'Echo'}
-                            buttonStyle={custom.interactionButton}
-                            iconStyle={custom.interactionIcon}
-                            textStyle={[TextStyle.postInteraction, custom.interactionText]}
-                        />
-                        
+                        }
+                        text={'Like'}
+                        buttonStyle={custom.interactionButton}
+                        iconStyle={[custom.interactionIcon, { tintColor: liked ? Colors.like : Colors.default }]}
+                        textStyle={[TextStyle.postInteraction, custom.interactionText, { color: liked ? Colors.like : Colors.default }]}
+                        onPress={() => this._handleLike()}
+                    />
+                    <ActionButton
+                        icon={require('../assets/icons/interaction/comment.png')}
+                        text={'Comment'}
+                        buttonStyle={custom.interactionButton}
+                        iconStyle={custom.interactionIcon}
+                        textStyle={[TextStyle.postInteraction, custom.interactionText]}
+                    />
+                    <ActionButton
+                        icon={require('../assets/icons/interaction/echo.png')}
+                        text={'Echo'}
+                        buttonStyle={custom.interactionButton}
+                        iconStyle={custom.interactionIcon}
+                        textStyle={[TextStyle.postInteraction, custom.interactionText]}
+                    />
+
                 </View>
             </View>
 
