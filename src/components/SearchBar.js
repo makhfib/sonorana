@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, Image, TextInput, TouchableHighlightComponent } from 'react-native'
 import { Colors } from '../constants/Colors'
 import { custom } from './css/Search.css'
-import Styles from '../constants/Styles'
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import PropTypes from 'prop-types'
 
@@ -22,7 +21,7 @@ export default class SearchBar extends Component {
                     >
                         <Image
                             source={require('../assets/icons/navigation/back.png')}
-                            style={[Styles.icon, { tintColor: Colors.tint, height: 30, }]}
+                            style={[{ resizeMode: 'contain',  tintColor: Colors.tint, height: 30, width: 20}]}
                         />
                     </TouchableOpacity>
                 }
@@ -30,7 +29,7 @@ export default class SearchBar extends Component {
                 <View style={custom.searchContainer}>
                     <Image
                         source={require('../assets/icons/search.png')}
-                        style={[Styles.icon, { alignSelf: 'center', }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', alignSelf: 'center', tintColor: Colors.tint }]}
                     />
                         <TextInput
                         style={custom.input}
@@ -53,7 +52,7 @@ export default class SearchBar extends Component {
                 >
                     <Image
                         source={require('../assets/brand/icon.png')}
-                        style={[Styles.icon, { tintColor: Colors.tint, width: 30, height: 30 }]}
+                        style={[{  width: 30, height: 30, resizeMode: 'contain', tintColor: Colors.tint }]}
                     />
                 </TouchableOpacity>
 

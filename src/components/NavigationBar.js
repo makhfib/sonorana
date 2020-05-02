@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
 import Layout from '../constants/Layout'
-import Styles from '../constants/Styles'
 import PropTypes from 'prop-types'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import TextStyle from '../constants/TextStyle'
@@ -24,27 +23,56 @@ export default class NavigationBar extends Component {
                 >
                     <Image
                         source={this.props.leftIcon}
-                        style={[Styles.icon, { tintColor: this.props.leftIconTintColor }]}
+                        style={[{ width: 20, height: 20, resizeMode: 'contain', tintColor: this.props.leftIconTintColor }]}
                     />
                 </TouchableOpacity>
                 <View style={{
-                        flex: 1,
-                        alignItems: 'center',
-                    }}>
-                    <Text style={[{fontSize: 16}]}>
+                    flex: 1,
+                    alignItems: this.props.rightSecondIcon ? 'flex-start' : 'center',
+                    marginHorizontal: 20,
+                }}>
+                    <Text style={[{ fontSize: 16 }]}>
                         {this.props.title}
                     </Text>
                 </View>
-
-                <TouchableOpacity
-                    onPress={this.props.rightIconOnPress}
-                    style={{ alignSelf: 'flex-end' }}
+                <View
+                    style={{
+                        alignSelf: 'flex-end',
+                        flexDirection: 'row',
+                    }}
                 >
-                    <Image
-                        source={this.props.rightIcon}
-                        style={[Styles.icon, { tintColor: this.props.rightIconTintColor }]}
-                    />
-                </TouchableOpacity>
+                    {
+                        this.props.rightThirdIcon &&
+                        <TouchableOpacity
+                            onPress={this.props.rightThirdIconOnPress}
+                        >
+                            <Image
+                                source={this.props.rightThirdIcon}
+                                style={[{ width: 20, height: 20, resizeMode: 'contain',  tintColor: this.props.rightThirdIconTintColor, marginRight: 20, }]}
+                            />
+                        </TouchableOpacity>
+                    }
+                    {
+                        this.props.rightSecondIcon &&
+                        <TouchableOpacity
+                            onPress={this.props.rightSecondIconOnPress}
+                        >
+                            <Image
+                                source={this.props.rightSecondIcon}
+                                style={[{  width: 20, height: 20, resizeMode: 'contain',  tintColor: this.props.rightSecondIconTintColor, marginRight: 15, }]}
+                            />
+                        </TouchableOpacity>
+                    }
+                    <TouchableOpacity
+                        onPress={this.props.rightIconOnPress}
+                    >
+                        <Image
+                            source={this.props.rightIcon}
+                            style={[{ width: 20, height: 20, resizeMode: 'contain', tintColor: this.props.rightIconTintColor }]}
+                        />
+                    </TouchableOpacity>
+                </View>
+
             </View>
         )
     }
@@ -54,6 +82,14 @@ NavigationBar.propTypes = {
     leftIcon: PropTypes.number,
     leftIconTintColor: PropTypes.string,
     leftIconOnPress: PropTypes.func,
+
+    rightThirdIcon: PropTypes.number,
+    rightThirdIconTintColor: PropTypes.string,
+    rightThirdIconOnPress: PropTypes.func,
+
+    rightSecondIcon: PropTypes.number,
+    rightSecondIconTintColor: PropTypes.string,
+    rightSecondIconOnPress: PropTypes.func,
 
     rightIcon: PropTypes.number,
     rightIconTintColor: PropTypes.string,

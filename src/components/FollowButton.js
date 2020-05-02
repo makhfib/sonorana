@@ -43,10 +43,7 @@ export default class FollowButton extends Component {
 }
 
 FollowButton.propTypes = {
-    icon: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    backgroundColor: PropTypes.string,
 }
 
 const custom = StyleSheet.create({

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
-import Styles from '../constants/Styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Home from '../screens/main/tab/Home'
 import Notifications from '../screens/main/tab/Notifications'
@@ -19,38 +18,40 @@ export default class BottomTab extends Component {
                 activeTintColor: Colors.tint,
                 showLabel: false,
                 keyboardHidesTabBar: true,
-                
+                tabStyle: {
+                    backgroundColor: Colors.background,
+                }
             }}>
                 <Tab.Screen name='Home' component={Home} options={{
                     tabBarIcon: ({ color }) => (<Image
                         source={require('../assets/icons/navigation/home.png')}
-                        style={[Styles.icon, { tintColor: color }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Notifications' component={Notifications} options={{
                     tabBarIcon: ({ color }) => (<Image
                         source={require('../assets/icons/navigation/notifications.png')}
-                        style={[Styles.icon, { tintColor: color }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Create' component={Create} options={{
                     tabBarIcon: ({ color }) => (
                     <Image
                         source={require('../assets/icons/navigation/create.png')}
-                        style={[Styles.icon, { tintColor: color }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />),
                     
                 }} />
                 <Tab.Screen name='Chat' component={Chat} options={{
                     tabBarIcon: ({ color }) => (<Image
                         source={require('../assets/icons/navigation/chat.png')}
-                        style={[Styles.icon, { tintColor: color }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Profile' component={Profile} options={{
                     tabBarIcon: ({ color }) => (<Image
                         source={require('../assets/icons/navigation/profile.png')}
-                        style={[Styles.icon, { tintColor: color }]}
+                        style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
             </Tab.Navigator>

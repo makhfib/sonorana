@@ -1,16 +1,17 @@
-const tint = '#164aad';
+const darkMode = false;
+const tint = darkMode ? '#fff' : '#164aad';
 
 export const Colors = {
   tint,
   safety: '#00c35c',
   danger: '#c30000',
   like: '#f3315e',
-  default: '#a1a1a1',
+  default: '#909090' ,
   active: tint,
   
-  inputBackground: '#f8f8f8',
+  inputBackground: darkMode ? '#1E1E1E' : '#f8f8f8',
   
   notwhite: '#DEDEDE',
-  background: '#fff',
-  antagonist: '#000'
+  background: darkMode ? '#151515' : '#fff',
+  antagonist: darkMode ? '#fff' : '#000'
 };

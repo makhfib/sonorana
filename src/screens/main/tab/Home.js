@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { View, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from '../../../components/SearchBar';
 import Post from '../../../components/Post';
-import { FlatList } from 'react-native-gesture-handler';
 import SamplePosts from '../../../data/Posts'
-import { View, Keyboard } from 'react-native';
+import { Colors } from '../../../constants/Colors'
 
 export default class Home extends Component {
 
@@ -59,7 +60,7 @@ export default class Home extends Component {
         const { search, value } = this.state;
 
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
                 <SearchBar
                     back={search}
                     onFocus={this._handleSearchOnFocus.bind(this)}
@@ -78,6 +79,7 @@ export default class Home extends Component {
                                         id={item.id}
                                         photo={item.photo}
                                         username={item.username}
+                                        name={item.name}
                                         datetime={item.datetime}
                                         description={item.description}
                                         duration={item.duration}

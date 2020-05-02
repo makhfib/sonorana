@@ -16,7 +16,7 @@ export const custom = StyleSheet.create({
         marginBottom: 5,
     },
     headerTextContainer: {
-        flex: 1,
+        //flex: 1,
         marginHorizontal: 10,
         height: headerHeight,
         justifyContent: 'space-around'
@@ -27,7 +27,8 @@ export const custom = StyleSheet.create({
         borderRadius: headerHeight / 2 
     },
     username: { 
-        fontWeight: 'bold' 
+        fontWeight: 'bold',
+        color: Colors.antagonist
     },
     datetime: { 
         fontWeight: 'normal', 
