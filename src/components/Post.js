@@ -5,23 +5,76 @@ import { custom } from './css/Post.css';
 import PropTypes from 'prop-types'
 import { Colors } from '../constants/Colors';
 import TextStyle from '../constants/TextStyle'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Post extends Component {
 
     state = {
         playing: false,
         liked: false,
+        // This state is used as a workaround to prevent
+        // the parent touchable from being triggered when
+        // other nested touchables are being pressed
+        touchableDisabled: false,
     }
 
     _handlePlayButton() {
+        this.setState({ touchableDisabled: true })
+
         const { playing } = this.state
         this.setState({ playing: !playing })
     }
 
     _handleLike() {
+        this.setState({ touchableDisabled: true })
+        
         const { liked } = this.state
         this.setState({ liked: !liked })
+    }
+
+    _handlePostOnPress() {
+        const {
+            id,
+            photo,
+            username,
+            name,
+            datetime,
+            description,
+            duration
+        } = this.props;
+
+        if (!this.state.touchableDisabled) {
+            this.props.navigation.navigate('Post', {
+                id,
+                photo,
+                username,
+                name,
+                datetime,
+                description,
+                duration
+            })
+        }
+
+        this.setState({ touchableDisabled: false })
+    }
+
+    _handleProfileOnPress() {
+        this.setState({ touchableDisabled: true })
+
+        const {
+            id,
+            photo,
+            username,
+            name,
+        } = this.props;
+
+        this.props.navigation.navigate('User', {
+            photo,
+            name,
+            username,
+            following: '10k',
+            followers: '1m'
+        })
     }
 
     render() {
@@ -37,35 +90,21 @@ export default class Post extends Component {
 
         const {
             playing,
-            liked
+            liked,
         } = this.state;
 
         return (
             <View style={custom.container}>
                 <TouchableWithoutFeedback
-                    onPress={() =>
-                        this.props.navigation.navigate('Post', {
-                            id,
-                            photo,
-                            username,
-                            name,
-                            datetime,
-                            description,
-                            duration
-                        })}>
+                    onPress={() => this._handlePostOnPress()}>
                     <View
                         style={custom.header}
                     >
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <TouchableWithoutFeedback
                                 style={{ flexDirection: 'row', }}
-                                onPress={() => this.props.navigation.navigate('User', {
-                                    photo,
-                                    name,
-                                    username,
-                                    following: '10k',
-                                    followers: '1m'
-                                })}
+                                onPress={() => this._handleProfileOnPress()}
+
                             >
                                 <Image
                                     source={{ uri: photo }}
