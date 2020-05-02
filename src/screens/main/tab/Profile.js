@@ -13,6 +13,8 @@ export default class Profile extends Component {
                 website={'makhfib.com'}
                 following={'11.8k'}
                 followers={'2.1m'}
+
+                navigation={this.props.navigation}
             />
         )
     }

@@ -29,6 +29,12 @@ export default class User extends Component {
         followers: this._props().followers,
     }
 
+    _handleMore() {
+        if (this.props.route === undefined) {
+            this.props.navigation.navigate('Settings')
+        }
+    }
+
     render() {
         const {
             name,
@@ -60,7 +66,7 @@ export default class User extends Component {
 
                         rightIcon={require('../../assets/icons/interaction/more.png')}
                         rightIconTintColor={Colors.tint}
-                        rightIconOnPress={null}
+                        rightIconOnPress={() => this._handleMore()}
                     />
                     <View style={custom.informationContainer}>
                         <View style={custom.profileHeaderContainer}>
