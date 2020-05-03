@@ -29,8 +29,8 @@ export default class FollowButton extends Component {
             <ActionButton 
                 icon={
                     icon === 'done'
-                        ? require('../assets/icons/interaction/done.png')
-                        : require('../assets/icons/interaction/add.png')
+                        ? require('../assets/icons/bold/done.png')
+                        : require('../assets/icons/bold/add.png')
                 }
                 text={text}
                 onPress={() => this._handleFollowButton()}

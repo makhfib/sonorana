@@ -63,46 +63,13 @@ export const custom = StyleSheet.create({
         marginBottom: 10,
     },
     usersInteractionsIcon: {
-        tintColor: Colors.antagonist,
         width: 15,
         height: 15,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor: Colors.antagonist
     },
     usersInteractionsText: {
         fontWeight: 'bold',
         color: Colors.antagonist
-    },
-    playerContainer: {
-        height: 160,
-        justifyContent: 'space-around',
-        paddingHorizontal: Layout.paddingHorizontal
-    },
-    playerButtonsContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        width: '90%',
-        alignSelf: 'center',
-    },
-    changeClipIcon: {
-        tintColor: Colors.antagonist,
-        width: 20,
-        height: 20,
-        resizeMode: 'contain',
-        tintColor: Colors.tint
-    },
-    backwardIcon: {
-        tintColor: Colors.antagonist,
-        width: 25,
-        height: 25,
-        resizeMode: 'contain',
-        tintColor: Colors.tint
-    },
-    playIcon: {
-        tintColor: Colors.antagonist,
-        width: 35,
-        height: 35,
-        resizeMode: 'contain',
-        tintColor: Colors.tint
     },
 });

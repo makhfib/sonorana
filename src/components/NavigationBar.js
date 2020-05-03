@@ -31,7 +31,7 @@ export default class NavigationBar extends Component {
                     alignItems: this.props.rightSecondIcon ? 'flex-start' : 'center',
                     marginHorizontal: 20,
                 }}>
-                    <Text style={[{ fontSize: 16 }]}>
+                    <Text style={[{ fontSize: 16, fontWeight: 'bold', color: Colors.antagonist }]}>
                         {this.props.title}
                     </Text>
                 </View>

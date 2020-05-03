@@ -20,7 +20,7 @@ export default class SearchBar extends Component {
                         }}
                     >
                         <Image
-                            source={require('../assets/icons/navigation/back.png')}
+                            source={require('../assets/icons/bold/arrow-left.png')}
                             style={[{ resizeMode: 'contain',  tintColor: Colors.tint, height: 30, width: 20}]}
                         />
                     </TouchableOpacity>
@@ -28,7 +28,7 @@ export default class SearchBar extends Component {
 
                 <View style={custom.searchContainer}>
                     <Image
-                        source={require('../assets/icons/search.png')}
+                        source={require('../assets/icons/bold/search.png')}
                         style={[{  width: 20, height: 20, resizeMode: 'contain', alignSelf: 'center', tintColor: Colors.tint }]}
                     />
                         <TextInput
@@ -45,7 +45,7 @@ export default class SearchBar extends Component {
                     
                 </View>
                 <TouchableOpacity
-                    onPress={null}
+                    onPress={() => this.props.navigation.navigate('Trending')}
                     style={{
                         marginBottom: 5,
                     }}

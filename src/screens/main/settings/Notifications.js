@@ -12,14 +12,14 @@ export default class Notifications extends Component {
                 <NavigationBar 
                     title={'Notifications'}
                     
-                    leftIcon={require('../../../assets/icons/navigation/back.png')}
+                    leftIcon={require('../../../assets/icons/bold/arrow-left.png')}
                     leftIconTintColor={Colors.tint}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/navigation/notifications.png')}
+                            source={require('../../../assets/illustrations/calendar-alert.png')}
                             style={custom.image}
                         />
                     </View>

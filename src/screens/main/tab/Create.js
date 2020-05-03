@@ -10,21 +10,21 @@ export default class Create extends Component {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: Colors.background}}>
                 <NavigationBar 
-                    title={'Create'}
+                
                 />
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/navigation/create.png')}
+                            source={require('../../../assets/illustrations/egg-media-player.png')}
                             style={custom.image}
                         />
                     </View>
                     <View style={custom.textContainer}>
                         <Text style={custom.title}>
-                            Create not available
+                            Publishing not available
                         </Text>
                         <Text style={custom.description}>
-                            Sorry, we haven't built the create module yet. We are working on it!
+                            Sorry, we haven't built this module yet. We are working on it!
                         </Text>
                     </View>
                 </View>

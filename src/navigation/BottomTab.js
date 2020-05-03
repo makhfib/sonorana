@@ -17,40 +17,60 @@ export default class BottomTab extends Component {
                 inactiveTintColor: Colors.default,
                 activeTintColor: Colors.tint,
                 showLabel: false,
-                keyboardHidesTabBar: true,
+                //keyboardHidesTabBar: true,
                 tabStyle: {
                     backgroundColor: Colors.background,
                 }
             }}>
                 <Tab.Screen name='Home' component={Home} options={{
-                    tabBarIcon: ({ color }) => (<Image
-                        source={require('../assets/icons/navigation/home.png')}
+                    tabBarIcon: ({ color, focused }) => (<Image
+                        source={
+                            focused 
+                            ? require('../assets/icons/bold/home.png')
+                            : require('../assets/icons/regular/home.png')
+                        }
                         style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Notifications' component={Notifications} options={{
-                    tabBarIcon: ({ color }) => (<Image
-                        source={require('../assets/icons/navigation/notifications.png')}
+                    tabBarIcon: ({ color, focused }) => (<Image
+                        source={
+                            focused 
+                            ? require('../assets/icons/bold/notifications.png')
+                            : require('../assets/icons/regular/notifications.png')
+                        }
                         style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Create' component={Create} options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ({ color, focused }) => (
                     <Image
-                        source={require('../assets/icons/navigation/create.png')}
+                        source={
+                            focused 
+                            ? require('../assets/icons/bold/create.png')
+                            : require('../assets/icons/regular/create.png')
+                        }
                         style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />),
                     
                 }} />
                 <Tab.Screen name='Chat' component={Chat} options={{
-                    tabBarIcon: ({ color }) => (<Image
-                        source={require('../assets/icons/navigation/chat.png')}
+                    tabBarIcon: ({ color, focused }) => (<Image
+                        source={
+                            focused 
+                            ? require('../assets/icons/bold/messages-bubble-double.png')
+                            : require('../assets/icons/regular/messages-bubble-double.png')
+                        }
                         style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Profile' component={Profile} options={{
-                    tabBarIcon: ({ color }) => (<Image
-                        source={require('../assets/icons/navigation/profile.png')}
+                    tabBarIcon: ({ color, focused }) => (<Image
+                        source={
+                            focused 
+                            ? require('../assets/icons/bold/profile.png')
+                            : require('../assets/icons/regular/profile.png')
+                        }
                         style={[{  width: 20, height: 20, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />

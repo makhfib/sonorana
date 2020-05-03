@@ -38,8 +38,8 @@ export const custom = StyleSheet.create({
         tintColor: MyTintColor
     },
     playIcon: {
-        width: 35,
-        height: 35,
+        width: 30,
+        height: 30,
         resizeMode: 'contain',
         tintColor: MyTintColor
     },

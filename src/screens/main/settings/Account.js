@@ -12,14 +12,14 @@ export default class Account extends Component {
                 <NavigationBar 
                     title={'Account'}
                     
-                    leftIcon={require('../../../assets/icons/navigation/back.png')}
+                    leftIcon={require('../../../assets/icons/bold/arrow-left.png')}
                     leftIconTintColor={Colors.tint}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/navigation/profile.png')}
+                            source={require('../../../assets/illustrations/tech-support-hand.png')}
                             style={custom.image}
                         />
                     </View>

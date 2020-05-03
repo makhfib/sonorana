@@ -27,7 +27,7 @@ export default class Post extends Component {
 
     _handleLike() {
         this.setState({ touchableDisabled: true })
-        
+
         const { liked } = this.state
         this.setState({ liked: !liked })
     }
@@ -68,12 +68,15 @@ export default class Post extends Component {
             name,
         } = this.props;
 
-        this.props.navigation.navigate('Profile', {
-            photo,
-            name,
-            username,
-            following: '10k',
-            followers: '1m'
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: {
+                photo,
+                name,
+                username,
+                following: '10k',
+                followers: '1m'
+            }
         })
     }
 
@@ -121,8 +124,8 @@ export default class Post extends Component {
                         <ActionButton
                             icon={
                                 playing
-                                    ? require('../assets/icons/audio/pause.png')
-                                    : require('../assets/icons/audio/play.png')
+                                    ? require('../assets/icons/bold/pause.png')
+                                    : require('../assets/icons/bold/play.png')
                             }
                             text={duration}
                             buttonStyle={custom.playButton}
@@ -139,8 +142,8 @@ export default class Post extends Component {
                         <ActionButton
                             icon={
                                 liked
-                                    ? require('../assets/icons/interaction/heart-filled.png')
-                                    : require('../assets/icons/interaction/heart.png')
+                                    ? require('../assets/icons/bold/heart.png')
+                                    : require('../assets/icons/regular/heart.png')
                             }
                             text={'Like'}
                             buttonStyle={custom.interactionButton}
@@ -149,14 +152,14 @@ export default class Post extends Component {
                             onPress={() => this._handleLike()}
                         />
                         <ActionButton
-                            icon={require('../assets/icons/interaction/comment.png')}
+                            icon={require('../assets/icons//regular/messages-bubble.png')}
                             text={'Comment'}
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}
                             textStyle={[TextStyle.postInteraction, custom.interactionText]}
                         />
                         <ActionButton
-                            icon={require('../assets/icons/interaction/echo.png')}
+                            icon={require('../assets/icons/regular/echo.png')}
                             text={'Echo'}
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}

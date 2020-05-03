@@ -15,7 +15,7 @@ export default class Chat extends Component {
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/navigation/chat.png')}
+                            source={require('../../../assets/illustrations/phone-comment-text.png')}
                             style={custom.image}
                         />
                     </View>

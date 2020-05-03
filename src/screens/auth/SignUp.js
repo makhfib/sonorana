@@ -15,7 +15,7 @@ export default class SignUp extends Component {
                     source={require('../../assets/images/background.png')}
                 >
                     <NavigationBar
-                        leftIcon={require('../../assets/icons/navigation/back.png')}
+                        leftIcon={require('../../assets/icons/bold/arrow-left.png')}
                         leftIconTintColor={textColor}
                         leftIconOnPress={() => this.props.navigation.goBack()}
                     />

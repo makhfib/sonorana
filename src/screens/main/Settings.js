@@ -27,7 +27,7 @@ export default class Settings extends Component {
                 <NavigationBar
                     title={'Settings'}
 
-                    leftIcon={require('../../assets/icons/navigation/back.png')}
+                    leftIcon={require('../../assets/icons/bold/arrow-left.png')}
                     leftIconTintColor={Colors.tint}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
@@ -37,14 +37,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/navigation/profile.png')}
+                                source={require('../../assets/icons/regular/profile.png')}
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
                                 Account
                         </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={custom.optionArrow}
                             />
                         </View>
@@ -54,14 +54,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/navigation/notifications.png')}
+                                source={require('../../assets/icons/regular/notifications.png')}
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
                                 Notifications
                         </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={custom.optionArrow}
                             />
                         </View>
@@ -71,14 +71,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/eye.png')}
+                                source={require('../../assets/icons/regular/eye.png')}
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
                                 Appearance
                         </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={custom.optionArrow}
                             />
                         </View>
@@ -88,14 +88,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/lock.png')}
+                                source={require('../../assets/icons/regular/privacy.png')}
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
                                 {'Privacy & Security'}
                             </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={custom.optionArrow}
                             />
                         </View>
@@ -105,14 +105,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/info.png')}
+                                source={require('../../assets/icons/regular/info.png')}
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
                                 About
                         </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={custom.optionArrow}
                             />
                         </View>
@@ -122,14 +122,14 @@ export default class Settings extends Component {
                     >
                         <View style={custom.optionContainer}>
                             <Image
-                                source={require('../../assets/icons/navigation/logout.png')}
+                                source={require('../../assets/icons/regular/logout.png')}
                                 style={[custom.optionIcon, custom.destructiveActionIcon]}
                             />
                             <Text style={[custom.optionText, custom.destructiveActionText]}>
                                 Log Out
                         </Text>
                             <Image
-                                source={require('../../assets/icons/navigation/arrow.png')}
+                                source={require('../../assets/icons/regular/arrow-right.png')}
                                 style={[custom.optionArrow, custom.destructiveActionIcon]}
                             />
                         </View>

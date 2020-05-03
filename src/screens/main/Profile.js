@@ -6,7 +6,7 @@ import { Colors } from '../../constants/Colors'
 import ActionButton from '../../components/ActionButton'
 import TextStyle from '../../constants/TextStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { custom } from './css/User.css'
+import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
 
 export default class User extends Component {
@@ -35,6 +35,10 @@ export default class User extends Component {
         }
     }
 
+    _handleEditProfile() {
+        this.props.navigation.navigate('EditProfile')
+    }
+
     render() {
         const {
             name,
@@ -54,7 +58,7 @@ export default class User extends Component {
                     
                         leftIcon={
                             this.props.route !== undefined
-                            ? require('../../assets/icons/navigation/back.png')
+                            ? require('../../assets/icons/bold/arrow-left.png')
                             : undefined
                         }
                         leftIconTintColor={Colors.tint}
@@ -64,7 +68,7 @@ export default class User extends Component {
                             : null
                         }
 
-                        rightIcon={require('../../assets/icons/interaction/more.png')}
+                        rightIcon={require('../../assets/icons/bold/more.png')}
                         rightIconTintColor={Colors.tint}
                         rightIconOnPress={() => this._handleMore()}
                     />
@@ -82,8 +86,9 @@ export default class User extends Component {
                                     this.props.route === undefined
                                         ? (
                                             <ActionButton
-                                                icon={require('../../assets/icons/edit.png')}
+                                                icon={require('../../assets/icons/bold/quill.png')}
                                                 text={'Edit profile'}
+                                                onPress={() => this._handleEditProfile()}
                                                 buttonStyle={custom.profileActionButton}
                                                 iconStyle={custom.profileActionButtonIcon}
                                                 textStyle={[TextStyle.postInteraction, custom.profileActionButtonText]}
@@ -134,14 +139,14 @@ export default class User extends Component {
                     <View style={custom.sectionsContainer}>
                         <TouchableOpacity style={custom.section}>
                             <Image
-                                source={require('../../assets/icons/mic.png')}
+                                source={require('../../assets/icons/bold/microphone.png')}
                                 style={custom.sectionIcon}
                             />
                             <Text style={custom.sectionText}>Posts</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={custom.section}>
                             <Image
-                                source={require('../../assets/icons/playlist.png')}
+                                source={require('../../assets/icons/bold/playlists.png')}
                                 style={custom.sectionIcon}
                             />
                             <Text style={custom.sectionText}>Playlists</Text>

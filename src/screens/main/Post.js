@@ -27,19 +27,19 @@ export default class Post extends Component {
                 <View style={custom.container}>
                     <NavigationBar
 
-                        leftIcon={require('../../assets/icons/navigation/back.png')}
+                        leftIcon={require('../../assets/icons/bold/arrow-left.png')}
                         leftIconTintColor={Colors.tint}
                         leftIconOnPress={() => this.props.navigation.goBack()}
 
-                        rightThirdIcon={require('../../assets/icons/audio/repeat.png')}
+                        rightThirdIcon={require('../../assets/icons/bold/repeat.png')}
                         rightThirdIconTintColor={Colors.default}
                         rightThirdIconOnPress={null}
 
-                        rightSecondIcon={require('../../assets/icons/add-to-playlist.png')}
+                        rightSecondIcon={require('../../assets/icons/bold/add-to-playlist.png')}
                         rightSecondIconTintColor={Colors.tint}
                         rightSecondIconOnPress={null}
 
-                        rightIcon={require('../../assets/icons/interaction/more.png')}
+                        rightIcon={require('../../assets/icons/bold/more.png')}
                         rightIconTintColor={Colors.tint}
                         rightIconOnPress={null}
                     />
@@ -48,7 +48,7 @@ export default class Post extends Component {
                             <View style={{ flex: 1 }}>
                                 <TouchableWithoutFeedback 
                                     style={{ flexDirection: 'row' }}
-                                    onPress={() => this.props.navigation.navigate('User', {
+                                    onPress={() => this.props.navigation.navigate('Profile', {
                                         photo,
                                         name,
                                         username,
@@ -82,8 +82,8 @@ export default class Post extends Component {
                             <ActionButton
                                 icon={
                                     true
-                                        ? require('../../assets/icons/interaction/heart-filled.png')
-                                        : require('../../assets/icons/interaction/heart.png')
+                                        ? require('../../assets/icons/bold/heart.png')
+                                        : require('../../assets/icons/regular/heart.png')
                                 }
                                 text={'Like'}
                                 buttonStyle={custom.interactionButtonStyle}
@@ -92,7 +92,7 @@ export default class Post extends Component {
                                 onPress={() => null}
                             />
                             <ActionButton
-                                icon={require('../../assets/icons/interaction/comment.png')}
+                                icon={require('../../assets/icons//regular/messages-bubble.png')}
                                 text={'Comment'}
                                 buttonStyle={custom.interactionButtonStyle}
                                 iconStyle={{ tintColor: Colors.default }}
@@ -100,7 +100,7 @@ export default class Post extends Component {
                                 onPress={() => null}
                             />
                             <ActionButton
-                                icon={require('../../assets/icons/interaction/echo.png')}
+                                icon={require('../../assets/icons/regular/echo.png')}
                                 text={'Echo'}
                                 buttonStyle={custom.interactionButtonStyle}
                                 iconStyle={[{ tintColor: Colors.default }]}
@@ -113,12 +113,12 @@ export default class Post extends Component {
                     <View style={custom.usersInteractionsContainer}>
                         <View style={custom.usersInteractionsLine}>
                             <Text style={[{ color: Colors.default }]}>
-                                {'Published '} {datetime}
+                                {'Published'} {datetime}
                             </Text>
                         </View>
                         <View style={custom.usersInteractionsLine}>
                             <Image
-                                source={require('../../assets/icons/interaction/heart-filled.png')}
+                                source={require('../../assets/icons/bold/heart.png')}
                                 style={custom.usersInteractionsIcon}
                             />
                             <Text style={custom.usersInteractionsText}>
@@ -127,7 +127,7 @@ export default class Post extends Component {
                         </View>
                         <View style={custom.usersInteractionsLine}>
                             <Image
-                                source={require('../../assets/icons/interaction/comment.png')}
+                                source={require('../../assets/icons//regular/messages-bubble.png')}
                                 style={custom.usersInteractionsIcon}
                             />
                             <Text style={custom.usersInteractionsText}>

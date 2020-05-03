@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 export const custom = StyleSheet.create({
     container: {
         flex: 1, 
-        backgroundColor: Colors.inputBackground
+        backgroundColor: Colors.background
     },
     imageContainer: {
         flex: 1,
@@ -12,10 +12,9 @@ export const custom = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 140,
+        height: 140,
         resizeMode: 'contain',
-        tintColor: Colors.notwhite
     },
     textContainer: {
         flex: 1,

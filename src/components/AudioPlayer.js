@@ -29,31 +29,31 @@ export default class AudioPlayer extends Component {
                 <View style={custom.playerButtonsContainer}>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/icons/audio/previous.png')}
+                            source={require('../assets/icons/bold/previous.png')}
                             style={custom.changeClipIcon}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/icons/audio/backward15.png')}
+                            source={require('../assets/icons/bold/backward15.png')}
                             style={custom.backwardIcon}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/icons/audio/play.png')}
+                            source={require('../assets/icons/bold/play.png')}
                             style={custom.playIcon}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/icons/audio/forward15.png')}
+                            source={require('../assets/icons/bold/forward15.png')}
                             style={custom.backwardIcon}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Image
-                            source={require('../assets/icons/audio/next.png')}
+                            source={require('../assets/icons/bold/next.png')}
                             style={custom.changeClipIcon}
                         />
                     </TouchableOpacity>

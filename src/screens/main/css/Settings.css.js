@@ -5,13 +5,14 @@ import Layout from '../../../constants/Layout';
 export const custom = StyleSheet.create({
     container: {
         marginTop: 30,
-        alignSelf: 'center',
-        width: '70%'
+        width: '75%',
+        alignSelf: 'center'
     },
     optionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 15,
+        paddingVertical: 15,
+        paddingHorizontal: 0,
     },
     optionIcon: {
         width: 20,

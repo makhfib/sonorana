@@ -15,7 +15,7 @@ export default class Notifications extends Component {
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/navigation/notifications.png')}
+                            source={require('../../../assets/illustrations/voicechat-interactions.png')}
                             style={custom.image}
                         />
                     </View>

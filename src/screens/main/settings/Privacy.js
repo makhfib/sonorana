@@ -12,14 +12,14 @@ export default class Privacy extends Component {
                 <NavigationBar 
                     title={'Privacy & Security'}
                     
-                    leftIcon={require('../../../assets/icons/navigation/back.png')}
+                    leftIcon={require('../../../assets/icons/bold/arrow-left.png')}
                     leftIconTintColor={Colors.tint}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>
                         <Image 
-                            source={require('../../../assets/icons/lock.png')}
+                            source={require('../../../assets/illustrations/padlock-shield.png')}
                             style={custom.image}
                         />
                     </View>
