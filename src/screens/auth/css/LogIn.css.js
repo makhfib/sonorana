@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { Colors } from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 
-export const textColor = Colors.background
+export const textColor = 'white'
 export const formColor = '#0E245075'
 
 export const custom = StyleSheet.create({

@@ -20,6 +20,7 @@ export const custom = StyleSheet.create({
     },
     title: {
         fontSize: 36,
+        color: Colors.antagonist
     },
     normalText: {
         color: textColor,
