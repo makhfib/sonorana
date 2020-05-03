@@ -36,7 +36,22 @@ export default class User extends Component {
     }
 
     _handleEditProfile() {
-        this.props.navigation.navigate('EditProfile')
+        const {
+            photo,
+            name,
+            description,
+            website
+        } = this.state;
+
+        this.props.navigation.navigate('Main', {
+            screen: 'EditProfile',
+            params: {
+                photo,
+                name,
+                description,
+                website
+            }
+        })
     }
 
     render() {

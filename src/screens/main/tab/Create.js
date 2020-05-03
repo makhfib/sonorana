@@ -10,7 +10,6 @@ export default class Create extends Component {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: Colors.background}}>
                 <NavigationBar 
-                
                 />
                 <View style={custom.container}>
                     <View style={custom.imageContainer}>

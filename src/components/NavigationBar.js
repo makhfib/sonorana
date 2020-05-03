@@ -68,7 +68,7 @@ export default class NavigationBar extends Component {
                     >
                         <Image
                             source={this.props.rightIcon}
-                            style={[{ width: 20, height: 20, resizeMode: 'contain', tintColor: this.props.rightIconTintColor }]}
+                            style={[{ width: 25, height: 20, resizeMode: 'contain', tintColor: this.props.rightIconTintColor }]}
                         />
                     </TouchableOpacity>
                 </View>
