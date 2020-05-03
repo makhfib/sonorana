@@ -68,7 +68,7 @@ export default class Post extends Component {
             name,
         } = this.props;
 
-        this.props.navigation.navigate('User', {
+        this.props.navigation.navigate('Profile', {
             photo,
             name,
             username,

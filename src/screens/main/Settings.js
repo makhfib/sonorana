@@ -13,23 +13,12 @@ export default class Settings extends Component {
             navigation
         } = this.props;
 
-        switch (option) {
-            case 'Accounts':
-                navigation.navigate('')
-                break;
-            case 'Notifications':
-                break;
-            case 'Appearance':
-                break;
-            case 'Privacy&Security':
-                break;
-            case 'About':
-                break;
-            case 'LogOut':
-                break;
-            default:
-                break;
+        if (option !== 'Log Out') {
+            navigation.navigate(option)
+        } else {
+            // do Log Out
         }
+        
     }
 
     render() {
@@ -44,7 +33,7 @@ export default class Settings extends Component {
                 />
                 <View style={custom.container}>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('Account')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
@@ -52,7 +41,7 @@ export default class Settings extends Component {
                                 style={custom.optionIcon}
                             />
                             <Text style={custom.optionText}>
-                                Accounts
+                                Account
                         </Text>
                             <Image
                                 source={require('../../assets/icons/navigation/arrow.png')}
@@ -61,7 +50,7 @@ export default class Settings extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('Notifications')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
@@ -78,7 +67,7 @@ export default class Settings extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('Appearance')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
@@ -95,7 +84,7 @@ export default class Settings extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('Privacy & Security')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
@@ -112,7 +101,7 @@ export default class Settings extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('About')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
@@ -129,19 +118,19 @@ export default class Settings extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={() => this._handleOptions('Log Out')}
                     >
                         <View style={custom.optionContainer}>
                             <Image
                                 source={require('../../assets/icons/navigation/logout.png')}
-                                style={[custom.optionIcon, custom.destructiveAction]}
+                                style={[custom.optionIcon, custom.destructiveActionIcon]}
                             />
-                            <Text style={[custom.optionText, custom.destructiveAction]}>
+                            <Text style={[custom.optionText, custom.destructiveActionText]}>
                                 Log Out
                         </Text>
                             <Image
                                 source={require('../../assets/icons/navigation/arrow.png')}
-                                style={[custom.optionArrow, custom.destructiveAction]}
+                                style={[custom.optionArrow, custom.destructiveActionIcon]}
                             />
                         </View>
                     </TouchableOpacity>

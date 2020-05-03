@@ -31,8 +31,10 @@ export const custom = StyleSheet.create({
         resizeMode: 'contain',
         tintColor: Colors.antagonist
     },
-    destructiveAction: {
+    destructiveActionIcon: {
         tintColor: Colors.danger,
+    },
+    destructiveActionText: {
         color: Colors.danger
     }
 })
