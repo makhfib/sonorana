@@ -5,18 +5,23 @@ import { Colors } from '../../constants/Colors'
 import NavigationBar from '../../components/NavigationBar'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Settings.css'
+import { connect } from 'react-redux'
+import { signOut } from '../../modules/Auth/actions'
+import PropTypes from 'prop-types'
 
-export default class Settings extends Component {
+class Settings extends Component {
 
     _handleOptions(option) {
         const {
-            navigation
+            navigation,
+            signOut
         } = this.props;
 
         if (option !== 'Log Out') {
             navigation.navigate(option)
         } else {
-            // do Log Out
+            console.log('Logged Out')
+            signOut(navigation)
         }
         
     }
@@ -140,3 +145,9 @@ export default class Settings extends Component {
         )
     }
 }
+
+Settings.propTypes = {
+    //user: PropTypes.object,
+}
+
+export default connect(null, { signOut })(Settings)
