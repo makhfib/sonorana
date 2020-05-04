@@ -7,6 +7,7 @@ import Post from '../../../components/Post';
 import SamplePosts from '../../../data/Posts'
 import { Colors } from '../../../constants/Colors'
 import { custom } from '../css/Notice.css'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class Home extends Component {
 
@@ -91,7 +92,10 @@ export default class Home extends Component {
                                 keyExtractor={item => item.id}
                             />
                         ) : (
-                            <View style={custom.container}>
+                            <KeyboardAwareScrollView
+                                scrollEnabled={false}
+                                style={custom.container}
+                            >
                                 <View style={custom.imageContainer}>
                                     <Image
                                         source={require('../../../assets/illustrations/binoculars.png')}
@@ -106,7 +110,7 @@ export default class Home extends Component {
                                         Sorry, we haven't built this module yet. We are working on it!
                                     </Text>
                                 </View>
-                            </View>
+                            </KeyboardAwareScrollView>
                         )
                 }
             </SafeAreaView>

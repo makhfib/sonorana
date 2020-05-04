@@ -24,7 +24,7 @@ export const custom = StyleSheet.create({
         tintColor: textColor
     },
     formContainer: {
-
+        
     },
     form: {
         backgroundColor: formColor,

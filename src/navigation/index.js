@@ -9,7 +9,7 @@ function switcher() {
     return (
         <Stack.Navigator headerMode='none'>
             {
-                true ? (
+                false ? (
                     <Stack.Screen name='Main' component={Main}/>
                 ) : (
                     <Stack.Screen name='Auth' component={Auth}/>

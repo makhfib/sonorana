@@ -11,9 +11,7 @@ export const custom = StyleSheet.create({
         paddingHorizontal: Layout.paddingHorizontal,
     },
     slider: {
-        transform: [{ scaleX: 0.75 }, { scaleY: 0.75 }],
-        width: Dimensions.get('window').width + 80,
-        alignSelf: 'center',
+        
     },
     timeIndicator: {
         color: Colors.antagonist

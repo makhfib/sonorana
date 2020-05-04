@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import ActionButton from '../../components/ActionButton'
 import NavigationBar from '../../components/NavigationBar';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class SignUp extends Component {
     render() {
@@ -19,40 +20,44 @@ export default class SignUp extends Component {
                         leftIconTintColor={textColor}
                         leftIconOnPress={() => this.props.navigation.goBack()}
                     />
-                    <View
-                        style={custom.content}>
-                        <View style={custom.titleContainer}>
-                            <Image
-                                source={require('../../assets/brand/text.png')}
-                                style={[custom.title, { height: 50, resizeMode: 'contain' }]}
-                            />
-                        </View>
-                        <View style={custom.formContainer} behavior="padding">
-                            <View style={custom.form}>
-                                <Text style={custom.inputLabel}>Username</Text>
-                                <TextInput
-                                    style={custom.input}
-                                    textContentType={'nickname'}
-                                    selectionColor={textColor}
-                                />
-                                <View style={custom.separator} />
-                                <Text style={custom.inputLabel}>Email</Text>
-                                <TextInput
-                                    style={custom.input}
-                                    textContentType={'emailAddress'}
-                                    selectionColor={textColor}
-                                />
-                                <View style={custom.separator} />
-                                <Text style={custom.inputLabel}>Password</Text>
-                                <TextInput
-                                    style={custom.input}
-                                    secureTextEntry={true}
-                                    textContentType={'password'}
-                                    selectionColor={textColor}
+                    <KeyboardAwareScrollView
+                        scrollEnabled={false}
+                        contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+                    >
+                        <View
+                            style={custom.content}>
+                            <View style={custom.titleContainer}>
+                                <Image
+                                    source={require('../../assets/brand/text.png')}
+                                    style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                                 />
                             </View>
-                            <Text style={custom.normalText}>
-                                By creating an account, you agree to our
+                            <View style={custom.formContainer} behavior="padding">
+                                <View style={custom.form}>
+                                    <Text style={custom.inputLabel}>Username</Text>
+                                    <TextInput
+                                        style={custom.input}
+                                        textContentType={'nickname'}
+                                        selectionColor={textColor}
+                                    />
+                                    <View style={custom.separator} />
+                                    <Text style={custom.inputLabel}>Email</Text>
+                                    <TextInput
+                                        style={custom.input}
+                                        textContentType={'emailAddress'}
+                                        selectionColor={textColor}
+                                    />
+                                    <View style={custom.separator} />
+                                    <Text style={custom.inputLabel}>Password</Text>
+                                    <TextInput
+                                        style={custom.input}
+                                        secureTextEntry={true}
+                                        textContentType={'password'}
+                                        selectionColor={textColor}
+                                    />
+                                </View>
+                                <Text style={custom.normalText}>
+                                    By creating an account, you agree to our
                                 <Text
                                         style={[{ fontWeight: 'bold' }]}
                                         onPress={() => null}
@@ -66,15 +71,17 @@ export default class SignUp extends Component {
                                 </Text> to learn how we use your data.
                                 You can opt out anytime.
                             </Text>
-                            <View style={custom.buttonContainer}>
-                                <ActionButton
-                                    icon={require('../../assets/brand/icon.png')}
-                                    text={'Create account'}
-                                    onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
-                                />
+                                <View style={custom.buttonContainer}>
+                                    <ActionButton
+                                        icon={require('../../assets/brand/icon.png')}
+                                        text={'Create account'}
+                                        onPress={() => this.props.navigation.navigate('Auth', { screen: 'ConfirmSignUp' })}
+                                    />
+                                </View>
                             </View>
                         </View>
-                    </View>
+
+                    </KeyboardAwareScrollView>
 
                 </ImageBackground>
             </SafeAreaView>
