@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
+import { persistReducer } from 'redux-persist'
+import AsyncStorage from '@react-native-community/async-storage';
 /* Reducers */
 import Auth from './Auth';
 import LocalStorage from './LocalStorage';
@@ -9,8 +11,14 @@ const INITIAL_STATE = {};
 
 const middleware = [thunk];
 
+const authPersistConfig = {
+  key: 'auth',
+  storage: AsyncStorage,
+  whitelist: ['CognitoUser']
+}
+
 const rootReducer = combineReducers({
-  auth: Auth,
+  auth: persistReducer(authPersistConfig, Auth),
   local: LocalStorage,
   audio: Audio,
 });
