@@ -289,8 +289,6 @@ export function forgotPasswordSubmit(username, code, newPassword, navigation) {
                 type: CONFIRM_FORGOT_PASSWORD,
                 payload: {
                     username,
-                    code,
-                    newPassword,
                 }
             })
 

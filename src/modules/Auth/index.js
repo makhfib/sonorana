@@ -24,7 +24,7 @@ import {
 } from './types'
 import {
     AuthExceptionMessage
-} from '../../exceptions/AuthExceptions'
+} from './exceptions'
 
 const INITIAL_STATE = {
     CognitoUser: null,
