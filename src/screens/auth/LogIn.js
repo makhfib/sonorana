@@ -8,16 +8,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { connect } from 'react-redux'
 import { signIn, reset } from '../../modules/Auth/actions'
 import PropTypes from 'prop-types'
+import { Colors } from '../../constants/Colors'
 
 class LogIn extends Component {
 
-    state ={
+    state = {
         username: '',
         password: '',
     }
 
     _handleInput(field, input) {
-        switch(field) {
+        switch (field) {
             case 'Username':
                 this.setState({ username: input })
                 break
@@ -28,7 +29,7 @@ class LogIn extends Component {
                 break
         }
     }
-    
+
     _handleLogIn() {
         const { username, password } = this.state;
         this.props.signIn(username, password, this.props.navigation);
@@ -47,45 +48,63 @@ class LogIn extends Component {
 
         return (
             <SafeAreaView style={custom.container}>
-                <ImageBackground style={custom.imageBackground}
-                    resizeMode='cover'
-                    source={require('../../assets/images/background.png')}
-                >
+                <View style={custom.secondContainer}>
                     <KeyboardAwareScrollView
                         scrollEnabled={false}
-                        contentContainerStyle={{flex:1, justifyContent: 'center'}}
+                        contentContainerStyle={{ flex: 1 }}
                     >
-                        <View style={custom.titleContainer}>
+                        <ImageBackground
+                            style={custom.titleContainer}
+                            source={require('../../assets/images/gradient.png')}
+                        >
                             <Image
                                 source={require('../../assets/brand/text.png')}
                                 style={[custom.title, { height: 50, resizeMode: 'contain' }]}
                             />
-                        </View>
-                        { error && <Text style={{color: 'white', backgroundColor:'#ff0000', marginBottom: 10, borderRadius: 5,}}>{' '} {errorMessage} {' '}</Text> }
+                        </ImageBackground>
+
                         <View style={custom.formContainer} behavior="padding">
-                            <View style={custom.form}>
-                                <Text style={custom.inputLabel}>Username or email</Text>
-                                <TextInput
-                                    style={custom.input}
-                                    textContentType={'emailAddress'}
-                                    selectionColor={textColor}
-                                    onChangeText={(text) => this._handleInput('Username', text)}
-                                />
-                                <View style={custom.separator} />
-                                <Text style={custom.inputLabel}>Password</Text>
-                                <TextInput
-                                    style={custom.input}
-                                    secureTextEntry={true}
-                                    textContentType={'password'}
-                                    selectionColor={textColor}
-                                    onChangeText={(text) => this._handleInput('Password', text)}
-                                />
+                            <View style={custom.errorContainer}>
+                                {
+                                    error &&
+                                    <Text style={custom.error}>
+                                        {' *'} {errorMessage} {' '}
+                                    </Text>
+                                }
                             </View>
-                            <TouchableOpacity
-                                onPress={() => this._handleNavigation('ResetPassword')}
-                            >
-                                <Text style={custom.normalText}>Forgot your password?</Text>
-                            </TouchableOpacity>
+                            <View style={[custom.form]}>
+                                <Text style={custom.inputLabel}>Username or email</Text>
+                                <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                    <Image
+                                        source={require('../../assets/icons/regular/profile.png')}
+                                        style={[custom.fieldIcon, { marginTop: 5 }]}
+                                    />
+                                    <TextInput
+                                        style={[custom.input]}
+                                        selectionColor={Colors.antagonist}
+                                        selectionColor={textColor}
+                                        textContentType={'emailAddress'}
+                                        onChangeText={(text) => this._handleInput('Username', text)}
+                                    />
+                                </View>
+                            </View>
+                            <View style={[custom.form]}>
+                                <Text style={custom.inputLabel}>Password</Text>
+                                <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                    <Image
+                                        source={require('../../assets/icons/regular/privacy.png')}
+                                        style={[custom.fieldIcon, { marginTop: 5 }]}
+                                    />
+                                    <TextInput
+                                        style={[custom.input]}
+                                        selectionColor={Colors.antagonist}
+                                        selectionColor={textColor}
+                                        textContentType={'password'}
+                                        secureTextEntry={true}
+                                        onChangeText={(text) => this._handleInput('Password', text)}
+                                    />
+                                </View>
+                            </View>
                             <View style={custom.buttonContainer}>
                                 <ActionButton
                                     icon={require('../../assets/brand/icon.png')}
@@ -93,24 +112,40 @@ class LogIn extends Component {
                                     onPress={() => this._handleLogIn()}
                                 />
                             </View>
-                            <View style={custom.alternativeContainer}>
-                                <Text
-                                    style={custom.normalText}
-                                    onPress={() => this._handleNavigation('SignUp')}
-                                >
-                                    Haven't got an account yet?
-                                <Text
-                                        style={[{ fontWeight: 'bold' }]}
-                                        onPress={() => this._handleNavigation('SignUp')}
-                                    > Sign up
-                                </Text>
-                                </Text>
 
-                            </View>
+                        </View>
+                        <View
+                            style={custom.resetContainer}
+                        >
+                            <TouchableOpacity
+                            style={{
+                                padding: 10
+                            }}
+                                onPress={() => this._handleNavigation('ResetPassword')}
+                            >
+                                <Text style={custom.normalText}>Forgot your password?</Text>
+                            </TouchableOpacity>
                         </View>
 
+                        <View style={custom.alternativeContainer}>
+                            <Text
+                                style={custom.normalText}
+                            >
+                                Haven't got an account yet?
+                            </Text>
+                            <TouchableOpacity
+                                onPress={() => this._handleNavigation('SignUp')}
+                            >
+                                <Text
+                                    style={custom.signUpButton}
+                                > 
+                            Sign up
+                            </Text>
+                            </TouchableOpacity>
+                            
+                        </View>
                     </KeyboardAwareScrollView>
-                </ImageBackground>
+                </View>
             </SafeAreaView>
         )
     }

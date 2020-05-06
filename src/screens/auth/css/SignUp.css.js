@@ -2,65 +2,86 @@ import { StyleSheet } from 'react-native'
 import { Colors } from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 
-export const textColor = 'white';
-export const formColor = '#0E245075'
+export const textColor = Colors.antagonist
+export const formColor = Colors.inputBackground
 
 export const custom = StyleSheet.create({
     container: {
         flex: 1,
     },
-    imageBackground: {
+    secondContainer: {
         flex: 1,
+        backgroundColor: Colors.background
     },
     content: {
-        flex: 1,
-        paddingHorizontal: Layout.paddingHorizontal,
-        justifyContent: 'center'
-    },
-    titleContainer: {
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
-        height: 100,
-        marginBottom: 25,
+        paddingTop: 40,
+        paddingHorizontal: Layout.paddingHorizontal
     },
     title: {
-        tintColor: textColor
+        fontSize: 36,
+        color: Colors.antagonist
     },
     formContainer: {
-
+        
+    },
+    errorContainer: {
+        height: 20,
+        marginVertical: 10,
+    },  
+    error: {
+        color: Colors.danger
     },
     form: {
-        backgroundColor: formColor,
-        opacity: 1,
-        height: 180,
+        backgroundColor: Colors.inputBackground,
+        height: 60,
         borderRadius: 4,
+        marginBottom: 20,
+    },
+    field: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+    },
+    fieldIcon: {
+        width: 20,
+        height: 20,
+        tintColor: Colors.default
     },
     inputLabel: {
         marginTop: 5,
-        color: textColor,
+        color: Colors.antagonist,
         paddingLeft: 10,
+        fontWeight:'bold'
     },
     input: {
-        color: textColor,
-        fontSize: 14,
+        flex: 1,
+        color: Colors.antagonist,
         height: 35,
+        width: '100%',
         paddingLeft: 10,
     },
     normalText: {
-        color: textColor,
-        marginTop: 10,
-        paddingHorizontal: 10,
-        backgroundColor: formColor,
-        borderRadius: 5,
+        color: Colors.default,
     },
-    separator: {
-        height: 0,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.notwhite,
+    resetContainer: { 
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    alternativeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        height: 60,
+        alignItems: 'center',
     },
     buttonContainer: {
         alignSelf: 'center',
         justifyContent: 'center',
         height: 80,
+    },
+    signUpButton: { 
+        fontWeight: 'bold', 
+        color: Colors.tint, 
+        padding: 10
     }
 });
