@@ -64,7 +64,9 @@ class EditProfile extends Component {
         // More info on all the options is below in the API Reference... just some common use cases shown here
         const options = {
             title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Remove Photo',  }],
+            customButtons: [
+                { name: 'Delete', title: 'Remove Photo',  }
+            ],
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -79,11 +81,14 @@ class EditProfile extends Component {
             console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                // Do something
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+            } else if (response.customButton === 'Delete') {
+                this.setState({
+                    // default photo
+                    photo: 'https://icon.org.uk/sites/all/themes/iconinstitute/images/avatar-default.jpg',
+                });
             } else {
                 const source = { uri: response.uri };
 
@@ -96,6 +101,7 @@ class EditProfile extends Component {
             }
         });
     }
+    
     render() {
         const {
             allowSave,
