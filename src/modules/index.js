@@ -5,7 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
 /* Reducers */
 import Auth from './Auth';
-import LocalStorage from './LocalStorage';
+import Profile from './Profile';
 import Audio from './Audio';
 
 const INITIAL_STATE = {};
@@ -25,7 +25,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, Auth),
-  local: LocalStorage,
+  profile: Profile,
   audio: Audio,
 });
 

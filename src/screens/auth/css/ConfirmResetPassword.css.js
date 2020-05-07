@@ -23,29 +23,42 @@ export const custom = StyleSheet.create({
     },
     normalText: {
         color: textColor,
+        marginTop: 10,
+    },
+    errorContainer: {
+        height: 20,
         marginVertical: 10,
+    },  
+    error: {
+        color: Colors.danger
     },
     form: {
-        backgroundColor: formColor,
-        opacity: 1,
-        height: 120,
+        backgroundColor: Colors.inputBackground,
+        height: 60,
         borderRadius: 4,
+        marginBottom: 20,
+    },
+    field: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    fieldIcon: {
+        width: 20,
+        height: 20,
+        tintColor: Colors.default
     },
     inputLabel: {
         marginTop: 5,
-        color: textColor,
-        fontWeight: 'bold',
+        color: Colors.antagonist,
         paddingLeft: 10,
+        fontWeight:'bold'
     },
     input: {
-        color: textColor,
+        flex: 1,
+        color: Colors.antagonist,
         height: 35,
+        width: '100%',
         paddingLeft: 10,
-    },
-    separator: {
-        height: 0,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.notwhite,
     },
     buttonContainer: {
         alignSelf: 'center',

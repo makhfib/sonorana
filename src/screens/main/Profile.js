@@ -8,8 +8,10 @@ import TextStyle from '../../constants/TextStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class User extends Component {
+class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
@@ -17,16 +19,6 @@ export default class User extends Component {
         } else {
             return this.props;
         }
-    }
-
-    state = {
-        name: this._props().name,
-        username: this._props().username,
-        photo: this._props().photo,
-        description: this._props().description,
-        website: this._props().website,
-        following: this._props().following,
-        followers: this._props().followers,
     }
 
     _handleMore() {
@@ -41,7 +33,7 @@ export default class User extends Component {
             name,
             description,
             website
-        } = this.state;
+        } = this._props();
 
         this.props.navigation.navigate('Main', {
             screen: 'EditProfile',
@@ -63,7 +55,7 @@ export default class User extends Component {
             website,
             following,
             followers
-        } = this.state;
+        } = this._props();
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
@@ -94,7 +86,7 @@ export default class User extends Component {
                                 style={custom.photo}
                             />
                             <View style={custom.profileHeaderText}>
-                                <Text style={custom.profileName}>
+                                <Text style={custom.profileName} numberOfLines={2}>
                                     {name}
                                 </Text>
                                 {
@@ -120,14 +112,14 @@ export default class User extends Component {
                         </View>
                         {
                             description &&
-                            <Text style={custom.description}>
+                            <Text style={custom.description} numberOfLines={3}>
                                 {description}
                             </Text>
                         }
                         {
                             website &&
                             <TouchableOpacity style={custom.websiteContainer}>
-                                <Text style={custom.website}>
+                                <Text style={custom.website} numberOfLines={1}>
                                     {website}
                                 </Text>
                             </TouchableOpacity>
@@ -173,3 +165,29 @@ export default class User extends Component {
         )
     }
 }
+
+Profile.propTypes = {
+    photo: PropTypes.string,
+    name: PropTypes.string,
+    username: PropTypes.string,
+    description: PropTypes.string,
+    website: PropTypes.string,
+    following: PropTypes.string,
+    followers: PropTypes.string,
+}
+
+const mapStateToProps = state => ({
+    photo: state.profile.photo,
+    name: state.profile.name,
+    username: state.profile.username,
+    description: state.profile.description,
+    website: state.profile.website,
+    following: state.profile.following,
+    followers: state.profile.followers,
+});
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

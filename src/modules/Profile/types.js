@@ -1,0 +1,2 @@
+export const SAVE_CHANGES = 'SAVE_CHANGES'
+export const CANCEL_CHANGES = 'CANCEL_CHANGES'

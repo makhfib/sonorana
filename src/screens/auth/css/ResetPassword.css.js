@@ -16,7 +16,7 @@ export const custom = StyleSheet.create({
     },
     content: {
         paddingTop: 40,
-        paddingHorizontal: Layout.paddingHorizontal
+        paddingHorizontal: Layout.paddingHorizontal,
     },
     title: {
         fontSize: 36,
@@ -24,7 +24,14 @@ export const custom = StyleSheet.create({
     },
     normalText: {
         color: textColor,
+        marginTop: 10,
+    },
+    errorContainer: {
+        height: 20,
         marginVertical: 10,
+    },  
+    error: {
+        color: Colors.danger
     },
     form: {
         backgroundColor: formColor,

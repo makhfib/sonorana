@@ -1,8 +1,8 @@
 function isEmpty(text) {
-    if (/\S/.test(text)) {
-        return false
-    } else {
+    if (/^\s*$/.test(text)) {
         return true
+    } else {
+        return false
     }
 }
 

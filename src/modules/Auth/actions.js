@@ -60,6 +60,11 @@ function _signIn(username, password, navigation) {
             if (err.code === 'UserNotConfirmedException') {
                 navigation.navigate('Auth', {
                     screen: 'ConfirmSignUp',
+                    params: {
+                        email,
+                        username,
+                        password
+                    }
                 });
             }
         });
@@ -126,7 +131,7 @@ export function signUp(email, username, password, navigation) {
             dispatch({
                 type: SIGNUP,
                 payload: {
-                    email,
+                    
                 }
             })
 
@@ -134,19 +139,24 @@ export function signUp(email, username, password, navigation) {
                 username,
                 password,
                 attributes: {
-                    email,
+                    email
                 },
                 validationData: []
             }).then(() => {
                 dispatch({
                     type: SIGNUP_SUCCESS,
                     payload: {
-                        email,
+                        
                     }
                 })
 
                 navigation.navigate('Auth', {
                     screen: 'ConfirmSignUp',
+                    params: {
+                        email,
+                        username,
+                        password,
+                    }
                 });
 
             }).catch((err) => {
@@ -210,7 +220,7 @@ export function resendCode(username) {
         dispatch({
             type: RESEND_CODE,
             payload: {
-                username,
+                
             }
         })
 
@@ -218,7 +228,7 @@ export function resendCode(username) {
             dispatch({
                 type: RESEND_CODE_SUCCESS,
                 payload: {
-                    data, // Isn't handled by reducer
+                    
                 }
             })
         }).catch((err) => {
@@ -246,7 +256,7 @@ export function forgotPassword(username, navigation) {
             dispatch({
                 type: FORGOT_PASSWORD,
                 payload: {
-                    username,
+                    
                 }
             })
 
@@ -254,12 +264,15 @@ export function forgotPassword(username, navigation) {
                 dispatch({
                     type: FORGOT_PASSWORD_SUCCESS,
                     payload: {
-                        username,
+                        
                     }
                 })
 
                 navigation.navigate('Auth', {
-                    screen: 'ConfirmForgotPassword',
+                    screen: 'ConfirmResetPassword',
+                    params: {
+                        username
+                    }
                 });
 
             }).catch((err) => {
@@ -288,7 +301,7 @@ export function forgotPasswordSubmit(username, code, newPassword, navigation) {
             dispatch({
                 type: CONFIRM_FORGOT_PASSWORD,
                 payload: {
-                    username,
+                    
                 }
             })
 
@@ -296,7 +309,7 @@ export function forgotPasswordSubmit(username, code, newPassword, navigation) {
                 dispatch({
                     type: CONFIRM_FORGOT_PASSWORD_SUCCESS,
                     payload: {
-                        data, // Isn't handled by reducer
+                        
                     }
                 })
 

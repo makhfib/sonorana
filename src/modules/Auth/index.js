@@ -28,8 +28,6 @@ import {
 
 const INITIAL_STATE = {
     CognitoUser: null,
-    email: null,
-    username: null,
     error: false,
     errorMessage: null,
     loading: false,   
@@ -57,7 +55,6 @@ export default function(state = INITIAL_STATE, action) {
                 errorMessage: null,
                 CognitoUser: action.payload.user,
                 loading: false,
-                username: action.payload.username, // for profile purposes
             }
         case SIGNIN_ERROR:
             return {
@@ -97,7 +94,6 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: false,
                 errorMessage: null,
-                email: action.payload.email,
                 loading: false,
             }
         case SIGNUP_ERROR:
@@ -159,7 +155,6 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: false,
                 errorMessage: null,
-                username: action.payload.username,
                 loading: false,
             }
         case FORGOT_PASSWORD_ERROR:

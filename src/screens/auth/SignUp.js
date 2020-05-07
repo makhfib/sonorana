@@ -40,9 +40,9 @@ class SignUp extends Component {
         this.props.signUp(email, username, password, this.props.navigation);
     }
 
-    _handleNavigation(screen) {
-        this.props.reset() // reset Auth state when changing screens
-        this.props.navigation.navigate('Auth', { screen: screen })
+    _handleGoBack() {
+        this.props.reset() // auth reducer resets errors
+        this.props.navigation.goBack()
     }
 
     render() {
@@ -57,7 +57,7 @@ class SignUp extends Component {
                     <NavigationBar
                         leftIcon={require('../../assets/icons/bold/arrow-left.png')}
                         leftIconTintColor={Colors.tint}
-                        leftIconOnPress={() => this.props.navigation.goBack()}
+                        leftIconOnPress={() => this._handleGoBack()}
                     />
                     <KeyboardAwareScrollView scrollEnabled={true}
                         style={{ flex: 1, }}>

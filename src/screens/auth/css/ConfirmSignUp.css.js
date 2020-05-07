@@ -23,7 +23,14 @@ export const custom = StyleSheet.create({
     },
     normalText: {
         color: textColor,
+        marginTop: 10,
+    },
+    errorContainer: {
+        height: 20,
         marginVertical: 10,
+    },  
+    error: {
+        color: Colors.danger
     },
     form: {
         backgroundColor: formColor,
