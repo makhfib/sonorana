@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import NavigationBar from '../../components/NavigationBar'
 import { Colors } from '../../constants/Colors'
@@ -9,7 +9,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
 import { connect } from 'react-redux'
+import { editProfile } from '../../modules/Profile/actions'
 import PropTypes from 'prop-types'
+import Browser from '../../functions/Browser'
 
 class Profile extends Component {
 
@@ -28,22 +30,7 @@ class Profile extends Component {
     }
 
     _handleEditProfile() {
-        const {
-            photo,
-            name,
-            description,
-            website
-        } = this._props();
-
-        this.props.navigation.navigate('Main', {
-            screen: 'EditProfile',
-            params: {
-                photo,
-                name,
-                description,
-                website
-            }
-        })
+        this.props.editProfile(this._props(), this.props.navigation)
     }
 
     render() {
@@ -57,22 +44,24 @@ class Profile extends Component {
             followers
         } = this._props();
 
+        let uniqueName = typeof username === "object" ? username['username'] : username;
+
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
                 <View style={custom.container}>
                     <NavigationBar
-                        title={username}
-                    
+                        title={uniqueName}
+
                         leftIcon={
                             this.props.route !== undefined
-                            ? require('../../assets/icons/bold/arrow-left.png')
-                            : undefined
+                                ? require('../../assets/icons/bold/arrow-left.png')
+                                : undefined
                         }
                         leftIconTintColor={Colors.tint}
                         leftIconOnPress={
                             this.props.route !== undefined
-                            ? () => this.props.navigation.goBack()
-                            : null
+                                ? () => this.props.navigation.goBack()
+                                : null
                         }
 
                         rightIcon={require('../../assets/icons/bold/more.png')}
@@ -101,13 +90,12 @@ class Profile extends Component {
                                                 textStyle={[TextStyle.postInteraction, custom.profileActionButtonText]}
                                             />
                                         ) : (
-                                            <View style={[{alignItems: 'flex-start'}]}>
+                                            <View style={[{ alignItems: 'flex-start' }]}>
                                                 <FollowButton />
                                             </View>
-                                            
+
                                         )
                                 }
-
                             </View>
                         </View>
                         {
@@ -118,9 +106,12 @@ class Profile extends Component {
                         }
                         {
                             website &&
-                            <TouchableOpacity style={custom.websiteContainer}>
+                            <TouchableOpacity
+                                style={custom.websiteContainer}
+                                onPress={() => Browser.goToURL(website)}
+                            >
                                 <Text style={custom.website} numberOfLines={1}>
-                                    {website}
+                                    {website.replace(/https?:\/\//i, "")}
                                 </Text>
                             </TouchableOpacity>
                         }
@@ -160,16 +151,16 @@ class Profile extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-
             </SafeAreaView>
         )
     }
 }
 
 Profile.propTypes = {
+    username: PropTypes.object, // CognitoUser
+
     photo: PropTypes.string,
     name: PropTypes.string,
-    username: PropTypes.string,
     description: PropTypes.string,
     website: PropTypes.string,
     following: PropTypes.string,
@@ -177,9 +168,10 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    username: state.auth.CognitoUser, // from auth module
+
     photo: state.profile.photo,
     name: state.profile.name,
-    username: state.profile.username,
     description: state.profile.description,
     website: state.profile.website,
     following: state.profile.following,
@@ -187,7 +179,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    
+    editProfile,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

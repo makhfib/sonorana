@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, TextInput } from 'react-native'
+import { Text, View, Image, TextInput, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Colors } from '../../constants/Colors'
@@ -15,10 +15,12 @@ import PropTypes from 'prop-types'
 class EditProfile extends Component {
 
     state = {
+        emptyName: false,
         allowSave: true,
+        
         photo: this.props.route.params.photo,
         name: this.props.route.params.name,
-        bio: this.props.route.params.description,
+        description: this.props.route.params.description,
         website: this.props.route.params.website,
     }
 
@@ -27,11 +29,12 @@ class EditProfile extends Component {
             case 'Name':
                 this.setState({
                     name: text,
+                    emptyName: InputInvalid.isEmpty(text),
                     allowSave: !InputInvalid.isEmpty(text)
                 })
                 break
             case 'Description':
-                this.setState({ bio: text })
+                this.setState({ description: text })
                 break
             case 'Website':
                 this.setState({ website: text })
@@ -42,30 +45,34 @@ class EditProfile extends Component {
     }
 
     _handleSave() {
-        const {
-            photo,
-            name,
-            bio,
-            website
-        } = this.state;
-        this.props.saveChanges(photo, name, bio, website, this.props.navigation)
+        Alert.alert(
+            "Save changes",
+            "Are you sure you want to save your changes?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Save",
+                    onPress: () => this._saveChanges(),
+                    style: 'default'
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
-    getPermissionAsync = async () => {
-        if (Constants.platform.ios) {
-            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this work!');
-            }
-        }
-    };
+    _saveChanges() {
+        this.props.saveChanges(this.state, this.props.navigation)
+    }
 
     _pickImage() {
         // More info on all the options is below in the API Reference... just some common use cases shown here
         const options = {
             title: 'Select Avatar',
             customButtons: [
-                { name: 'Delete', title: 'Remove Photo',  }
+                { name: 'Delete', title: 'Remove Photo', }
             ],
             storageOptions: {
                 skipBackup: true,
@@ -101,13 +108,14 @@ class EditProfile extends Component {
             }
         });
     }
-    
+
     render() {
         const {
+            emptyName,
             allowSave,
             photo,
             name,
-            bio,
+            description,
             website
         } = this.state;
 
@@ -147,8 +155,8 @@ class EditProfile extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={custom.formContainer}>
-                        <View style={[custom.form, (!allowSave && { borderColor: Colors.danger, borderWidth: 1 })]}>
-                            <Text style={custom.inputLabel}>Name</Text>
+                        <View style={custom.form}>
+                            <Text style={custom.inputLabel}>Name  {emptyName && <Text style={{color:Colors.danger}}>* required</Text> }  </Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/profile.png')}
@@ -159,6 +167,7 @@ class EditProfile extends Component {
                                     selectionColor={Colors.antagonist}
                                     onChangeText={(text) => this._handleTextChange('Name', text)}
                                     defaultValue={name}
+                                    maxLength={30}
                                 />
                             </View>
                         </View>
@@ -172,15 +181,16 @@ class EditProfile extends Component {
                                 <TextInput
                                     style={[custom.input, { height: 70, paddingTop: 5 }]}
                                     selectionColor={Colors.antagonist}
-                                    defaultValue={bio}
+                                    defaultValue={description}
                                     textAlignVertical={'top'}
                                     multiline={true}
                                     onChangeText={(text) => this._handleTextChange('Description', text)}
+                                    maxLength={140}
                                 />
                             </View>
                         </View>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Website</Text>
+                            <Text style={custom.inputLabel}>Website <Text style={{color: Colors.default, fontWeight: 'normal'}}>defaults to http</Text></Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/hyperlink.png')}

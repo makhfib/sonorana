@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { persistReducer, persistStore } from 'redux-persist'
-//import AsyncStorage from '@react-native-community/async-storage';
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 /* Reducers */
 import Auth from './Auth';
 import Profile from './Profile';

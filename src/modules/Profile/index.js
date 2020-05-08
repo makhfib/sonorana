@@ -5,6 +5,7 @@ import {
 const INITIAL_STATE = {
     photo: 'https://icon.org.uk/sites/all/themes/iconinstitute/images/avatar-default.jpg',
     name: 'Mohammed Makhfi',
+    username: 'makhfib',
     description: null,
     website: null,
     following: '11.8k',
@@ -13,6 +14,10 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case EDIT_PROFILE:
+            return {
+                ...state,
+            }
         case SAVE_CHANGES:
             return {
                 ...state,
