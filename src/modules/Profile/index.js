@@ -1,5 +1,7 @@
 import {
-    SAVE_CHANGES, CANCEL_CHANGES
+    EDIT_PROFILE,
+    SAVE_CHANGES, 
+    CANCEL_CHANGES
 } from './types'
 
 const INITIAL_STATE = {
@@ -8,7 +10,7 @@ const INITIAL_STATE = {
     username: 'makhfib',
     description: null,
     website: null,
-    following: '11.8k',
+    following: '12.8k',
     followers: '2.1m'  
 }
 

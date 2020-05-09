@@ -26,12 +26,25 @@ export const custom = StyleSheet.create({
         color: textColor,
         marginTop: 10,
     },
-    errorContainer: {
-        height: 20,
+    errorSpace: {
         marginVertical: 10,
+    },
+    errorContainer: {
+        backgroundColor: Colors.danger,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingVertical: 2,
+        paddingHorizontal: 10,
     },  
     error: {
-        color: Colors.danger
+        paddingHorizontal: 5,
+        color: Colors.background
+    },
+    fieldIcon: {
+        width: 20,
+        height: 20,
+        tintColor: Colors.background
     },
     form: {
         backgroundColor: formColor,

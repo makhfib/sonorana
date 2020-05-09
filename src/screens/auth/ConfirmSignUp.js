@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput } from 'react-native'
+import { Text, View, TextInput, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/Colors'
 import { textColor, custom } from './css/ConfirmSignUp.css'
@@ -67,14 +67,20 @@ class ConfirmSignUp extends Component {
                             </Text>
                             . If you don't see it, check your spam folder.
                         </Text>
-                        <View style={custom.errorContainer}>
-                            {
-                                error &&
-                                <Text style={custom.error}>
-                                    {' *'} {errorMessage} {' '}
-                                </Text>
-                            }
-                        </View>
+                        <View style={custom.errorSpace}>
+                                {
+                                    error &&
+                                    <View style={custom.errorContainer}>
+                                        <Image
+                                            source={require('../../assets/icons/bold/delete.png')}
+                                            style={[custom.fieldIcon]}
+                                        />
+                                        <Text style={custom.error}>
+                                            {''} {errorMessage} {' '}
+                                        </Text>
+                                    </View>
+                                }
+                            </View>
                         <View style={custom.form}>
                             <Text style={custom.inputLabel}>Code</Text>
                             <TextInput

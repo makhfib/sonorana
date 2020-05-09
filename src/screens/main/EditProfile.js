@@ -190,7 +190,7 @@ class EditProfile extends Component {
                             </View>
                         </View>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Website <Text style={{color: Colors.default, fontWeight: 'normal'}}>defaults to http</Text></Text>
+                            <Text style={custom.inputLabel}>Website <Text style={{color: Colors.default, fontWeight: 'normal'}}>defaults to http://</Text></Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/hyperlink.png')}

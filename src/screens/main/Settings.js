@@ -161,7 +161,7 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-    //user: PropTypes.object,
+    
 }
 
 export default connect(null, { signOut })(Settings)

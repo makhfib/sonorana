@@ -32,6 +32,16 @@ export default class Post extends Component {
         this.setState({ liked: !liked })
     }
 
+    _handleComment() {
+        this.setState({ touchableDisabled: true })
+
+    }
+
+    _handleEcho() {
+        this.setState({ touchableDisabled: true })
+
+    }
+
     _handlePostOnPress() {
         const {
             id,
@@ -157,6 +167,7 @@ export default class Post extends Component {
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}
                             textStyle={[TextStyle.postInteraction, custom.interactionText]}
+                            onPress={() => this._handleComment()}
                         />
                         <ActionButton
                             icon={require('../assets/icons/regular/echo.png')}
@@ -164,6 +175,7 @@ export default class Post extends Component {
                             buttonStyle={custom.interactionButton}
                             iconStyle={custom.interactionIcon}
                             textStyle={[TextStyle.postInteraction, custom.interactionText]}
+                            onPress={() => this._handleEcho()}
                         />
 
                     </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput } from 'react-native'
+import { Text, View, Image, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from '../../constants/Colors'
@@ -70,14 +70,20 @@ class ConfirmResetPassword extends Component {
                             Enter the verification code we sent to your email.
                             If you don't see it, check your spam folder.
                         </Text>
-                        <View style={custom.errorContainer}>
-                            {
-                                error &&
-                                <Text style={custom.error}>
-                                    {' *'} {errorMessage} {' '}
-                                </Text>
-                            }
-                        </View>
+                        <View style={custom.errorSpace}>
+                                {
+                                    error &&
+                                    <View style={custom.errorContainer}>
+                                        <Image
+                                            source={require('../../assets/icons/bold/delete.png')}
+                                            style={[custom.fieldIcon]}
+                                        />
+                                        <Text style={custom.error}>
+                                            {''} {errorMessage} {' '}
+                                        </Text>
+                                    </View>
+                                }
+                            </View>
                         <View style={[custom.form]}>
                             <Text style={custom.inputLabel}>Code</Text>
                             <View style={[custom.field, { alignItems: 'flex-start' }]}>

@@ -44,13 +44,19 @@ class Profile extends Component {
             followers
         } = this._props();
 
-        let uniqueName = typeof username === "object" ? username['username'] : username;
+        let user = null;
+
+        try {
+            user = username['username'] // this is CognitoUser from Auth reducer
+        } catch {
+            user = username;
+        }
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
                 <View style={custom.container}>
                     <NavigationBar
-                        title={uniqueName}
+                        title={user}
 
                         leftIcon={
                             this.props.route !== undefined

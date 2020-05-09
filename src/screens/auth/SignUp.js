@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, ImageBackground } from 'react-native'
 import { textColor, custom } from './css/SignUp.css'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
@@ -53,93 +53,107 @@ class SignUp extends Component {
 
         return (
             <SafeAreaView style={custom.container}>
-                <View style={[custom.secondContainer]}>
+                <ImageBackground style={[custom.imageBackground]}
+                    resizeMode='cover'
+                    source={require('../../assets/images/background.png')}
+                >
                     <NavigationBar
                         leftIcon={require('../../assets/icons/bold/arrow-left.png')}
-                        leftIconTintColor={Colors.tint}
+                        leftIconTintColor={textColor}
                         leftIconOnPress={() => this._handleGoBack()}
                     />
-                    <KeyboardAwareScrollView scrollEnabled={true}
-                        style={{ flex: 1, }}>
-                        <View style={custom.content}>
-                            <Text style={custom.title}>
-                                Create account
-                            </Text>
-                            <View style={[custom.formContainer]} behavior="padding">
-                                <View style={custom.errorContainer}>
+                    <KeyboardAwareScrollView
+                        scrollEnabled={true}
+                        contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+                    >
+                        <View
+                            style={custom.content}>
+                            <View style={custom.titleContainer}>
+                                <Image
+                                    source={require('../../assets/brand/text.png')}
+                                    style={[custom.title, { height: 35, resizeMode: 'contain' }]}
+                                />
+                            </View>
+                            <View style={custom.formContainer} behavior="padding">
+                                <View style={custom.errorSpace}>
                                     {
-                                        error &&
-                                        <Text style={custom.error}>
-                                            {' *'} {errorMessage} {' '}
-                                        </Text>
+                                        error && 
+                                        <View style={custom.errorContainer}>
+                                            <Image
+                                                source={require('../../assets/icons/bold/delete.png')}
+                                                style={[custom.fieldIcon]}
+                                            />
+                                            <Text style={custom.error}>
+                                                {''} {errorMessage} {' '}
+                                            </Text>
+                                        </View>
                                     }
                                 </View>
-                                <View style={[custom.form]}>
+                                <View style={custom.form}>
                                     <Text style={custom.inputLabel}>Username</Text>
-                                    <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                    <View style={custom.field}>
                                         <Image
                                             source={require('../../assets/icons/regular/profile.png')}
                                             style={[custom.fieldIcon, { marginTop: 5 }]}
                                         />
                                         <TextInput
-                                            style={[custom.input]}
-                                            selectionColor={Colors.antagonist}
-                                            selectionColor={textColor}
+                                            style={custom.input}
                                             textContentType={'nickname'}
+                                            selectionColor={textColor}
                                             onChangeText={(text) => this._handleInput('Username', text)}
                                         />
                                     </View>
-                                </View>
-                                <View style={[custom.form]}>
+                                    <View style={custom.separator} />
                                     <Text style={custom.inputLabel}>Email</Text>
-                                    <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                    <View style={custom.field}>
                                         <Image
                                             source={require('../../assets/icons/regular/email.png')}
                                             style={[custom.fieldIcon, { marginTop: 5 }]}
                                         />
                                         <TextInput
-                                            style={[custom.input]}
-                                            selectionColor={Colors.antagonist}
-                                            selectionColor={textColor}
+                                            style={custom.input}
                                             textContentType={'emailAddress'}
+                                            selectionColor={textColor}
                                             onChangeText={(text) => this._handleInput('Email', text)}
                                         />
                                     </View>
-                                </View>
-                                <View style={[custom.form]}>
+                                    <View style={custom.separator} />
                                     <Text style={custom.inputLabel}>Password</Text>
-                                    <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                    <View style={custom.field}>
                                         <Image
                                             source={require('../../assets/icons/regular/privacy.png')}
                                             style={[custom.fieldIcon, { marginTop: 5 }]}
                                         />
                                         <TextInput
-                                            style={[custom.input]}
-                                            selectionColor={Colors.antagonist}
-                                            selectionColor={textColor}
-                                            textContentType={'password'}
+                                            style={custom.input}
                                             secureTextEntry={true}
+                                            textContentType={'password'}
+                                            selectionColor={textColor}
                                             onChangeText={(text) => this._handleInput('Password', text)}
                                         />
                                     </View>
+                                    <TextInput
+                                        style={custom.input}
+                                        secureTextEntry={true}
+                                        textContentType={'password'}
+                                        selectionColor={textColor}
+                                    />
                                 </View>
-                                <View>
                                 <Text style={custom.normalText}>
                                     By creating an account, you agree to our
-                                    <Text
+                                <Text
                                         style={[{ fontWeight: 'bold' }]}
                                         onPress={() => null}
                                     > Terms
-                                    </Text>.
+                                </Text>.
                                 Check our
                                 <Text
-                                    style={[{ fontWeight: 'bold' }]}
-                                    onPress={() => null}
-                                > Data Policy
+                                        style={[{ fontWeight: 'bold' }]}
+                                        onPress={() => null}
+                                    > Data Policy
                                 </Text> to learn how we use your data.
                                 You can opt out anytime.
                             </Text>
-                                </View>
                                 <View style={custom.buttonContainer}>
                                     <ActionButton
                                         icon={require('../../assets/brand/icon.png')}
@@ -148,12 +162,11 @@ class SignUp extends Component {
                                     />
                                 </View>
                             </View>
-
-
                         </View>
+
                     </KeyboardAwareScrollView>
 
-                </View>
+                </ImageBackground>
             </SafeAreaView>
         )
     }

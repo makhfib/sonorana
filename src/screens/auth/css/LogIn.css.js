@@ -2,42 +2,48 @@ import { StyleSheet } from 'react-native'
 import { Colors } from '../../../constants/Colors'
 import Layout from '../../../constants/Layout'
 
-export const textColor = Colors.antagonist
-export const formColor = Colors.inputBackground
+export const textColor = 'white'
+export const formColor = '#0E245075'
 
 export const custom = StyleSheet.create({
     container: {
         flex: 1,
     },
-    secondContainer: {
+    imageBackground: {
         flex: 1,
-        //justifyContent: 'center',
-        backgroundColor: Colors.background
+        paddingHorizontal: Layout.paddingHorizontal,
+        justifyContent: 'center',
     },
     titleContainer: {
         alignSelf: 'center',
-        justifyContent: 'center',
-        height: 150,
-        resizeMode: 'contain'
+        justifyContent: 'flex-start',
+        height: 100,
     },
     title: {
-        tintColor: Colors.background
+        tintColor: textColor
     },
     formContainer: {
-        paddingHorizontal: Layout.paddingHorizontal,
+        
     },
     errorContainer: {
-        height: 20,
-        marginVertical: 10,
+        backgroundColor: Colors.danger,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingVertical: 2,
+        paddingHorizontal: 10,
     },  
+    errorSpace: {
+        marginVertical: 10,
+    },
     error: {
-        color: Colors.danger
+        paddingHorizontal: 5,
+        color: Colors.background
     },
     form: {
-        backgroundColor: Colors.inputBackground,
-        height: 60,
+        backgroundColor: formColor,
+        height: 120,
         borderRadius: 4,
-        marginBottom: 20,
     },
     field: {
         flexDirection: 'row',
@@ -47,43 +53,40 @@ export const custom = StyleSheet.create({
     fieldIcon: {
         width: 20,
         height: 20,
-        tintColor: Colors.default
+        tintColor: Colors.background
     },
     inputLabel: {
         marginTop: 5,
-        color: Colors.antagonist,
+        color: textColor,
         paddingLeft: 10,
-        fontWeight:'bold'
     },
     input: {
         flex: 1,
-        color: Colors.antagonist,
+        color: textColor,
         height: 35,
-        width: '100%',
         paddingLeft: 10,
     },
     normalText: {
-        color: Colors.default,
+        color: textColor,
+        marginTop: 10,
+        paddingVertical: 2,
+        paddingHorizontal: 10,
+        backgroundColor: formColor,
+        borderRadius: 5,
     },
-    resetContainer: { 
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+    separator: {
+        height: 0,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.notwhite,
     },
     alternativeContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        height: 60,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     buttonContainer: {
         alignSelf: 'center',
         justifyContent: 'center',
         height: 80,
-    },
-    signUpButton: { 
-        fontWeight: 'bold', 
-        color: Colors.tint, 
-        padding: 10
     }
 });

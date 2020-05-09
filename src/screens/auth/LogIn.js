@@ -45,66 +45,74 @@ class LogIn extends Component {
             error,
             errorMessage
         } = this.props;
-
+        
         return (
             <SafeAreaView style={custom.container}>
-                <View style={custom.secondContainer}>
+                <ImageBackground style={custom.imageBackground}
+                    resizeMode='cover'
+                    source={require('../../assets/images/background.png')}
+                >
                     <KeyboardAwareScrollView
                         scrollEnabled={false}
-                        contentContainerStyle={{ flex: 1 }}
+                        contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
                     >
-                        <ImageBackground
-                            style={custom.titleContainer}
-                            source={require('../../assets/images/gradient.png')}
-                        >
+                        <View style={custom.titleContainer}>
                             <Image
                                 source={require('../../assets/brand/text.png')}
-                                style={[custom.title, { height: 50, resizeMode: 'contain' }]}
+                                style={[custom.title, { height: 35, resizeMode: 'contain' }]}
                             />
-                        </ImageBackground>
-
+                        </View>
                         <View style={custom.formContainer} behavior="padding">
-                            <View style={custom.errorContainer}>
+                            <View style={custom.errorSpace}>
                                 {
                                     error &&
-                                    <Text style={custom.error}>
-                                        {' *'} {errorMessage} {' '}
-                                    </Text>
+                                    <View style={custom.errorContainer}>
+                                        <Image
+                                            source={require('../../assets/icons/bold/delete.png')}
+                                            style={[custom.fieldIcon]}
+                                        />
+                                        <Text style={custom.error}>
+                                            {''} {errorMessage} {' '}
+                                        </Text>
+                                    </View>
                                 }
                             </View>
-                            <View style={[custom.form]}>
+                            <View style={custom.form}>
                                 <Text style={custom.inputLabel}>Username or email</Text>
-                                <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                <View style={custom.field}>
                                     <Image
                                         source={require('../../assets/icons/regular/profile.png')}
                                         style={[custom.fieldIcon, { marginTop: 5 }]}
                                     />
                                     <TextInput
-                                        style={[custom.input]}
-                                        selectionColor={Colors.antagonist}
-                                        selectionColor={textColor}
+                                        style={custom.input}
                                         textContentType={'emailAddress'}
+                                        selectionColor={textColor}
                                         onChangeText={(text) => this._handleInput('Username', text)}
                                     />
                                 </View>
-                            </View>
-                            <View style={[custom.form]}>
+                                <View style={custom.separator} />
                                 <Text style={custom.inputLabel}>Password</Text>
-                                <View style={[custom.field, { alignItems: 'flex-start' }]}>
+                                <View style={custom.field}>
                                     <Image
                                         source={require('../../assets/icons/regular/privacy.png')}
                                         style={[custom.fieldIcon, { marginTop: 5 }]}
                                     />
                                     <TextInput
-                                        style={[custom.input]}
-                                        selectionColor={Colors.antagonist}
-                                        selectionColor={textColor}
-                                        textContentType={'password'}
+                                        style={custom.input}
                                         secureTextEntry={true}
+                                        textContentType={'password'}
+                                        selectionColor={textColor}
                                         onChangeText={(text) => this._handleInput('Password', text)}
                                     />
                                 </View>
                             </View>
+                            <TouchableOpacity
+                                activeOpacity={.7}
+                                onPress={() => this._handleNavigation('ResetPassword')}
+                            >
+                                <Text style={custom.normalText}>Forgot your password?</Text>
+                            </TouchableOpacity>
                             <View style={custom.buttonContainer}>
                                 <ActionButton
                                     icon={require('../../assets/brand/icon.png')}
@@ -112,40 +120,27 @@ class LogIn extends Component {
                                     onPress={() => this._handleLogIn()}
                                 />
                             </View>
-
-                        </View>
-                        <View
-                            style={custom.resetContainer}
-                        >
                             <TouchableOpacity
-                            style={{
-                                padding: 10
-                            }}
-                                onPress={() => this._handleNavigation('ResetPassword')}
-                            >
-                                <Text style={custom.normalText}>Forgot your password?</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={custom.alternativeContainer}>
-                            <Text
-                                style={custom.normalText}
-                            >
-                                Haven't got an account yet?
-                            </Text>
-                            <TouchableOpacity
+                                activeOpacity={.7}
+                                style={custom.alternativeContainer}
                                 onPress={() => this._handleNavigation('SignUp')}
                             >
                                 <Text
-                                    style={custom.signUpButton}
-                                > 
-                            Sign up
-                            </Text>
+                                    style={custom.normalText}
+                                >
+                                    Haven't got an account yet?
+                                    <Text
+                                        style={[{ fontWeight: 'bold' }]}
+                                    >
+                                        {' '}Sign up
+                                    </Text>
+                                </Text>
+
                             </TouchableOpacity>
-                            
                         </View>
+
                     </KeyboardAwareScrollView>
-                </View>
+                </ImageBackground>
             </SafeAreaView>
         )
     }
@@ -157,6 +152,7 @@ LogIn.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    CognitoUser: state.auth.CognitoUser,
     error: state.auth.error,
     errorMessage: state.auth.errorMessage,
 });

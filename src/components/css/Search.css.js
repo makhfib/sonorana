@@ -10,7 +10,6 @@ export const custom = StyleSheet.create({
         alignItems: 'flex-end',
         paddingBottom: 10,
         backgroundColor: Colors.background,
-        alignContent: 'center',
     },
     searchContainer: {
         flex: 1,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput } from 'react-native'
+import { Text, View, TextInput, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from '../../constants/Colors'
@@ -61,12 +61,18 @@ class ResetPassword extends Component {
                             <Text style={custom.normalText}>
                                 To reset your password, enter the username or email you use to log in.
                         </Text>
-                            <View style={custom.errorContainer}>
+                            <View style={custom.errorSpace}>
                                 {
                                     error &&
-                                    <Text style={custom.error}>
-                                        {' *'} {errorMessage} {' '}
-                                    </Text>
+                                    <View style={custom.errorContainer}>
+                                        <Image
+                                            source={require('../../assets/icons/bold/delete.png')}
+                                            style={[custom.fieldIcon]}
+                                        />
+                                        <Text style={custom.error}>
+                                            {''} {errorMessage} {' '}
+                                        </Text>
+                                    </View>
                                 }
                             </View>
                             <View style={custom.form}>
