@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import NavigationBar from '../../components/NavigationBar'
 import { Colors } from '../../constants/Colors'
@@ -8,8 +8,12 @@ import TextStyle from '../../constants/TextStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
+import { connect } from 'react-redux'
+import { editProfile } from '../../modules/Profile/actions'
+import PropTypes from 'prop-types'
+import Browser from '../../functions/Browser'
 
-export default class User extends Component {
+class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
@@ -19,16 +23,6 @@ export default class User extends Component {
         }
     }
 
-    state = {
-        name: this._props().name,
-        username: this._props().username,
-        photo: this._props().photo,
-        description: this._props().description,
-        website: this._props().website,
-        following: this._props().following,
-        followers: this._props().followers,
-    }
-
     _handleMore() {
         if (this.props.route === undefined) {
             this.props.navigation.navigate('Settings')
@@ -36,22 +30,7 @@ export default class User extends Component {
     }
 
     _handleEditProfile() {
-        const {
-            photo,
-            name,
-            description,
-            website
-        } = this.state;
-
-        this.props.navigation.navigate('Main', {
-            screen: 'EditProfile',
-            params: {
-                photo,
-                name,
-                description,
-                website
-            }
-        })
+        this.props.editProfile(this._props(), this.props.navigation)
     }
 
     render() {
@@ -63,24 +42,32 @@ export default class User extends Component {
             website,
             following,
             followers
-        } = this.state;
+        } = this._props();
+
+        let user = null;
+
+        try {
+            user = username['username'] // this is CognitoUser from Auth reducer
+        } catch {
+            user = username;
+        }
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
                 <View style={custom.container}>
                     <NavigationBar
-                        title={username}
-                    
+                        title={user}
+
                         leftIcon={
                             this.props.route !== undefined
-                            ? require('../../assets/icons/bold/arrow-left.png')
-                            : undefined
+                                ? require('../../assets/icons/bold/arrow-left.png')
+                                : undefined
                         }
                         leftIconTintColor={Colors.tint}
                         leftIconOnPress={
                             this.props.route !== undefined
-                            ? () => this.props.navigation.goBack()
-                            : null
+                                ? () => this.props.navigation.goBack()
+                                : null
                         }
 
                         rightIcon={require('../../assets/icons/bold/more.png')}
@@ -94,7 +81,7 @@ export default class User extends Component {
                                 style={custom.photo}
                             />
                             <View style={custom.profileHeaderText}>
-                                <Text style={custom.profileName}>
+                                <Text style={custom.profileName} numberOfLines={2}>
                                     {name}
                                 </Text>
                                 {
@@ -109,26 +96,28 @@ export default class User extends Component {
                                                 textStyle={[TextStyle.postInteraction, custom.profileActionButtonText]}
                                             />
                                         ) : (
-                                            <View style={[{alignItems: 'flex-start'}]}>
+                                            <View style={[{ alignItems: 'flex-start' }]}>
                                                 <FollowButton />
                                             </View>
-                                            
+
                                         )
                                 }
-
                             </View>
                         </View>
                         {
                             description &&
-                            <Text style={custom.description}>
+                            <Text style={custom.description} numberOfLines={3}>
                                 {description}
                             </Text>
                         }
                         {
                             website &&
-                            <TouchableOpacity style={custom.websiteContainer}>
-                                <Text style={custom.website}>
-                                    {website}
+                            <TouchableOpacity
+                                style={custom.websiteContainer}
+                                onPress={() => Browser.goToURL(website)}
+                            >
+                                <Text style={custom.website} numberOfLines={1}>
+                                    {website.replace(/https?:\/\//i, "")}
                                 </Text>
                             </TouchableOpacity>
                         }
@@ -168,8 +157,35 @@ export default class User extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-
             </SafeAreaView>
         )
     }
 }
+
+Profile.propTypes = {
+    username: PropTypes.object, // CognitoUser
+
+    photo: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    website: PropTypes.string,
+    following: PropTypes.string,
+    followers: PropTypes.string,
+}
+
+const mapStateToProps = state => ({
+    username: state.auth.CognitoUser, // from auth module
+
+    photo: state.profile.photo,
+    name: state.profile.name,
+    description: state.profile.description,
+    website: state.profile.website,
+    following: state.profile.following,
+    followers: state.profile.followers,
+});
+
+const mapDispatchToProps = {
+    editProfile,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

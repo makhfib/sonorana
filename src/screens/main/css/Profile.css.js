@@ -29,8 +29,9 @@ export const custom = StyleSheet.create({
         color: Colors.antagonist
     },
     profileHeaderText: {
-        marginLeft: 20,
-        justifyContent: 'space-around'
+        flex:1,
+        paddingHorizontal: 20,
+        justifyContent: 'space-around',
     },
     profileActionButton: {
         paddingHorizontal: 15,

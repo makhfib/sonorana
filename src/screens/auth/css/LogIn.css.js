@@ -18,7 +18,6 @@ export const custom = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'flex-start',
         height: 100,
-        marginBottom: 25,
     },
     title: {
         tintColor: textColor
@@ -26,10 +25,35 @@ export const custom = StyleSheet.create({
     formContainer: {
         
     },
+    errorContainer: {
+        backgroundColor: Colors.danger,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingVertical: 2,
+        paddingHorizontal: 10,
+    },  
+    errorSpace: {
+        marginVertical: 10,
+    },
+    error: {
+        paddingHorizontal: 5,
+        color: Colors.background
+    },
     form: {
         backgroundColor: formColor,
         height: 120,
         borderRadius: 4,
+    },
+    field: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+    },
+    fieldIcon: {
+        width: 20,
+        height: 20,
+        tintColor: Colors.background
     },
     inputLabel: {
         marginTop: 5,
@@ -37,6 +61,7 @@ export const custom = StyleSheet.create({
         paddingLeft: 10,
     },
     input: {
+        flex: 1,
         color: textColor,
         height: 35,
         paddingLeft: 10,
@@ -44,6 +69,7 @@ export const custom = StyleSheet.create({
     normalText: {
         color: textColor,
         marginTop: 10,
+        paddingVertical: 2,
         paddingHorizontal: 10,
         backgroundColor: formColor,
         borderRadius: 5,
@@ -55,7 +81,8 @@ export const custom = StyleSheet.create({
     },
     alternativeContainer: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     buttonContainer: {
         alignSelf: 'center',

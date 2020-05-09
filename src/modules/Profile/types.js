@@ -1,0 +1,3 @@
+export const EDIT_PROFILE = 'EDIT_PROFILE'
+export const SAVE_CHANGES = 'SAVE_CHANGES'
+export const CANCEL_CHANGES = 'CANCEL_CHANGES'

@@ -23,29 +23,50 @@ export const custom = StyleSheet.create({
     },
     normalText: {
         color: textColor,
+        marginTop: 10,
+    },
+    errorSpace: {
         marginVertical: 10,
     },
+    errorContainer: {
+        backgroundColor: Colors.danger,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems:'center',
+        paddingVertical: 2,
+        paddingHorizontal: 10,
+    },  
+    error: {
+        paddingHorizontal: 5,
+        color: Colors.background
+    },
+    fieldIcon: {
+        width: 20,
+        height: 20,
+        tintColor: Colors.background
+    },
     form: {
-        backgroundColor: formColor,
-        opacity: 1,
-        height: 120,
+        backgroundColor: Colors.inputBackground,
+        height: 60,
         borderRadius: 4,
+        marginBottom: 20,
+    },
+    field: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     inputLabel: {
         marginTop: 5,
-        color: textColor,
-        fontWeight: 'bold',
+        color: Colors.antagonist,
         paddingLeft: 10,
+        fontWeight:'bold'
     },
     input: {
-        color: textColor,
+        flex: 1,
+        color: Colors.antagonist,
         height: 35,
+        width: '100%',
         paddingLeft: 10,
-    },
-    separator: {
-        height: 0,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.notwhite,
     },
     buttonContainer: {
         alignSelf: 'center',

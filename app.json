@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bluesiren",
-    "slug": "bluesiren",
+    "name": "sonorana",
+    "slug": "sonorana",
     "platforms": [
       "ios",
       "android"
@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "sonorana"
+    },
+    "android": {
+      "package": "sonorana"
+    },
+    "entryPoint": "./index.js"
   }
 }

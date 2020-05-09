@@ -4,10 +4,10 @@ export const AuthExceptionMessage = (err) => {
         console.log(err)
     switch (err.code) {
         case 'NotValidException':
-            return 'Clean up your room'
+            return 'Invalid input'
 
         case 'UserNotConfirmedException':
-            return 'User not confirmed'
+            return 'Verify your email, please'
 
         case 'PasswordResetRequiredException':
             return 'Please, reset your password' 
@@ -22,7 +22,7 @@ export const AuthExceptionMessage = (err) => {
             return 'Not able to send confirmation code'
 
         case 'InvalidPasswordException':
-            return 'Invalid password'
+            return 'Password must contain at least 6 characters'
 
         case 'UsernameExistsException':
             return 'Username taken'

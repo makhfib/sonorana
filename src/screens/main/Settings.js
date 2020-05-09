@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '../../constants/Colors'
 import NavigationBar from '../../components/NavigationBar'
@@ -20,8 +20,22 @@ class Settings extends Component {
         if (option !== 'Log Out') {
             navigation.navigate(option)
         } else {
-            console.log('Logged Out')
-            signOut(navigation)
+            Alert.alert(
+                "Log out?",
+                "You can always access your content by logging back in",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "Log out",
+                        onPress: () => signOut(navigation),
+                        style: 'destructive'
+                    }
+                ],
+                { cancelable: false }
+            );            
         }
         
     }
@@ -147,7 +161,7 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-    //user: PropTypes.object,
+    
 }
 
 export default connect(null, { signOut })(Settings)

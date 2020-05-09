@@ -11,50 +11,51 @@ export default class SearchBar extends Component {
 
         return (
             <View style={custom.container}>
-                {back &&
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {back &&
+                        <TouchableOpacity
+                            onPress={this.props.leftIconOnPress}
+                            style={{
+                                marginRight: 15,
+                            }}
+                        >
+                            <Image
+                                source={require('../assets/icons/bold/arrow-left.png')}
+                                style={[{ resizeMode: 'contain', tintColor: Colors.tint, height: 30, width: 20 }]}
+                            />
+                        </TouchableOpacity>
+                    }
+                    <View style={custom.searchContainer}>
+                        <Image
+                            source={require('../assets/icons/bold/search.png')}
+                            style={[{ width: 20, height: 20, resizeMode: 'contain', alignSelf: 'center', tintColor: Colors.tint }]}
+                        />
+                        <TextInput
+                            style={custom.input}
+                            textContentType={'name'}
+                            selectionColor={Colors.tint}
+                            placeholder={'Search...'}
+                            placeholderTextColor={Colors.tint}
+                            onFocus={() => this.props.onFocus()}
+                            onChangeText={(text) => this.props.onChangeText(text)}
+                            onSubmitEditing={() => this.props.onSubmit()}
+                            value={this.props.value}
+                        />
+
+                    </View>
                     <TouchableOpacity
-                        onPress={this.props.leftIconOnPress}
+                        onPress={() => this.props.navigation.navigate('Trending')}
                         style={{
-                            marginBottom: 5,
-                            marginRight: 15,
+
                         }}
                     >
                         <Image
-                            source={require('../assets/icons/bold/arrow-left.png')}
-                            style={[{ resizeMode: 'contain',  tintColor: Colors.tint, height: 30, width: 20}]}
+                            source={require('../assets/icons/bold/fire.png')}
+                            style={[{ width: 25, height: 25, resizeMode: 'contain', tintColor: Colors.tint }]}
                         />
                     </TouchableOpacity>
-                }
 
-                <View style={custom.searchContainer}>
-                    <Image
-                        source={require('../assets/icons/bold/search.png')}
-                        style={[{  width: 20, height: 20, resizeMode: 'contain', alignSelf: 'center', tintColor: Colors.tint }]}
-                    />
-                        <TextInput
-                        style={custom.input}
-                        textContentType={'name'}
-                        selectionColor={Colors.tint}
-                        placeholder={'Search...'}
-                        placeholderTextColor={Colors.tint}
-                        onFocus={() => this.props.onFocus()}
-                        onChangeText={(text) => this.props.onChangeText(text)}
-                        onSubmitEditing={() => this.props.onSubmit()}
-                        value={this.props.value}
-                    />
-                    
                 </View>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Trending')}
-                    style={{
-                        marginBottom: 5,
-                    }}
-                >
-                    <Image
-                        source={require('../assets/brand/icon.png')}
-                        style={[{  width: 30, height: 30, resizeMode: 'contain', tintColor: Colors.tint }]}
-                    />
-                </TouchableOpacity>
 
             </View>
         )

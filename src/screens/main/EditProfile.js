@@ -1,52 +1,121 @@
 import React, { Component } from 'react'
-import { Text, View, Image, TextInput, Keyboard } from 'react-native'
+import { Text, View, Image, TextInput, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Colors } from '../../constants/Colors'
 import { custom } from './css/EditProfile.css'
 import NavigationBar from '../../components/NavigationBar';
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Layout from '../../constants/Layout'
+import ImagePicker from 'react-native-image-picker';
+import InputInvalid from '../../functions/InputInvalid'
+import { connect } from 'react-redux'
+import { saveChanges, cancelChanges } from '../../modules/Profile/actions'
+import PropTypes from 'prop-types'
 
-export default class EditProfile extends Component {
+class EditProfile extends Component {
 
     state = {
-        save: false,
-        newLine: false,
+        emptyName: false,
+        allowSave: true,
+        
         photo: this.props.route.params.photo,
         name: this.props.route.params.name,
-        bio: this.props.route.params.description,
+        description: this.props.route.params.description,
         website: this.props.route.params.website,
     }
 
     _handleTextChange(field, text) {
-        if ('bio') {
-
+        switch (field) {
+            case 'Name':
+                this.setState({
+                    name: text,
+                    emptyName: InputInvalid.isEmpty(text),
+                    allowSave: !InputInvalid.isEmpty(text)
+                })
+                break
+            case 'Description':
+                this.setState({ description: text })
+                break
+            case 'Website':
+                this.setState({ website: text })
+                break
+            default:
+                break
         }
     }
 
-    _handleOnKeyPress() {
-
+    _handleSave() {
+        Alert.alert(
+            "Save changes",
+            "Are you sure you want to save your changes?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Save",
+                    onPress: () => this._saveChanges(),
+                    style: 'default'
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
-    _handleFinish() {
-        const {
-            save
-        } = this.state;
+    _saveChanges() {
+        this.props.saveChanges(this.state, this.props.navigation)
+    }
 
-        if (save) {
-            this.props.navigation.goBack()
-        } else {
-            console.log('Show red message of error')
-        }
+    _pickImage() {
+        // More info on all the options is below in the API Reference... just some common use cases shown here
+        const options = {
+            title: 'Select Avatar',
+            customButtons: [
+                { name: 'Delete', title: 'Remove Photo', }
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        /**
+         * The first arg is the options object for customization (it can also be null or omitted for default options),
+         * The second arg is the callback which sends object: response (more info in the API Reference)
+         */
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                // Do something
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton === 'Delete') {
+                this.setState({
+                    // default photo
+                    photo: 'https://icon.org.uk/sites/all/themes/iconinstitute/images/avatar-default.jpg',
+                });
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    photo: source.uri,
+                });
+            }
+        });
     }
 
     render() {
         const {
-            save,
+            emptyName,
+            allowSave,
             photo,
             name,
-            bio,
+            description,
             website
         } = this.state;
 
@@ -58,8 +127,8 @@ export default class EditProfile extends Component {
                     leftIconOnPress={() => this.props.navigation.goBack()}
 
                     rightIcon={require('../../assets/icons/bold/done.png')}
-                    rightIconTintColor={save ? Colors.antagonist : Colors.default}
-                    rightIconOnPress={() => this._handleFinish()}
+                    rightIconTintColor={allowSave ? Colors.tint : Colors.default}
+                    rightIconOnPress={() => { allowSave ? this._handleSave() : null }}
                 />
                 <KeyboardAwareScrollView
                     resetScrollToCoords={{ x: 0, y: 0 }}
@@ -74,6 +143,7 @@ export default class EditProfile extends Component {
                         />
                         <TouchableOpacity
                             style={custom.editPhotoButtonContainer}
+                            onPress={() => this._pickImage()}
                         >
                             <Image
                                 source={require('../../assets/icons/regular/face-id.png')}
@@ -86,7 +156,7 @@ export default class EditProfile extends Component {
                     </View>
                     <View style={custom.formContainer}>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Name</Text>
+                            <Text style={custom.inputLabel}>Name  {emptyName && <Text style={{color:Colors.danger}}>* required</Text> }  </Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/profile.png')}
@@ -95,8 +165,9 @@ export default class EditProfile extends Component {
                                 <TextInput
                                     style={custom.input}
                                     selectionColor={Colors.antagonist}
-
+                                    onChangeText={(text) => this._handleTextChange('Name', text)}
                                     defaultValue={name}
+                                    maxLength={30}
                                 />
                             </View>
                         </View>
@@ -110,16 +181,16 @@ export default class EditProfile extends Component {
                                 <TextInput
                                     style={[custom.input, { height: 70, paddingTop: 5 }]}
                                     selectionColor={Colors.antagonist}
-                                    defaultValue={bio}
+                                    defaultValue={description}
                                     textAlignVertical={'top'}
                                     multiline={true}
-                                    onChangeText={(text) => this._handleTextChange('bio', text)}
-                                    onKeyPress={() => this._handleOnKeyPress()}
+                                    onChangeText={(text) => this._handleTextChange('Description', text)}
+                                    maxLength={140}
                                 />
                             </View>
                         </View>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Website</Text>
+                            <Text style={custom.inputLabel}>Website <Text style={{color: Colors.default, fontWeight: 'normal'}}>defaults to http://</Text></Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/hyperlink.png')}
@@ -128,12 +199,11 @@ export default class EditProfile extends Component {
                                 <TextInput
                                     style={custom.input}
                                     selectionColor={Colors.antagonist}
-
+                                    onChangeText={(text) => this._handleTextChange('Website', text)}
                                     defaultValue={website}
                                 />
                             </View>
                         </View>
-
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
@@ -141,21 +211,17 @@ export default class EditProfile extends Component {
     }
 }
 
-/*
-<View style={custom.container}>
-    <View style={custom.imageContainer}>
-        <Image
-            source={require('../../assets/illustrations/avatar-settings.png')}
-            style={custom.image}
-        />
-    </View>
-    <View style={custom.textContainer}>
-        <Text style={custom.title}>
-            Profile settings not available
-        </Text>
-        <Text style={custom.description}>
-            Sorry, we haven't built this module yet. We are working on it!
-        </Text>
-    </View>
-</View>
-*/
+EditProfile.propTypes = {
+
+}
+
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = {
+    saveChanges,
+    cancelChanges
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
