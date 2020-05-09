@@ -23,10 +23,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "SirenApp"
+      "bundleIdentifier": "sonorana"
     },
     "android": {
-      "package": "SirenApp"
+      "package": "sonorana"
     },
     "entryPoint": "./index.js"
   }
