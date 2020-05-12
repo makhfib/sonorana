@@ -1,5 +1,5 @@
 const darkMode = false;
-const tint = darkMode ? '#fff' : '#164aad';
+const tint = darkMode ? '#fff' : '#002865';
 
 export const Colors = {
   tint,

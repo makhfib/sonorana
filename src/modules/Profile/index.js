@@ -10,16 +10,14 @@ const INITIAL_STATE = {
     username: 'makhfib',
     description: null,
     website: null,
-    following: '12.8k',
+    following: '13.8k',
     followers: '2.1m'  
 }
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case EDIT_PROFILE:
-            return {
-                ...state,
-            }
+            return state
         case SAVE_CHANGES:
             return {
                 ...state,
@@ -29,9 +27,7 @@ export default function(state = INITIAL_STATE, action) {
                 website: action.payload.website,
             }
         case CANCEL_CHANGES:
-            return {
-                ...state,
-            }
+            return state
         default:
             return state
     }

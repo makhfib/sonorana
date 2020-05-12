@@ -15,15 +15,15 @@ export const custom = StyleSheet.create({
         justifyContent: 'center',
     },
     titleContainer: {
+        flex: 2,
         alignSelf: 'center',
-        justifyContent: 'flex-start',
-        height: 100,
+        justifyContent: 'center',
     },
     title: {
         tintColor: textColor
     },
     formContainer: {
-        
+        flex: 3,
     },
     errorContainer: {
         backgroundColor: Colors.danger,

@@ -58,8 +58,8 @@ class LogIn extends Component {
                     >
                         <View style={custom.titleContainer}>
                             <Image
-                                source={require('../../assets/brand/text.png')}
-                                style={[custom.title, { height: 35, resizeMode: 'contain' }]}
+                                source={require('../../assets/brand/icon.png')}
+                                style={[custom.title, { height: 100, resizeMode: 'contain' }]}
                             />
                         </View>
                         <View style={custom.formContainer} behavior="padding">
@@ -115,7 +115,7 @@ class LogIn extends Component {
                             </TouchableOpacity>
                             <View style={custom.buttonContainer}>
                                 <ActionButton
-                                    icon={require('../../assets/brand/icon.png')}
+                                    icon={require('../../assets/icons/bold/target.png')}
                                     text={'Log in'}
                                     onPress={() => this._handleLogIn()}
                                 />

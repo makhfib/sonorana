@@ -70,8 +70,8 @@ class SignUp extends Component {
                             style={custom.content}>
                             <View style={custom.titleContainer}>
                                 <Image
-                                    source={require('../../assets/brand/text.png')}
-                                    style={[custom.title, { height: 35, resizeMode: 'contain' }]}
+                                    source={require('../../assets/brand/icon.png')}
+                                    style={[custom.title, { height: 100, resizeMode: 'contain', }]}
                                 />
                             </View>
                             <View style={custom.formContainer} behavior="padding">
@@ -156,7 +156,7 @@ class SignUp extends Component {
                             </Text>
                                 <View style={custom.buttonContainer}>
                                     <ActionButton
-                                        icon={require('../../assets/brand/icon.png')}
+                                        icon={require('../../assets/icons/bold/target.png')}
                                         text={'Create account'}
                                         onPress={() => this._handleSignUp()}
                                     />
