@@ -8,16 +8,13 @@ import TextStyle from '../../constants/TextStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
-import { connect } from 'react-redux'
-import { editProfile } from '../../modules/Profile/actions'
-import PropTypes from 'prop-types'
 import Browser from '../../functions/Browser'
 
-class Profile extends Component {
+export default class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
-            return this.props.route.params;
+            return this.props.route.params.item;
         } else {
             return this.props;
         }
@@ -35,28 +32,21 @@ class Profile extends Component {
 
     render() {
         const {
-            name,
-            username,
-            photo,
-            description,
-            website,
-            following,
-            followers
+            u_username,
+            u_name,
+            u_photo,
+            u_description,
+            u_website,
+            u_numFollowing,
+            u_numFollowers,
+            u_following,
         } = this._props();
-
-        let user = null;
-
-        try {
-            user = username['username'] // this is CognitoUser from Auth reducer
-        } catch {
-            user = username;
-        }
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
                 <View style={custom.container}>
                     <NavigationBar
-                        title={user}
+                        title={u_username}
 
                         leftIcon={
                             this.props.route !== undefined
@@ -77,12 +67,12 @@ class Profile extends Component {
                     <View style={custom.informationContainer}>
                         <View style={custom.profileHeaderContainer}>
                             <Image
-                                source={{ uri: photo }}
+                                source={{ uri: u_photo }}
                                 style={custom.photo}
                             />
                             <View style={custom.profileHeaderText}>
                                 <Text style={custom.profileName} numberOfLines={2}>
-                                    {name}
+                                    {u_name}
                                 </Text>
                                 {
                                     this.props.route === undefined
@@ -97,7 +87,10 @@ class Profile extends Component {
                                             />
                                         ) : (
                                             <View style={[{ alignItems: 'flex-start' }]}>
-                                                <FollowButton />
+                                                <FollowButton
+                                                    u_username={u_username}
+                                                    u_following={u_following}
+                                                />
                                             </View>
 
                                         )
@@ -105,26 +98,26 @@ class Profile extends Component {
                             </View>
                         </View>
                         {
-                            description &&
+                            u_description &&
                             <Text style={custom.description} numberOfLines={3}>
-                                {description}
+                                {u_description}
                             </Text>
                         }
                         {
-                            website &&
+                            u_website &&
                             <TouchableOpacity
                                 style={custom.websiteContainer}
                                 onPress={() => Browser.goToURL(website)}
                             >
                                 <Text style={custom.website} numberOfLines={1}>
-                                    {website.replace(/https?:\/\//i, "")}
+                                    {u_website.replace(/https?:\/\//i, "")}
                                 </Text>
                             </TouchableOpacity>
                         }
                         <View style={custom.numbersContainer}>
                             <View style={custom.numbersElementContainer}>
                                 <Text style={custom.number}>
-                                    {following}
+                                    {u_numFollowing}
                                 </Text>
                                 <Text style={custom.text}>
                                     {' '} following
@@ -132,7 +125,7 @@ class Profile extends Component {
                             </View>
                             <View style={custom.numbersElementContainer}>
                                 <Text style={custom.number}>
-                                    {followers}
+                                    {u_numFollowers}
                                 </Text>
                                 <Text style={custom.text}>
                                     {' '} followers
@@ -161,31 +154,3 @@ class Profile extends Component {
         )
     }
 }
-
-Profile.propTypes = {
-    username: PropTypes.object, // CognitoUser
-
-    photo: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    website: PropTypes.string,
-    following: PropTypes.string,
-    followers: PropTypes.string,
-}
-
-const mapStateToProps = state => ({
-    username: state.auth.CognitoUser, // from auth module
-
-    photo: state.profile.photo,
-    name: state.profile.name,
-    description: state.profile.description,
-    website: state.profile.website,
-    following: state.profile.following,
-    followers: state.profile.followers,
-});
-
-const mapDispatchToProps = {
-    editProfile,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -53,7 +53,7 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: false,
                 errorMessage: null,
-                CognitoUser: action.payload.user,
+                CognitoUser: action.payload.CognitoUser,
                 loading: false,
             }
         case SIGNIN_ERROR:

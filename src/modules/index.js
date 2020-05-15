@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Auth from './Auth';
 import Profile from './Profile';
 import Audio from './Audio';
+import Feed from './Feed';
 
 const INITIAL_STATE = {};
 
@@ -31,6 +32,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, Auth),
+  feed: Feed,
   profile: Profile,
   audio: Audio,
 });

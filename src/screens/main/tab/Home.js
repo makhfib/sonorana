@@ -8,8 +8,11 @@ import SamplePosts from '../../../data/Posts'
 import { Colors } from '../../../constants/Colors'
 import { custom } from '../css/Notice.css'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
+import { get_feed } from '../../../modules/Feed/actions'
+import PropTypes from 'prop-types'
 
-export default class Home extends Component {
+class Home extends Component {
 
     state = {
         value: undefined,
@@ -17,8 +20,18 @@ export default class Home extends Component {
         searchText: '',
     }
 
+    fetchData() {
+        const {
+            CognitoUser
+        } = this.props;
+
+        this.props.get_feed({
+            u_username: CognitoUser['username']
+        })
+    }
 
     componentDidMount() {
+        this.fetchData()
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
     }
 
@@ -60,6 +73,7 @@ export default class Home extends Component {
 
     render() {
         const { search, value } = this.state;
+        const { feed } = this.props;
 
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
@@ -76,20 +90,14 @@ export default class Home extends Component {
                     !search
                         ? (
                             <FlatList
-                                data={SamplePosts}
+                                data={feed}
                                 renderItem={({ item }) =>
                                     <Post
-                                        id={item.id}
-                                        photo={item.photo}
-                                        username={item.username}
-                                        name={item.name}
-                                        datetime={item.datetime}
-                                        description={item.description}
-                                        duration={item.duration}
+                                        item={item}
                                         navigation={this.props.navigation}
                                     />
                                 }
-                                keyExtractor={item => item.id}
+                                keyExtractor={item => item.p_id}
                             />
                         ) : (
                             <KeyboardAwareScrollView
@@ -117,3 +125,18 @@ export default class Home extends Component {
         )
     }
 }
+
+Home.propTypes = {
+
+}
+
+const mapStateToProps = state => ({
+    feed: state.feed.feed,
+    CognitoUser: state.auth.CognitoUser
+});
+
+const mapDispatchToProps = {
+    get_feed
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

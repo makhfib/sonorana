@@ -9,18 +9,29 @@ import AudioPlayer from '../../components/AudioPlayer'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { custom } from './css/Post.css'
 import Layout from '../../constants/Layout'
+import { timeSince } from '../../functions/Utils'
 
 export default class Post extends Component {
+
+    state = {
+        liked: this.props.route.params.item.u_liked,
+    }
+
+    _handleLike() {
+
+        const { liked } = this.state
+        this.setState({ liked: !liked })
+    }
+
     render() {
         const {
-            id,
-            photo,
-            username,
-            name,
-            datetime,
-            description,
-            duration
+            item
         } = this.props.route.params;
+        const {
+            liked,
+        } = this.state;
+
+
 
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -49,47 +60,45 @@ export default class Post extends Component {
                                 <TouchableWithoutFeedback 
                                     style={{ flexDirection: 'row' }}
                                     onPress={() => this.props.navigation.navigate('Profile', {
-                                        photo,
-                                        name,
-                                        username,
-                                        following: '10k',
-                                        followers: '1m'
+                                        item
                                     })}
                                 >
                                     <Image
-                                        source={{ uri: photo }}
+                                        source={{ uri: item.u_photo }}
                                         style={custom.photo}
                                     />
                                     <View style={custom.postHeaderTextContainer}>
                                         <Text style={custom.postAuthor}>
-                                            {name}
+                                            {item.u_name}
                                         </Text>
                                         <Text style={custom.postDatetime}>
-                                            {username}
+                                            {item.u_username}
                                         </Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                             </View>
 
-
-                            <FollowButton />
+                            <FollowButton 
+                                u_username={item.u_username}
+                                u_following={item.u_following}
+                            />
                         </View>
 
                         <Text style={custom.postDescription}>
-                            {description}
+                            {item.p_description}
                         </Text>
                         <View style={custom.interactionsContainer}>
                             <ActionButton
                                 icon={
-                                    true
+                                    liked
                                         ? require('../../assets/icons/bold/heart.png')
                                         : require('../../assets/icons/regular/heart.png')
                                 }
                                 text={'Like'}
                                 buttonStyle={custom.interactionButtonStyle}
-                                iconStyle={[{ tintColor: true ? Colors.like : Colors.default }]}
-                                textStyle={[{ color: true ? Colors.like : Colors.default }]}
-                                onPress={() => null}
+                                iconStyle={[{ tintColor: liked ? Colors.like : Colors.default }]}
+                                textStyle={[{ color: liked ? Colors.like : Colors.default }]}
+                                onPress={() => this._handleLike()}
                             />
                             <ActionButton
                                 icon={require('../../assets/icons//regular/messages-bubble.png')}
@@ -113,7 +122,7 @@ export default class Post extends Component {
                     <View style={custom.usersInteractionsContainer}>
                         <View style={custom.usersInteractionsLine}>
                             <Text style={[{ color: Colors.default }]}>
-                                {'Published'} {datetime}
+                                {'Posted'} {timeSince(item.p_datetime)}
                             </Text>
                         </View>
                         <View style={custom.usersInteractionsLine}>
@@ -122,7 +131,7 @@ export default class Post extends Component {
                                 style={custom.usersInteractionsIcon}
                             />
                             <Text style={custom.usersInteractionsText}>
-                                {' '} makhfib, mike and 272 others
+                                {' '} {item.p_numLikes + ' likes'}
                             </Text>
                         </View>
                         <View style={custom.usersInteractionsLine}>
@@ -135,7 +144,7 @@ export default class Post extends Component {
                             </Text>
                         </View>
                     </View>
-                    <AudioPlayer />
+                    <AudioPlayer item={item}/>
 
                 </View>
             </SafeAreaView>

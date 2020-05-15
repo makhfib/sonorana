@@ -6,12 +6,13 @@ import PropTypes from 'prop-types'
 import { Colors } from '../constants/Colors';
 import TextStyle from '../constants/TextStyle'
 import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler';
+import { formatTime, timeSince } from '../functions/Utils'
 
 export default class Post extends Component {
 
     state = {
         playing: false,
-        liked: false,
+        liked: this.props.item.u_liked,
         // This state is used as a workaround to prevent
         // the parent touchable from being triggered when
         // other nested touchables are being pressed
@@ -44,24 +45,12 @@ export default class Post extends Component {
 
     _handlePostOnPress() {
         const {
-            id,
-            photo,
-            username,
-            name,
-            datetime,
-            description,
-            duration
+            item
         } = this.props;
 
         if (!this.state.touchableDisabled) {
             this.props.navigation.navigate('Post', {
-                id,
-                photo,
-                username,
-                name,
-                datetime,
-                description,
-                duration
+                item
             })
         }
 
@@ -72,33 +61,20 @@ export default class Post extends Component {
         this.setState({ touchableDisabled: true })
 
         const {
-            id,
-            photo,
-            username,
-            name,
+            item
         } = this.props;
 
         this.props.navigation.navigate('Main', {
             screen: 'Profile',
             params: {
-                photo,
-                name,
-                username,
-                following: '10k',
-                followers: '1m'
+                item
             }
         })
     }
 
     render() {
         const {
-            id,
-            photo,
-            username,
-            name,
-            datetime,
-            description,
-            duration
+            item
         } = this.props;
 
         const {
@@ -120,12 +96,12 @@ export default class Post extends Component {
 
                             >
                                 <Image
-                                    source={{ uri: photo }}
+                                    source={{ uri: item.u_photo }}
                                     style={custom.photo}
                                 />
                                 <View style={custom.headerTextContainer}>
-                                    <Text numberOfLines={1} style={custom.username}>{username}</Text>
-                                    <Text numberOfLines={1} style={[TextStyle.postDate, custom.datetime]}>{datetime}</Text>
+                                    <Text numberOfLines={1} style={custom.username}>{item.u_username}</Text>
+                                    <Text numberOfLines={1} style={[TextStyle.postDate, custom.datetime]}>{timeSince(item.p_datetime)}</Text>
                                 </View>
 
                             </TouchableWithoutFeedback>
@@ -137,7 +113,7 @@ export default class Post extends Component {
                                     ? require('../assets/icons/bold/pause.png')
                                     : require('../assets/icons/bold/play.png')
                             }
-                            text={duration}
+                            text={formatTime(item.p_duration)}
                             buttonStyle={custom.playButton}
                             iconStyle={[custom.playIcon]}
                             textStyle={[TextStyle.postInteraction, custom.playText]}
@@ -145,7 +121,7 @@ export default class Post extends Component {
                         />
                     </View>
                     <Text style={custom.description}>
-                        {description}
+                        {item.p_description}
                     </Text>
 
                     <View style={custom.interactionsContainer}>
@@ -188,10 +164,5 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-    id: PropTypes.string,
-    photo: PropTypes.string,
-    username: PropTypes.string,
-    datetime: PropTypes.string,
-    description: PropTypes.string,
-    duration: PropTypes.string,
+    item: PropTypes.object, // contains user and post attributes
 }

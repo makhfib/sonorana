@@ -8,7 +8,8 @@ import { Colors } from '../constants/Colors';
 export default class FollowButton extends Component {
 
     state = {
-        following: this.props.following,
+        u_username: this.props.u_username,
+        following: this.props.u_following,
     }
 
     _handleFollowButton() {
@@ -20,6 +21,8 @@ export default class FollowButton extends Component {
         const { 
             following
         } = this.state;
+
+        console.log('Following? ' + following)
 
         var icon = following ? 'done' : 'add';
         var text = following ? 'Following' : 'Follow';

@@ -24,6 +24,7 @@ import {
     CONFIRM_FORGOT_PASSWORD_SUCCESS
 } from './types'
 import InputInvalid from '../../functions/InputInvalid'
+import { get_user, get_feed } from '../Api/actions'
 
 // Made it a private function because it is called
 // in 'signIn' and 'confirmSignUp'
@@ -38,17 +39,28 @@ function _signIn(username, password, navigation) {
         Auth.signIn({ // This takes a long time, add ActivityIndicator
             username, // Can't change this cuz AWS is so cool that won't recognize anything other than "username"
             password
-        }).then((data) => {
+        }).then((CognitoUser) => {
             dispatch({
                 type: SIGNIN_SUCCESS,
                 payload: {
-                    user: data,
+                    CognitoUser: CognitoUser,
                 }
             })
 
             navigation.reset({
                 routes: [{ name: 'Root' }]
             });
+
+            dispatch(
+                get_user({
+                    u_username: CognitoUser['username']
+                }),
+                get_feed({
+                    u_username: CognitoUser['username']
+                })
+            )
+
+            console.log('dispatch from auth')
 
         }).catch((err) => {
             dispatch({

@@ -3,9 +3,14 @@ import { Text, View, Slider, Image } from 'react-native'
 import { Colors } from '../constants/Colors'
 import { custom } from './css/AudioPlayer.css'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { formatTime } from '../functions/Utils'
 
 export default class AudioPlayer extends Component {
     render() {
+        const {
+            item
+        } = this.props;
+
         return (
             <View style={custom.playerContainer}>
                 <View>
@@ -22,7 +27,7 @@ export default class AudioPlayer extends Component {
                         color: Colors.default
                     }}>
                         <Text style={[{ flex: 1 }, custom.timeIndicator]}>00:00</Text>
-                        <Text style={custom.timeIndicator}>-00:24</Text>
+                <Text style={custom.timeIndicator}>-{formatTime(item.p_duration)}</Text>
                     </View>
                 </View>
 
