@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, Linking } from 'react-native'
+import { Text, View, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import NavigationBar from '../../components/NavigationBar'
 import { Colors } from '../../constants/Colors'
@@ -9,8 +9,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { custom } from './css/Profile.css'
 import FollowButton from '../../components/FollowButton'
 import Browser from '../../functions/Browser'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { edit_profile } from '../../modules/Profile/actions'
 
-export default class Profile extends Component {
+class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
@@ -27,7 +30,7 @@ export default class Profile extends Component {
     }
 
     _handleEditProfile() {
-        this.props.editProfile(this._props(), this.props.navigation)
+        this.props.edit_profile(this._props(), this.props.navigation)
     }
 
     render() {
@@ -154,3 +157,17 @@ export default class Profile extends Component {
         )
     }
 }
+
+Profile.propTypes = {
+    
+}
+
+const mapStateToProps = state => ({
+    
+});
+
+const mapDispatchToProps = {
+    edit_profile,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

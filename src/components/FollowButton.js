@@ -22,8 +22,6 @@ export default class FollowButton extends Component {
             following
         } = this.state;
 
-        console.log('Following? ' + following)
-
         var icon = following ? 'done' : 'add';
         var text = following ? 'Following' : 'Follow';
         var color = following ? Colors.safety : Colors.tint;

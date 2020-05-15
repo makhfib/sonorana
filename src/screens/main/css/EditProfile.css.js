@@ -16,6 +16,7 @@ export const custom = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
+        backgroundColor: Colors.inputBackground
     },
     editPhotoButtonContainer: {
         flexDirection: 'row',

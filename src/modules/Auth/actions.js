@@ -60,8 +60,6 @@ function _signIn(username, password, navigation) {
                 })
             )
 
-            console.log('dispatch from auth')
-
         }).catch((err) => {
             dispatch({
                 type: SIGNIN_ERROR,

@@ -90,7 +90,6 @@ export function get_user(payload) {
                                 currentUser: json['body']
                             }
                         })
-                        console.log(json['body'])
 
                     } else {
 
@@ -101,8 +100,6 @@ export function get_user(payload) {
                                 errorMessage: json['header']['message']
                             }
                         })
-                        console.log(json['header']['message'])
-
                     }
                 }).catch((error) => {
                     dispatch({
@@ -112,7 +109,6 @@ export function get_user(payload) {
                             errorMessage: error,
                         }
                     })
-                    console.log(error)
                 })
         }
     }
@@ -148,7 +144,7 @@ export function get_feed(payload) {
                     }
                 })
             })
-                .then((response) => console.log(response.json()) )//response.json())
+                .then((response) => response.json() )
                 .then((json) => {
                     if (json['header']['code'] === 200) {
 
@@ -159,7 +155,6 @@ export function get_feed(payload) {
                                 feed: json['body']
                             }
                         })
-                        console.log(json['body'])
 
                     } else {
 
@@ -170,8 +165,6 @@ export function get_feed(payload) {
                                 errorMessage: json['header']['message']
                             }
                         })
-                        console.log(json['header']['message'])
-                        
                     }
                 }).catch((error) => {
                     dispatch({
@@ -181,7 +174,6 @@ export function get_feed(payload) {
                             errorMessage: error,
                         }
                     })
-                    console.log(error)
                 })
         }
     }

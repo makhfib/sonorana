@@ -1,7 +1,6 @@
 // Cognito User Identity Pool API Reference
 // https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/
 export const AuthExceptionMessage = (err) => {
-        console.log(err)
     switch (err.code) {
         case 'NotValidException':
             return 'Invalid input'

@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
-import { View, Keyboard, Image, Text } from 'react-native';
+import { View, Keyboard, Image, Text, RefreshControl, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from '../../../components/SearchBar';
 import Post from '../../../components/Post';
-import SamplePosts from '../../../data/Posts'
 import { Colors } from '../../../constants/Colors'
 import { custom } from '../css/Notice.css'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
-import { get_feed } from '../../../modules/Feed/actions'
+import { get_feed, load_more, refresh_feed } from '../../../modules/Feed/actions'
 import PropTypes from 'prop-types'
 
 class Home extends Component {
@@ -20,18 +19,10 @@ class Home extends Component {
         searchText: '',
     }
 
-    fetchData() {
-        const {
-            CognitoUser
-        } = this.props;
-
-        this.props.get_feed({
-            u_username: CognitoUser['username']
-        })
-    }
-
     componentDidMount() {
-        this.fetchData()
+        this.props.get_feed({
+            u_username: this.props.CognitoUser['username']
+        })
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
     }
 
@@ -71,6 +62,31 @@ class Home extends Component {
         Keyboard.dismiss()
     }
 
+    _handleOnRefresh() {
+        this.props.refresh_feed({
+            u_username: this.props.CognitoUser['username']
+        })
+    }
+
+    _renderFooter = () => {
+        //it will show indicator at the bottom of the list when data is loading otherwise it returns null
+        if (!this.props.isLoading) return null;
+        return (
+            <ActivityIndicator
+                style={{ color: '#000' }}
+            />
+        );
+    };
+
+    _handleLoadMore = () => {
+        if (!this.props.isLoading && this.props.more) {
+            this.props.load_more({
+                skip: this.props.skip,
+                u_username: this.props.CognitoUser['username']
+            })
+        }
+    };
+
     render() {
         const { search, value } = this.state;
         const { feed } = this.props;
@@ -98,6 +114,15 @@ class Home extends Component {
                                     />
                                 }
                                 keyExtractor={item => item.p_id}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.props.isRefreshing}
+                                        onRefresh={this._handleOnRefresh.bind(this)}
+                                    />
+                                }
+                                ListFooterComponent={this._renderFooter.bind(this)}
+                                onEndReachedThreshold={0.4}
+                                onEndReached={this._handleLoadMore.bind(this)}
                             />
                         ) : (
                             <KeyboardAwareScrollView
@@ -131,12 +156,18 @@ Home.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    skip: state.feed.skip,
+    more: state.feed.more,
     feed: state.feed.feed,
+    isRefreshing: state.feed.refreshing,
+    isLoading: state.feed.loading,
     CognitoUser: state.auth.CognitoUser
 });
 
 const mapDispatchToProps = {
-    get_feed
+    get_feed,
+    load_more,
+    refresh_feed,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

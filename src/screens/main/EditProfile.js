@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import ImagePicker from 'react-native-image-picker';
 import InputInvalid from '../../functions/InputInvalid'
 import { connect } from 'react-redux'
-import { saveChanges, cancelChanges } from '../../modules/Profile/actions'
+import { save_changes, cancelChanges } from '../../modules/Profile/actions'
 import PropTypes from 'prop-types'
 
 class EditProfile extends Component {
@@ -17,27 +17,28 @@ class EditProfile extends Component {
     state = {
         emptyName: false,
         allowSave: true,
-        
-        photo: this.props.route.params.photo,
-        name: this.props.route.params.name,
-        description: this.props.route.params.description,
-        website: this.props.route.params.website,
+
+        u_username: this.props.route.params.u_username,
+        u_photo: this.props.route.params.u_photo,
+        u_name: this.props.route.params.u_name,
+        u_description: this.props.route.params.u_description,
+        u_website: this.props.route.params.u_website,
     }
 
     _handleTextChange(field, text) {
         switch (field) {
-            case 'Name':
+            case 'u_name':
                 this.setState({
-                    name: text,
+                    u_name: text,
                     emptyName: InputInvalid.isEmpty(text),
                     allowSave: !InputInvalid.isEmpty(text)
                 })
                 break
-            case 'Description':
-                this.setState({ description: text })
+            case 'u_description':
+                this.setState({ u_description: text })
                 break
-            case 'Website':
-                this.setState({ website: text })
+            case 'u_website':
+                this.setState({ u_website: text })
                 break
             default:
                 break
@@ -64,7 +65,7 @@ class EditProfile extends Component {
     }
 
     _saveChanges() {
-        this.props.saveChanges(this.state, this.props.navigation)
+        this.props.save_changes(this.state, this.props.navigation)
     }
 
     _pickImage() {
@@ -72,7 +73,7 @@ class EditProfile extends Component {
         const options = {
             title: 'Select Avatar',
             customButtons: [
-                { name: 'Delete', title: 'Remove Photo', }
+                { name: 'Delete', title: 'Remove photo', }
             ],
             storageOptions: {
                 skipBackup: true,
@@ -85,16 +86,15 @@ class EditProfile extends Component {
          * The second arg is the callback which sends object: response (more info in the API Reference)
          */
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
 
             if (response.didCancel) {
                 // Do something
             } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                
             } else if (response.customButton === 'Delete') {
                 this.setState({
-                    // default photo
-                    photo: 'https://icon.org.uk/sites/all/themes/iconinstitute/images/avatar-default.jpg',
+                    // default u_photo
+                    u_photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSUXlNfuGfm7C2hlqTgAgkqr3URHctV1-A307SwaXLQCpsjBM6d&usqp=CAU',
                 });
             } else {
                 const source = { uri: response.uri };
@@ -103,7 +103,7 @@ class EditProfile extends Component {
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
-                    photo: source.uri,
+                    u_photo: source.uri,
                 });
             }
         });
@@ -113,10 +113,10 @@ class EditProfile extends Component {
         const {
             emptyName,
             allowSave,
-            photo,
-            name,
-            description,
-            website
+            u_photo,
+            u_name,
+            u_description,
+            u_website
         } = this.state;
 
         return (
@@ -138,8 +138,8 @@ class EditProfile extends Component {
                 >
                     <View style={custom.photoContainer}>
                         <Image
-                            source={{ uri: photo }}
-                            style={custom.photo}
+                                source={{uri: u_photo}}
+                                style={custom.photo}
                         />
                         <TouchableOpacity
                             style={custom.editPhotoButtonContainer}
@@ -156,7 +156,7 @@ class EditProfile extends Component {
                     </View>
                     <View style={custom.formContainer}>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Name  {emptyName && <Text style={{color:Colors.danger}}>* required</Text> }  </Text>
+                            <Text style={custom.inputLabel}>Name  {emptyName && <Text style={{ color: Colors.danger }}>* required</Text>}  </Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/profile.png')}
@@ -165,8 +165,8 @@ class EditProfile extends Component {
                                 <TextInput
                                     style={custom.input}
                                     selectionColor={Colors.antagonist}
-                                    onChangeText={(text) => this._handleTextChange('Name', text)}
-                                    defaultValue={name}
+                                    onChangeText={(text) => this._handleTextChange('u_name', text)}
+                                    defaultValue={u_name}
                                     maxLength={30}
                                 />
                             </View>
@@ -181,16 +181,16 @@ class EditProfile extends Component {
                                 <TextInput
                                     style={[custom.input, { height: 70, paddingTop: 5 }]}
                                     selectionColor={Colors.antagonist}
-                                    defaultValue={description}
+                                    defaultValue={u_description}
                                     textAlignVertical={'top'}
                                     multiline={true}
-                                    onChangeText={(text) => this._handleTextChange('Description', text)}
+                                    onChangeText={(text) => this._handleTextChange('u_description', text)}
                                     maxLength={140}
                                 />
                             </View>
                         </View>
                         <View style={custom.form}>
-                            <Text style={custom.inputLabel}>Website <Text style={{color: Colors.default, fontWeight: 'normal'}}>defaults to http://</Text></Text>
+                            <Text style={custom.inputLabel}>u_website <Text style={{ color: Colors.default, fontWeight: 'normal' }}>defaults to http://</Text></Text>
                             <View style={custom.field}>
                                 <Image
                                     source={require('../../assets/icons/regular/hyperlink.png')}
@@ -199,8 +199,8 @@ class EditProfile extends Component {
                                 <TextInput
                                     style={custom.input}
                                     selectionColor={Colors.antagonist}
-                                    onChangeText={(text) => this._handleTextChange('Website', text)}
-                                    defaultValue={website}
+                                    onChangeText={(text) => this._handleTextChange('u_website', text)}
+                                    defaultValue={u_website}
                                 />
                             </View>
                         </View>
@@ -220,7 +220,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    saveChanges,
+    save_changes,
     cancelChanges
 }
 
