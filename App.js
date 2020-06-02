@@ -1,51 +1,36 @@
 import React from 'react'
+import { store, persistor } from './src/modules'
 import { Provider } from 'react-redux'
-import { store } from './src/store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Root from './src/navigation'
-import { AppLoading } from 'expo';
+import Amplify from 'aws-amplify'
+import { awsconfig } from './aws-exports'
 
-const Zero = createStackNavigator()
+Amplify.configure(awsconfig);
+const Application = createStackNavigator();
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        console.disableYellowBox = true;
-
-        console.log('User: ');
-        console.log(store.getState()['auth']['user']);
-    }
-
-    state = {
-        dataLoaded: false,
     }
 
     render() {
-        //const user = store.getState()['auth']['user']
-        const { dataLoaded } = this.state;
-
-        if (!dataLoaded) {
-            console.log('Data not loaded');
-            return (
-                <AppLoading
-                    onFinish={() => this.setState({dataLoaded: true})}
-                />
-            );
-            
-        }
-
-        console.log('Data loaded');
 
         return (
             <Provider store={store}>
-                <NavigationContainer>
-                    <Zero.Navigator headerMode='none'>
-                        <Zero.Screen name='Root' component={Root} />
-                    </Zero.Navigator>
-                </NavigationContainer>
+                <PersistGate loading={null} persistor={persistor} >
+                    <SafeAreaProvider>
+                        <NavigationContainer>
+                            <Application.Navigator headerMode='none'>
+                                <Application.Screen name='Root' component={Root} />
+                            </Application.Navigator>
+                        </NavigationContainer>
+                    </SafeAreaProvider>
+                </PersistGate>
             </Provider>
-            
         );
     }
 

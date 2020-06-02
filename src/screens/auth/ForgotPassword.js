@@ -5,7 +5,7 @@ export default class ForgotPassword extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <Text> Forgot Password </Text>
             </View>
         )
     }

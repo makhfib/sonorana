@@ -5,7 +5,7 @@ export default class ConfirmSignUp extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <Text> Confirm Sign Up </Text>
             </View>
         )
     }

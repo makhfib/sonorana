@@ -5,7 +5,7 @@ export default class ConfirmForgotPassword extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <Text> Confirm Forgot Password </Text>
             </View>
         )
     }

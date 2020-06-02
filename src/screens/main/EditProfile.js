@@ -5,7 +5,7 @@ export default class EditProfile extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <Text> Edit Profile </Text>
             </View>
         )
     }
