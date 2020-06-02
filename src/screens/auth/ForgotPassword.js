@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class ForgotPassword extends Component {
     render() {
         return (
-            <View>
+            <SafeAreaView>
                 <Text> Forgot Password </Text>
-            </View>
+            </SafeAreaView>
         )
     }
 }

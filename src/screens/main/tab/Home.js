@@ -1,13 +1,14 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-class Home extends React.Component {
+export default class Home extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Home</Text>
-            </View>
+            <SafeAreaView>
+                <Text>Home</Text>
+            </SafeAreaView>
         ); 
     }
 }

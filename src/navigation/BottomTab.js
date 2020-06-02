@@ -9,6 +9,8 @@ import Profile from '../screens/main/tab/Profile'
 
 const Tab = createBottomTabNavigator()
 
+const iconSize = 30;
+
 export default class BottomTab extends Component {
     render() {
         return (
@@ -21,43 +23,43 @@ export default class BottomTab extends Component {
                 }
             }}>
                 <Tab.Screen name='Home' component={Home} options={{
-                    tabBarIcon: ({ focused }) => (<Image
+                    tabBarIcon: ({ color, focused }) => (<Image
                         source={
                             focused 
                             ? require('../assets/icons/home_selected.png')
                             : require('../assets/icons/home_default.png')
                         }
-                        style={[{  width: 20, height: 20, resizeMode: 'contain' }]}
+                        style={[{  width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Search' component={Search} options={{
-                    tabBarIcon: ({ focused }) => (<Image
+                    tabBarIcon: ({ color, focused }) => (<Image
                         source={
                             require('../assets/icons/search.png')
                         }
-                        style={[{ width: 20, height: 20, resizeMode: 'contain' }]}
+                        style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Create' component={Create} options={{
-                    tabBarIcon: ({ focused }) => (
+                    tabBarIcon: ({ color, focused }) => (
                     <Image
                         source={
                             focused 
                             ? require('../assets/icons/create_selected.png')
                             : require('../assets/icons/create_default.png')
                         }
-                        style={[{ width: 20, height: 20, resizeMode: 'contain' }]}
+                        style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />),
                     
                 }} />
                 <Tab.Screen name='Profile' component={Profile} options={{
-                    tabBarIcon: ({ focused }) => (<Image
+                    tabBarIcon: ({ color, focused }) => (<Image
                         source={
                             focused 
                             ? require('../assets/icons/profile_selected.png')
                             : require('../assets/icons/profile_default.png')
                         }
-                        style={[{ width: 20, height: 20, resizeMode: 'contain' }]}
+                        style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
             </Tab.Navigator>

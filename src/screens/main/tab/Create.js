@@ -1,13 +1,14 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-class Create extends React.Component {
+export default class Create extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Create</Text>
-            </View>
+            <SafeAreaView>
+                <Text>Create</Text>
+            </SafeAreaView>
         ); 
     }
 }

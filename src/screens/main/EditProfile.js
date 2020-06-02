@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class EditProfile extends Component {
     render() {
         return (
-            <View>
+            <SafeAreaView>
                 <Text> Edit Profile </Text>
-            </View>
+            </SafeAreaView>
         )
     }
 }
