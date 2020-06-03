@@ -1,0 +1,121 @@
+import React, { Component } from 'react'
+import { Text, View, Image, StyleSheet } from 'react-native'
+import { colors, layout } from '../constants/Styles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import PropTypes from 'prop-types';
+
+export default class NavigationBar extends Component {
+    _handleGoBack() {
+        this.props.navigation.goBack()
+    }
+
+    render() {
+        return (
+            <View
+                style={styles.container}
+            >
+                <View style={styles.itemsContainer}>
+                    <View
+                        style={styles.leftItemContainer}
+                    >
+                        {
+                            this.props.leftIconImage !== undefined ?
+
+                                <TouchableOpacity
+                                    onPress={() => this.props.leftIconOnPress()}
+                                >
+                                    <Image
+                                        style={styles.icon}
+                                        source={require('../assets/icons/left_arrow.png')}
+                                    />
+                                </TouchableOpacity>
+                                : <></>
+                        }
+                    </View>
+
+                    <View
+                        style={styles.middleItemContainer}>
+                        {
+                            this.props.title !== undefined ?
+                                <>
+                                    {
+                                        // read more https://stackoverflow.com/questions/332422/get-the-name-of-an-objects-type
+                                        this.props.title.constructor === String
+                                            ? <Text
+                                                style={styles.text}
+                                            >
+                                                {this.props.title}
+                                            </Text>
+                                            : <Image
+                                                style={[styles.icon, { width: '100%' }]}
+                                                source={this.props.title}
+                                            />
+                                    }
+                                </> : <></>
+                        }
+                    </View>
+
+                    <View
+                        style={styles.rightItemContainer}>
+                        {
+                            this.props.rightIconImage !== undefined ?
+
+                                <TouchableOpacity
+                                    onPress={() => console.log('Not handled')}
+                                >
+                                    <Image
+                                        style={styles.icon}
+                                        source={require('../assets/icons/left_arrow.png')}
+                                    />
+                                </TouchableOpacity>
+                                : <></>
+                        }
+                    </View>
+                </View>
+            </View>
+        )
+    }
+}
+
+NavigationBar.propTypes = {
+    leftIconOnPress: PropTypes.func,
+    leftIconImage: PropTypes.any,
+    rightIconOnPress: PropTypes.func,
+    rightIconImage: PropTypes.any,
+    title: PropTypes.any,
+}
+
+const styles = StyleSheet.create({
+    container: {
+        height: 70,
+        backgroundColor: colors.background,
+        paddingBottom: 10,
+        paddingHorizontal: layout.paddingHorizontal,
+        justifyContent: 'flex-end',
+    },
+    itemsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    leftItemContainer: {
+        flex: 1,
+    },
+    middleItemContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    rightItemContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    icon: {
+        height: 30,
+        width: 30,
+    },
+    text: {
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+})

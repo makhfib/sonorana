@@ -12,7 +12,7 @@ export default class SignUp extends Component {
             screen: 'ConfirmSignUp'
         })
     }
-    
+
     _handleLogIn() {
         this.props.navigation.goBack()
     }
@@ -39,13 +39,13 @@ export default class SignUp extends Component {
                             start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
                             style={styles.gradientContainer}
                         >
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Username'}
-                                placeholderTextColor={colors.tint}
-                                style={styles.input}
-                            />
-                        </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Username'}
+                                    placeholderTextColor={colors.tint}
+                                    style={styles.input}
+                                />
+                            </View>
                         </LinearGradient>
                         <LinearGradient
                             colors={[colors.pink, colors.orange, colors.yellow]}
@@ -53,21 +53,21 @@ export default class SignUp extends Component {
                             style={styles.gradientContainer}
                         >
 
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Email'}
-                                placeholderTextColor={colors.tint}
-                                style={styles.input}
-                            />
-                        </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Email'}
+                                    placeholderTextColor={colors.tint}
+                                    style={styles.input}
+                                />
+                            </View>
                         </LinearGradient>
                         <LinearGradient
                             colors={[colors.pink, colors.orange, colors.yellow]}
                             start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
                             style={styles.gradientContainer}
                         >
-                            <View 
-                            style={styles.inputContainer}>
+                            <View
+                                style={styles.inputContainer}>
 
                                 <TextInput
                                     placeholder={'Password'}
@@ -96,7 +96,7 @@ export default class SignUp extends Component {
                                 <Text
                                     style={styles.signupText}
                                 >
-                                    SIGN UP
+                                    CREATE ACCOUNT
                             </Text>
                             </TouchableOpacity>
                         </LinearGradient>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         height: 46,
         flexDirection: 'row',
-        paddingHorizontal: layout.paddingHorizontal-10,
+        paddingHorizontal: layout.paddingHorizontal - 10,
         backgroundColor: colors.background
     },
     signupContainer: {

@@ -95,7 +95,7 @@ export default class LogIn extends Component {
                             <Text
                                 style={styles.signupText}
                             >
-                                SIGN UP
+                                CREATE ACCOUNT
                             </Text>
                         </TouchableOpacity>
                     </View>
