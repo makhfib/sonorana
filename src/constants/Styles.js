@@ -15,3 +15,7 @@ export const colors = {
   orange: '#f1741c',
   yellow: '#fcb304'
 };
+
+export const layout = {
+  paddingHorizontal: 20,
+}
