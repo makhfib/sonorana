@@ -1,5 +1,8 @@
+import { Dimensions } from "react-native";
+
 const darkMode = false;
 const tint = darkMode ? '#fff' : '#121212';
+
 
 export const colors = {
   tint,
@@ -13,9 +16,14 @@ export const colors = {
 
   pink: '#f3315e',
   orange: '#f1741c',
-  yellow: '#fcb304'
+  yellow: '#fcb304',
+
+  safearea: darkMode ? '#121212' : '#f6f6f6', 
 };
 
 export const layout = {
   paddingHorizontal: 20,
+
+  deviceWidth: Dimensions.get('window').width, //full width
+  deviceHeight: Dimensions.get('window').height, //full height
 }
