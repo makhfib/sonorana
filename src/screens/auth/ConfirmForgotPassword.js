@@ -6,7 +6,7 @@ import NavigationBar from '../../components/NavigationBar'
 import { colors, layout } from '../../constants/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default class ForgotPassword extends Component {
+export default class ConfirmForgotPassword extends Component {
 
     _handleConfirm() {
         console.log('Not handled!')
