@@ -11,6 +11,7 @@ export default class SignUp extends Component {
         this.props.navigation.navigate('Auth', {
             screen: 'ConfirmSignUp'
         })
+        console.log('Sign up')
     }
 
     _handleLogIn() {
@@ -142,9 +143,8 @@ const styles = StyleSheet.create({
         width: 160,
     },
     formContainer: {
-        flex: 1,
         alignItems: 'stretch',
-        marginHorizontal: layout.paddingHorizontal,
+        paddingHorizontal: layout.paddingHorizontal,
     },
     gradientContainer: {
         height: 50,
