@@ -3,6 +3,7 @@ import { Dimensions } from "react-native";
 const darkMode = false;
 const tint = darkMode ? '#fff' : '#121212';
 
+
 export const colors = {
   tint,
   gray: '#a1a1a1',
@@ -26,3 +27,4 @@ export const layout = {
   deviceWidth: Dimensions.get('window').width, //full width
   deviceHeight: Dimensions.get('window').height, //full height
 }
+
