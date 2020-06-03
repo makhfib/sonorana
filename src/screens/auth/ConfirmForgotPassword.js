@@ -9,9 +9,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default class ForgotPassword extends Component {
 
     _handleConfirm() {
-        this.props.navigation.navigate('Auth', {
-            screen: 'ConfirmForgotPassword'
-        })
+        console.log('Not handled!')
+    }
+
+    _handleResend() {
+        console.log('Not handled!')
     }
 
     render() {
@@ -103,6 +105,21 @@ export default class ForgotPassword extends Component {
                             </Text>
                         </TouchableOpacity>
                     </LinearGradient>
+                    <View
+                        style={styles.alternativeContainer}
+                    >
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            style={styles.alternativeButtonContainer}
+                            onPress={() => this._handleResend()}
+                        >
+                            <Text
+                                style={styles.alternativeButtonText}
+                            >
+                                RESEND CODE
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
             </SafeAreaView>
@@ -147,5 +164,24 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.pink,
         backgroundColor: colors.background,
+    },
+    alternativeContainer: {
+        flex: 1,
+        alignItems: 'stretch',
+        justifyContent: 'center',
+    },
+    alternativeButtonContainer: {
+        height: 50,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: layout.paddingHorizontal,
+        alignContent: 'center',
+    },
+    alternativeButtonText: {
+        flex: 1,
+        fontWeight: 'bold',
+        color: colors.blue,
+        textAlign: 'center',
     },
 })
