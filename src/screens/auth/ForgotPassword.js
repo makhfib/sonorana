@@ -17,36 +17,22 @@ export default class ForgotPassword extends Component {
     render() {
         return (
             <SafeAreaView
-                style={{
-                    flex: 1,
-                    backgroundColor: colors.safearea
-                }}
+                style={styles.safearea}
             >
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
                 <View
-                    style={{
-                        flex: 1,
-                        paddingTop: 20,
-                        paddingHorizontal: layout.paddingHorizontal,
-                        backgroundColor: colors.background
-                    }}
+                    style={styles.contentContainer}
                 >
                     <Text
-                        style={{
-                            fontSize: 24,
-                            fontWeight: 'bold',
-                            marginBottom: 10,
-                        }}
+                        style={styles.title}
                     >
                         Reset Password
                     </Text>
                     <Text
-                        style={{
-                            marginBottom: 10,
-                        }}
+                        style={styles.text}
                     >
                         Enter your username or recovery email
                     </Text>
@@ -89,6 +75,24 @@ export default class ForgotPassword extends Component {
 }
 
 const styles = StyleSheet.create({
+    safearea: {
+        flex: 1,
+        backgroundColor: colors.safearea
+    },
+    contentContainer: {
+        flex: 1,
+        paddingTop: 20,
+        paddingHorizontal: layout.paddingHorizontal,
+        backgroundColor: colors.background
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    text: {
+        marginBottom: 10,
+    },
     gradientContainer: {
         height: 50,
         marginBottom: 10,

@@ -19,36 +19,22 @@ export default class ConfirmForgotPassword extends Component {
     render() {
         return (
             <SafeAreaView
-                style={{
-                    flex: 1,
-                    backgroundColor: colors.safearea
-                }}
+                style={styles.safearea}
             >
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this.props.navigation.goBack()}
                 />
                 <View
-                    style={{
-                        flex: 1,
-                        paddingTop: 20,
-                        paddingHorizontal: layout.paddingHorizontal,
-                        backgroundColor: colors.background
-                    }}
+                    style={styles.contentContainer}
                 >
                     <Text
-                        style={{
-                            fontSize: 24,
-                            fontWeight: 'bold',
-                            marginBottom: 10,
-                        }}
+                        style={styles.title}
                     >
                         Reset Password
                     </Text>
                     <Text
-                        style={{
-                            marginBottom: 10,
-                        }}
+                        style={styles.text}
                     >
                         Enter the verification code we sent to your email and set a new password
                     </Text>
@@ -128,6 +114,24 @@ export default class ConfirmForgotPassword extends Component {
 }
 
 const styles = StyleSheet.create({
+    safearea: {
+        flex: 1,
+        backgroundColor: colors.safearea
+    },
+    contentContainer: {
+        flex: 1,
+        paddingTop: 20,
+        paddingHorizontal: layout.paddingHorizontal,
+        backgroundColor: colors.background
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    text: {
+        marginBottom: 10,
+    },
     gradientContainer: {
         height: 50,
         marginBottom: 10,
