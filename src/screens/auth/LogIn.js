@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        color: colors.background,
+        color: colors.lightgray,
     },
     inputIcon: {
         width: 40,
