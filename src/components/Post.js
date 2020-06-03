@@ -6,12 +6,20 @@ import { colors } from '../constants/Styles'
 export default class Post extends Component {
     state = {
         playing: false,
-        liked: false,
+        liked: true,
+    }
+
+    _onLikePress() {
+        this.setState({ liked: !this.state.liked })
+    }
+
+    _onPlayPausePress() {
+        this.setState({ playing: !this.state.playing })
     }
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View>
                 <View style={{flexDirection: 'row'}}>
                     <View style={{}}>
                         <Image 
@@ -22,12 +30,12 @@ export default class Post extends Component {
                     <TouchableOpacity activeOpacity={1} style={{flex: 1, justifyContent: 'center'}}>
                         <Text maxLength = {15} style={{fontWeight: 'bold'}}>user</Text>
                     </TouchableOpacity >
-                    <TouchableOpacity activeOpacity={1} style={{alignItems: 'center', justifyContent: 'center',}}>
+                    <TouchableOpacity activeOpacity={1} style={{alignItems: 'center', justifyContent: 'center',}} onPress={()=>this._onLikePress()}>
                         <Image 
                             source={ this.state.liked
                                 ? require('../assets/icons/liked.png')
                                 : require('../assets/icons/like.png')}
-                            style={this.state.liked ? {width: 30, height: 30, resizeMode: 'contain', backgroundColor: colors.background, tintColor: colors.red} : {width: 30, height: 30, resizeMode: 'contain', backgroundColor: colors.background, tintColor: colors.gray}}
+                            style={{width: 30, height: 30, resizeMode: 'contain', backgroundColor: colors.background, tintColor: this.state.liked ? colors.pink : colors.gray}}
                         />
                     </TouchableOpacity>
                 </View>
@@ -37,15 +45,15 @@ export default class Post extends Component {
                         style={{flex: 1, flexDirection: 'row'}}
                     >
                         <View style={{flex: 1, padding: 9, paddingBottom: 14}}>
-                                <View style={{paddingBottom: 5}}>
-                                    <Text style={{fontWeight: 'bold'}}>«Quien con monstruos lucha, cuide de convertirse a su vez en monstruo.»</Text>
-                                </View>
-                                <View style={{}}>
-                                    <Text>01:23</Text>
-                                </View>
+                            <View style={{paddingBottom: 5}}>
+                                <Text style={{fontWeight: 'bold'}}>«Quien con monstruos lucha, cuide de convertirse a su vez en monstruo.»</Text>
+                            </View>
+                            <View style={{}}>
+                                <Text>01:23</Text>
+                            </View>
                         </View>
                     </ImageBackground>
-                    <TouchableOpacity activeOpacity={1} style={{justifyContent: 'center'}}>
+                    <TouchableOpacity activeOpacity={1} style={{justifyContent: 'center'}} onPress={()=>this._onPlayPausePress()}>
                         <Image 
                             source={ this.state.playing 
                                 ? require('../assets/icons/pause_circle.png')

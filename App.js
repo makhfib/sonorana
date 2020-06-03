@@ -9,8 +9,6 @@ import Root from './src/navigation'
 import Amplify from 'aws-amplify'
 import { awsconfig } from './aws-exports'
 
-import Home from './src/screens/main/tab/Home'
-
 Amplify.configure(awsconfig);
 const Application = createStackNavigator();
 
@@ -25,7 +23,11 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor} >
                     <SafeAreaProvider>
-                        <Home />
+                        <NavigationContainer>
+                            <Application.Navigator headerMode='none'>
+                                <Application.Screen name='Root' component={Root} />
+                            </Application.Navigator>
+                        </NavigationContainer>
                     </SafeAreaProvider>
                 </PersistGate>
             </Provider>
