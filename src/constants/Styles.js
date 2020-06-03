@@ -27,3 +27,4 @@ export const layout = {
   deviceWidth: Dimensions.get('window').width, //full width
   deviceHeight: Dimensions.get('window').height, //full height
 }
+
