@@ -2,8 +2,26 @@ import React, { Component } from 'react'
 import { Text, View, ImageBackground, Image, TextInput, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class LogIn extends Component {
+
+    _handleLogIn() {
+        console.log('Hello log in!')
+    }
+
+    _handleForgotPassword() {
+        this.props.navigation.navigate('Auth', {
+            screen: 'ForgotPassword'
+        })
+    }
+
+    _handleSignUp() {
+        this.props.navigation.navigate('Auth', {
+            screen: 'SignUp'
+        })
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
@@ -19,7 +37,6 @@ export default class LogIn extends Component {
                             source={require('../../assets/brand/White-Icon.png')}
                         />
                     </View>
-
                     <View
                         style={styles.formContainer}
                     >
@@ -44,36 +61,44 @@ export default class LogIn extends Component {
                                 source={require('../../assets/icons/appearance.png')}
                             />
                         </View>
-                        <View style={styles.loginContainer}>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            style={styles.loginContainer}
+                            onPress={() => this._handleLogIn()}
+                        >
                             <Text
                                 style={styles.loginText}
                             >
-                                Log In
+                                LOG IN
                             </Text>
-                        </View>
-
+                        </TouchableOpacity>
                     </View>
                     <View
                         style={styles.alternativesContainer}
                     >
-                        <View
+                        <TouchableOpacity
+                            activeOpacity={1}
                             style={styles.forgotContainer}
+                            onPress={() => this._handleForgotPassword()}
                         >
                             <Text
                                 style={styles.forgotText}
                             >
                                 I forgot my password
                             </Text>
-                        </View>
-                        <View style={styles.signupContainer}>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            style={styles.signupContainer}
+                            onPress={() => this._handleSignUp()}
+                        >
                             <Text
                                 style={styles.signupText}
                             >
-                                Sign Up
+                                SIGN UP
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
-
                 </ImageBackground>
             </SafeAreaView>
         )
@@ -87,7 +112,6 @@ const styles = StyleSheet.create({
     },
     background: {
         flex: 1,
-        alignItems: 'center',
     },
     logoContainer: {
         flex: 1,
@@ -100,7 +124,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
         marginHorizontal: layout.paddingHorizontal,
     },
     inputContainer: {
@@ -113,17 +137,16 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         height: 50,
-        flexDirection: 'row',
-        alignItems: 'center',
+        borderRadius: 5,
+        justifyContent: 'center',
         borderRadius: 5,
         borderWidth: 2,
         borderColor: 'rgba(0,0,0,0.3)',
     },
     loginText: {
-        flex: 1,
         fontWeight: 'bold',
         color: colors.background,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     input: {
         flex: 1,
@@ -138,7 +161,7 @@ const styles = StyleSheet.create({
     },
     alternativesContainer: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'flex-start',
     },
     forgotContainer: {
@@ -146,6 +169,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 50,
+        marginHorizontal: layout.paddingHorizontal,
     },
     forgotText: {
         fontWeight: 'bold',
@@ -153,12 +177,12 @@ const styles = StyleSheet.create({
     },
     signupContainer: {
         height: 50,
+        borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5,
         marginHorizontal: layout.paddingHorizontal,
         backgroundColor: colors.background,
+        alignContent: 'center',
     },
     signupText: {
         flex: 1,
