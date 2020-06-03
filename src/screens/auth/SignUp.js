@@ -3,14 +3,16 @@ import { Text, View, ImageBackground, Image, TextInput, StyleSheet } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class SignUp extends Component {
 
     _handleSignUp() {
-        console.log('Hello sign up!')
+        this.props.navigation.navigate('Auth', {
+            screen: 'ConfirmSignUp'
+        })
     }
-
+    
     _handleLogIn() {
         this.props.navigation.goBack()
     }
@@ -32,6 +34,11 @@ export default class SignUp extends Component {
                     <View
                         style={styles.formContainer}
                     >
+                        <LinearGradient
+                            colors={[colors.pink, colors.orange, colors.yellow]}
+                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                            style={styles.gradientContainer}
+                        >
                         <View style={styles.inputContainer}>
                             <TextInput
                                 placeholder={'Username'}
@@ -39,6 +46,13 @@ export default class SignUp extends Component {
                                 style={styles.input}
                             />
                         </View>
+                        </LinearGradient>
+                        <LinearGradient
+                            colors={[colors.pink, colors.orange, colors.yellow]}
+                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                            style={styles.gradientContainer}
+                        >
+
                         <View style={styles.inputContainer}>
                             <TextInput
                                 placeholder={'Email'}
@@ -46,28 +60,37 @@ export default class SignUp extends Component {
                                 style={styles.input}
                             />
                         </View>
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Password'}
-                                placeholderTextColor={colors.tint}
-                                secureTextEntry={true}
-                                style={[styles.input, {
-                                    paddingRight: layout.paddingHorizontal,
-                                }]}
-                            />
-                            <Image
-                                style={styles.inputIcon}
-                                source={require('../../assets/icons/appearance.png')}
-                            />
-                        </View>
+                        </LinearGradient>
                         <LinearGradient
-                            colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
+                            colors={[colors.pink, colors.orange, colors.yellow]}
                             start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                            style={{ height: 48, width: 200, alignItems: 'center', justifyContent: 'center', width: 200 }}
+                            style={styles.gradientContainer}
+                        >
+                            <View 
+                            style={styles.inputContainer}>
+
+                                <TextInput
+                                    placeholder={'Password'}
+                                    placeholderTextColor={colors.tint}
+                                    secureTextEntry={true}
+                                    style={[styles.input, {
+                                        paddingRight: layout.paddingHorizontal,
+                                    }]}
+                                />
+                                <Image
+                                    style={styles.inputIcon}
+                                    source={require('../../assets/icons/appearance.png')}
+                                />
+                            </View>
+                        </LinearGradient>
+
+                        <LinearGradient
+                            colors={[colors.yellow, colors.orange, colors.pink]}
+                            start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
+                            style={styles.signupContainer}
                         >
                             <TouchableOpacity
                                 activeOpacity={1}
-                                style={styles.signupContainer}
                                 onPress={() => this._handleSignUp()}
                             >
                                 <Text
@@ -77,7 +100,7 @@ export default class SignUp extends Component {
                             </Text>
                             </TouchableOpacity>
                         </LinearGradient>
-                        
+
                     </View>
                     <View
                         style={styles.alternativesContainer}
@@ -85,7 +108,7 @@ export default class SignUp extends Component {
                         <TouchableOpacity
                             activeOpacity={1}
                             style={styles.loginContainer}
-                            onPress={() => this._handleSignUp()}
+                            onPress={() => this._handleLogIn()}
                         >
                             <Text
                                 style={styles.loginText}
@@ -123,27 +146,31 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         marginHorizontal: layout.paddingHorizontal,
     },
-    inputContainer: {
-        flexDirection: 'row',
+    gradientContainer: {
         height: 50,
-        borderRadius: 5,
         marginBottom: 10,
-        paddingHorizontal: layout.paddingHorizontal,
-        borderBottomWidth: 3,
-        borderBottomColor: 'rgba(0,0,0,0.3)'
+    },
+    inputContainer: {
+        height: 46,
+        flexDirection: 'row',
+        paddingHorizontal: layout.paddingHorizontal-10,
+        backgroundColor: colors.background
     },
     signupContainer: {
         height: 50,
         marginTop: 20,
         justifyContent: 'center',
         borderRadius: 5,
-        borderWidth: 2,
-        borderColor: 'rgba(0,0,0,0.3)',
     },
     signupText: {
+        paddingVertical: 13,
+        borderRadius: 3,
+        overflow: 'hidden',
+        marginHorizontal: 2,
         fontWeight: 'bold',
-        color: colors.pink,
         textAlign: 'center',
+        color: colors.pink,
+        backgroundColor: colors.background,
     },
     input: {
         flex: 1,
@@ -153,7 +180,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         resizeMode: 'contain',
-        tintColor: colors.background,
+        tintColor: colors.tint,
         alignSelf: 'center'
     },
     alternativesContainer: {
