@@ -43,7 +43,6 @@ export default class Post extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safe}>
-                <View style={styles.container}>
                     <NavigationBar 
                         leftIconImage={require('../../assets/icons/left_arrow.png')}
                         leftIconOnPress={() => this._onBackPress()}
@@ -51,6 +50,7 @@ export default class Post extends Component {
                         rightIconImage={REPEAT_ICON[this.state.repeat]}
                         rightIconOnPress={() => this._onRepeatPress()}
                     />
+                <View style={styles.container}>
                     <View style={styles.profileContainer}>
                         <Image 
                             source={usersList[0].image}
