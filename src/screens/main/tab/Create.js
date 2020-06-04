@@ -11,18 +11,25 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class Create extends React.Component {
 
     state = {
-        //textInput: undefined,
         maxLength: 140,
         currentLength: 0,
+        clear: false,
     }
 
     _handleCancel() {
-        //this.state._textInput.setNativeProps({text: ''});
+        this.setState({ 
+            clear: true,
+            currentLength: 0
+        })
         this.props.navigation.goBack()
     }
 
-    _onChangeText(text) {
-        this.setState({ currentLength: text.length })
+    _onChangeText = (text) => {
+        if(this.state.clear) { this.setState({ clear: false }) }
+        this.setState({
+            text: text,
+            currentLength: text.length
+        })
     }
 
     _handleRecord() {
@@ -33,10 +40,7 @@ export default class Create extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={{
-                flex: 1,
-                backgroundColor: colors.safearea
-            }}>
+            <SafeAreaView style={styles.safearea}>
                 <NavigationBar
                     leftIconOnPress={() => this._handleCancel()}
                     leftIconImage={require('../../../assets/icons/cancel.png')}
@@ -45,65 +49,37 @@ export default class Create extends React.Component {
                 />
                 <Separator />
                 <View
-                    style={{
-                        paddingHorizontal: layout.paddingHorizontal,
-                        paddingVertical: layout.paddingHorizontal/2,
-                        backgroundColor: colors.background,
-                    }}
+                    style={styles.container}
                 >
-                    <MultilineInput 
-                        style={{
-                            flexWrap: 'wrap',
-                            flexDirection: 'column',
-                            justifyContent: "flex-start",
-                            textAlignVertical: "top",
-                        }}
+                    <MultilineInput
+                        style={styles.textInput}
                         maxLines={1}
                         maxLength={this.state.maxLength}
                         placeholder={'What\'s on your mind?'}
-                        //ref={component => this.state._textInput = component }
-                        onChangeText={(text) => this._onChangeText(text)}
+                        onChangeText={this._onChangeText}
+                        clear={this.state.clear}
                     />
                     <Text
-                        style={{
-                            color: colors.gray,
-                            alignSelf: 'flex-end'
-                        }}
+                        style={styles.counter}
                     >{this.state.currentLength}/{this.state.maxLength}</Text>
                 </View>
                 <Separator />
                 <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => this._handleRecord()}
-                    style={{
-                        height: layout.inputContainerHeight,
-                        paddingHorizontal: layout.paddingHorizontal,
-                        backgroundColor: colors.background,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}
+                    style={styles.optionContainer}
                 >
                     <Image
-                        style={{
-                            height: 40,
-                            width: 40,
-                        }}
+                        style={styles.optionIcon}
                         source={require('../../../assets/icons/mic.png')}
                     />
                     <Text
-                        style={{
-                            flex: 1,
-                            marginHorizontal: 10,
-                            fontWeight: 'bold',
-                        }}
+                        style={styles.optionText}
                     >
                         Record
                     </Text>
                     <Image
-                        style={{
-                            height: 20,
-                            width: 20,
-                        }}
+                        style={styles.optionArrow}
                         source={require('../../../assets/icons/right_arrow.png')}
                     />
                 </TouchableOpacity>
@@ -111,3 +87,45 @@ export default class Create extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    safearea: {
+        flex: 1,
+        backgroundColor: colors.safearea
+    },
+    container: {
+        paddingHorizontal: layout.paddingHorizontal,
+        paddingVertical: layout.paddingHorizontal / 2,
+        backgroundColor: colors.background,
+    },
+    textInput: {
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        justifyContent: "flex-start",
+        textAlignVertical: "top",
+    },
+    counter: {
+        color: colors.gray,
+        alignSelf: 'flex-end'
+    },
+    optionContainer: {
+        height: layout.inputContainerHeight,
+        paddingHorizontal: layout.paddingHorizontal,
+        backgroundColor: colors.background,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    optionIcon: {
+        height: 40,
+        width: 40,
+    },
+    optionText: {
+        flex: 1,
+        marginHorizontal: 10,
+        fontWeight: 'bold',
+    },
+    optionArrow: {
+        height: 20,
+        width: 20,
+    },
+})
