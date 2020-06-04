@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button } from 'react-native'
+import { Text, View, StyleSheet, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../../components/NavigationBar'
 import Separator from '../../../components/Separator'
@@ -22,11 +22,45 @@ export default class Create extends React.Component {
                 <Separator />
                 <View
                     style={{
-                        height: 30,
+                        height: layout.inputContainerHeight*2,
                         backgroundColor: colors.background
                     }}
                 >
 
+                </View>
+                <Separator />
+                <View
+                    style={{
+                        height: layout.inputContainerHeight,
+                        paddingHorizontal: layout.paddingHorizontal,
+                        backgroundColor: colors.background,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Image 
+                        style={{
+                            height: 40,
+                            width: 40,
+                        }}
+                        source={require('../../../assets/icons/mic.png')}
+                    />
+                    <Text
+                        style={{
+                            flex: 1,
+                            marginHorizontal: 10,
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Record
+                    </Text>
+                    <Image 
+                        style={{
+                            height: 20,
+                            width: 20,
+                        }}
+                        source={require('../../../assets/icons/right_arrow.png')}
+                    />
                 </View>
             </SafeAreaView>
         ); 
