@@ -10,7 +10,7 @@ export default function Switcher(props) {
     return (
         <Stack.Navigator headerMode='none'>
             {
-                false ? (
+                true ? (
                     <Stack.Screen name='Main' component={Main}/>
                 ) : (
                     <Stack.Screen name='Auth' component={Auth}/>
