@@ -23,6 +23,7 @@ export const colors = {
 
 export const layout = {
   paddingHorizontal: 20,
+  inputContainerHeight: 50,
 
   deviceWidth: Dimensions.get('window').width, //full width
   deviceHeight: Dimensions.get('window').height, //full height

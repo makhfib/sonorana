@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     gradientContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         marginBottom: 10,
     },
     inputContainer: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     buttonContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         marginTop: 20,
         justifyContent: 'center',
         borderRadius: 5,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     alternativeButtonContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',

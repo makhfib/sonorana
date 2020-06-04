@@ -14,13 +14,13 @@ const iconSize = 30;
 export default class BottomTab extends Component {
     render() {
         return (
-            <Tab.Navigator initialRouteName='Home' tabBarOptions={{
+            <Tab.Navigator initialRouteName='Home' lazy={false} tabBarOptions={{
                 inactiveTintColor: colors.gray,
                 activeTintColor: colors.tint,
                 showLabel: false,
                 tabStyle: {
                     backgroundColor: colors.background,
-                }
+                },
             }}>
                 <Tab.Screen name='Home' component={Home} options={{
                     tabBarIcon: ({ color, focused }) => (<Image
@@ -50,7 +50,7 @@ export default class BottomTab extends Component {
                         }
                         style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />),
-                    
+                    tabBarVisible: false,
                 }} />
                 <Tab.Screen name='Profile' component={Profile} options={{
                     tabBarIcon: ({ color, focused }) => (<Image

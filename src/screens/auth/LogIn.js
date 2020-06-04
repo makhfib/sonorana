@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
-        height: 50,
+        height: layout.inputContainerHeight,
         borderRadius: 5,
         marginBottom: 10,
         paddingHorizontal: layout.paddingHorizontal,
         backgroundColor: 'rgba(0,0,0,0.3)'
     },
     loginContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         borderRadius: 5,
         justifyContent: 'center',
         borderRadius: 5,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         color: colors.background,
     },
     signupContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',

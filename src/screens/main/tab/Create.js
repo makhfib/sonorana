@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Button } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class Create extends React.Component {
@@ -8,6 +8,10 @@ export default class Create extends React.Component {
         return (
             <SafeAreaView>
                 <Text>Create</Text>
+                <Button
+                    title={'Go back'}
+                    onPress={() => this.props.navigation.goBack()}
+                />
             </SafeAreaView>
         ); 
     }

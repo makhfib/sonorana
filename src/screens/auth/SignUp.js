@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: layout.paddingHorizontal,
     },
     gradientContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         marginBottom: 10,
     },
     inputContainer: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background
     },
     signupContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         marginTop: 20,
         justifyContent: 'center',
         borderRadius: 5,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     loginContainer: {
-        height: 50,
+        height: layout.inputContainerHeight,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
