@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import Slider from "react-native-slider"
 import { SafeAreaView } from 'react-native-safe-area-context';
+import NavigationBar from '../../components/NavigationBar'
 
 import { colors } from '../../constants/Styles'
 import { layout } from '../../constants/Styles'
@@ -9,11 +10,22 @@ import { clipsList } from '../../data/clipsList'
 import { usersList } from '../../data/usersList'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+const REPEAT_ICON = [
+    require('../../assets/icons/play_all_repeat.png'), // repeat all
+    require('../../assets/icons/shuffle_all.png'), // shuffle
+    require('../../assets/icons/repeat_one.png'), // repeat one
+]
+
 export default class Post extends Component {
     state = {
         liked: false,
         value: 0.2,
         playing: false,
+        repeat: 0,
+    }
+
+    _onBackPress() {
+        this.props.navigation.goBack()
     }
 
     _onLikePress = () => {
@@ -24,80 +36,78 @@ export default class Post extends Component {
         this.setState({ playing: !this.state.playing })
     }
 
+    _onRepeatPress() {
+        this.setState({ repeat: (this.state.repeat+1)%3 })
+    }
+
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.headerContainer}>
-                    <TouchableOpacity activeOpacity={1}>
-                        <Image 
-                            source={require('../../assets/icons/left_arrow.png')}
-                            style={styles.headerImage}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.descriptionText}>{usersList[0].user}</Text>
-                    <TouchableOpacity activeOpacity={1}>
-                        <Image 
-                            source={require('../../assets/icons/shuffle_all.png')}
-                            style={styles.headerImage}
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.profileContainer}>
-                    <Image 
-                        source={usersList[0].image}
-                        style={styles.profileImage}
+            <SafeAreaView style={styles.safe}>
+                <View style={styles.container}>
+                    <NavigationBar 
+                        leftIconImage={require('../../assets/icons/left_arrow.png')}
+                        leftIconOnPress={() => this._onBackPress()}
+                        title={require('../../assets/brand/Black-Text.png')}
+                        rightIconImage={REPEAT_ICON[this.state.repeat]}
+                        rightIconOnPress={() => this._onRepeatPress()}
                     />
-                </View>
-                <View style={styles.descriptionContainer}>
-                    <Text style={styles.descriptionText}>{clipsList[0].p_description}</Text>
-                </View>
-                <View style={styles.sliderContainer}>
-                    <Text style={styles.durationText}>0:45</Text>
-                    <Slider
-                        style={styles.slider}
-                        value={this.state.value}
-                        onValueChange={value => this.setState({ value })}
-                        maximumTrackTintColor='lightgray'
-                        minimumTrackTintColor={colors.pink}
-                        thumbStyle={styles.thumb}
-                        trackStyle={styles.track}
-                    />
-                    <Text style={styles.durationText}>-{clipsList[0].p_duration}</Text>
-                </View>
-                <View style={styles.controls}>
-                    <TouchableOpacity activeOpacity={1}>
+                    <View style={styles.profileContainer}>
                         <Image 
-                            source={require('../../assets/icons/rewind.png')}
-                            style={styles.buttonImage}
+                            source={usersList[0].image}
+                            style={styles.profileImage}
                         />
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} onPress={this._onPlayPausePress}>
-                        <Image 
-                            source={ this.state.playing 
-                                ? require('../../assets/icons/pause_circle.png')
-                                : require('../../assets/icons/play_circle.png')}
-                            style={styles.playPauseImage}
+                    </View>
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.descriptionText}>{clipsList[0].p_description}</Text>
+                    </View>
+                    <View style={styles.sliderContainer}>
+                        <Text style={styles.durationText}>0:45</Text>
+                        <Slider
+                            style={styles.slider}
+                            value={this.state.value}
+                            onValueChange={value => this.setState({ value })}
+                            maximumTrackTintColor='lightgray'
+                            minimumTrackTintColor={colors.pink}
+                            thumbStyle={styles.thumb}
+                            trackStyle={styles.track}
                         />
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1}>
-                        <Image 
-                            source={require('../../assets/icons/fastforward.png')}
-                            style={styles.buttonImage}
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.actions}>
-                    <TouchableOpacity activeOpacity={1} onPress={this._onLikePress}>
-                        <Image 
-                            source={ this.state.liked
-                                ? require('../../assets/icons/liked.png')
-                                : require('../../assets/icons/like.png')}
-                            style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
-                        />
-                        <View style={styles.likes}>
-                            <Text style={styles.actionsText}>{clipsList[0].p_numLikes}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        <Text style={styles.durationText}>-{clipsList[0].p_duration}</Text>
+                    </View>
+                    <View style={styles.controls}>
+                        <TouchableOpacity activeOpacity={1}>
+                            <Image 
+                                source={require('../../assets/icons/rewind.png')}
+                                style={styles.buttonImage}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={this._onPlayPausePress}>
+                            <Image 
+                                source={ this.state.playing 
+                                    ? require('../../assets/icons/pause_circle.png')
+                                    : require('../../assets/icons/play_circle.png')}
+                                style={styles.playPauseImage}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1}>
+                            <Image 
+                                source={require('../../assets/icons/fastforward.png')}
+                                style={styles.buttonImage}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.actions}>
+                        <TouchableOpacity activeOpacity={1} onPress={this._onLikePress}>
+                            <Image 
+                                source={ this.state.liked
+                                    ? require('../../assets/icons/liked.png')
+                                    : require('../../assets/icons/like.png')}
+                                style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
+                            />
+                            <View style={styles.likes}>
+                                <Text style={styles.actionsText}>{clipsList[0].p_numLikes}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </SafeAreaView>
         )
@@ -105,21 +115,15 @@ export default class Post extends Component {
 }
 
 const styles = StyleSheet.create({
+    safe: {
+        flex: 1,
+        backgroundColor: colors.safearea,
+    },
     container: {
         flex: 1,
         paddingLeft: layout.paddingHorizontal,
         paddingRight: layout.paddingHorizontal,
         backgroundColor: colors.background,
-    },
-    headerContainer: {
-        flex: 0.07,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    headerImage: {
-        width: 33, 
-        height: 33,
     },
     profileContainer: {
         flex: 0.33,
