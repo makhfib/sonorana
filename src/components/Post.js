@@ -70,7 +70,6 @@ export default class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 10,
         backgroundColor: colors.background,
     },
     headerContainer: {
