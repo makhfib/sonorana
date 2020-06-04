@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { colors } from '../constants/Styles'
+import { layout } from '../constants/Styles'
 
 export default class Post extends Component {
     state = {
@@ -19,16 +20,16 @@ export default class Post extends Component {
 
     render() {
         return (
-            <View>
-                <View style={styles.container}>
+            <View style={styles.container}>
+                <View style={styles.headerContainer}>
                     <View>
                         <Image 
-                            source={require('../assets/fake/daruma-draw.png')}
+                            source={this.props.user.image}
                             style={styles.profileImage}
                         />
                     </View>
                     <TouchableOpacity activeOpacity={1} style={styles.userContainer}>
-                        <Text maxLength = {15} style={styles.boldText}>user</Text>
+                        <Text maxLength = {15} style={styles.boldText}>{this.props.user.user}</Text>
                     </TouchableOpacity >
                     <TouchableOpacity activeOpacity={1} style={styles.likeButton} onPress={()=>this._onLikePress()}>
                         <Image 
@@ -39,17 +40,17 @@ export default class Post extends Component {
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity activeOpacity={1}  style={styles.container}>
+                <TouchableOpacity activeOpacity={1}  style={styles.bodyContainer}>
                     <ImageBackground 
                         source={require('../assets/fake/fake-audio.png')} 
                         style={styles.imageBackground}
                     >
                         <View style={styles.infoContainer}>
                             <View style={styles.textContainer}>
-                                <Text style={styles.boldText}>«Quien con monstruos lucha, cuide de convertirse a su vez en monstruo.»</Text>
+                                <Text style={styles.boldText}>{this.props.description}</Text>
                             </View>
                             <View>
-                                <Text>01:23</Text>
+                                <Text>{this.props.duration}</Text>
                             </View>
                         </View>
                     </ImageBackground>
@@ -69,7 +70,15 @@ export default class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row'
+        marginBottom: 10,
+        backgroundColor: colors.background,
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: layout.paddingHorizontal,
+        paddingRight: layout.paddingHorizontal-5,
+        borderBottomWidth: 0.5,
+        borderColor: colors.lightgray,
     },
     profileImage: {
         width: 25, 
@@ -86,8 +95,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     likeButton: {
+        flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'center'
+    },
+    bodyContainer: {
+        flexDirection: 'row',
+        paddingLeft: 5,
     },
     likeImage: {
         width: 30, 
@@ -98,17 +111,19 @@ const styles = StyleSheet.create({
     infoContainer: {
         flex: 1, 
         padding: 9, 
-        paddingBottom: 14
+        paddingHorizontal: layout.paddingHorizontal+9-5,
+        paddingBottom: 14,
     },
     textContainer: {
         paddingBottom: 5
     },
     imageBackground: {
         flex: 1, 
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     playPauseButton: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingRight: layout.paddingHorizontal-5,
     },
     playPauseImage: {
         width: 30, 
