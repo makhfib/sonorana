@@ -1,7 +1,8 @@
 import React from 'react'
 import { FlatList, Text, View, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import NavigationBar from '../../../components/NavigationBar'
+import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
 import { clipsList } from '../../../data/clipsList'
 import { usersList } from '../../../data/usersList'
@@ -12,6 +13,9 @@ export default class Home extends React.Component {
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: colors.lightgray}}>
+                    <NavigationBar 
+                        title={require('../../../assets/brand/Black-Text.png')}
+                    />
                     <FlatList
                         data={clipsList}
                         renderItem={({ item }) => (
@@ -24,6 +28,7 @@ export default class Home extends React.Component {
                                 userId={item.u_id}
                             />
                         )}
+                        ItemSeparatorComponent={Separator}
                     />
             </SafeAreaView>
         ); 
