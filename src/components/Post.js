@@ -38,9 +38,6 @@ export default class Post extends Component {
                                 : require('../assets/icons/like.png')}
                             style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
                         />
-                        <View>
-                            <Text style={styles.likeText}>{this.props.likes > 0 ? this.props.likes : ""}</Text>
-                        </View>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity activeOpacity={1}  style={styles.bodyContainer}>
@@ -73,10 +70,15 @@ export default class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: layout.paddingHorizontal,
+        marginBottom: 10,
+        backgroundColor: colors.background,
     },
     headerContainer: {
         flexDirection: 'row',
+        paddingHorizontal: layout.paddingHorizontal,
+        paddingRight: layout.paddingHorizontal-5,
+        borderBottomWidth: 0.5,
+        borderColor: colors.lightgray,
     },
     profileImage: {
         width: 25, 
@@ -93,12 +95,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     likeButton: {
-        flex: 0.64,
         flexDirection: 'row',
         alignItems: 'center', 
     },
     bodyContainer: {
         flexDirection: 'row',
+        paddingLeft: 5,
     },
     likeImage: {
         width: 30, 
@@ -106,23 +108,22 @@ const styles = StyleSheet.create({
         resizeMode: 'contain', 
         backgroundColor: colors.background
     },
-    likeText: {
-        color: colors.gray
-    },
     infoContainer: {
         flex: 1, 
         padding: 9, 
-        paddingBottom: 14
+        paddingHorizontal: layout.paddingHorizontal+9-5,
+        paddingBottom: 14,
     },
     textContainer: {
         paddingBottom: 5
     },
     imageBackground: {
         flex: 1, 
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     playPauseButton: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingRight: layout.paddingHorizontal-5,
     },
     playPauseImage: {
         width: 30, 
