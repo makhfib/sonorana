@@ -26,7 +26,7 @@ export default class NavigationBar extends Component {
                                 >
                                     <Image
                                         style={styles.icon}
-                                        source={require('../assets/icons/left_arrow.png')}
+                                        source={this.props.leftIconImage}
                                     />
                                 </TouchableOpacity>
                                 : <></>
@@ -61,11 +61,11 @@ export default class NavigationBar extends Component {
                             this.props.rightIconImage !== undefined ?
 
                                 <TouchableOpacity
-                                    onPress={() => console.log('Not handled')}
+                                    onPress={() => this.props.rightIconOnPress()}
                                 >
                                     <Image
                                         style={styles.icon}
-                                        source={require('../assets/icons/left_arrow.png')}
+                                        source={this.props.rightIconImage}
                                     />
                                 </TouchableOpacity>
                                 : <></>
