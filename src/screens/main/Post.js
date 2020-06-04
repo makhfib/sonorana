@@ -27,6 +27,21 @@ export default class Post extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <View style={styles.headerContainer}>
+                    <TouchableOpacity activeOpacity={1}>
+                        <Image 
+                            source={require('../../assets/icons/left_arrow.png')}
+                            style={styles.headerImage}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.descriptionText}>{usersList[0].user}</Text>
+                    <TouchableOpacity activeOpacity={1}>
+                        <Image 
+                            source={require('../../assets/icons/shuffle_all.png')}
+                            style={styles.headerImage}
+                        />
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.profileContainer}>
                     <Image 
                         source={usersList[0].image}
@@ -96,8 +111,18 @@ const styles = StyleSheet.create({
         paddingRight: layout.paddingHorizontal,
         backgroundColor: colors.background,
     },
+    headerContainer: {
+        flex: 0.07,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    headerImage: {
+        width: 33, 
+        height: 33,
+    },
     profileContainer: {
-        flex: 0.4,
+        flex: 0.33,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -145,7 +170,7 @@ const styles = StyleSheet.create({
     controls: {
         flex: 0.3,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
     },
     buttonImage: {
@@ -153,8 +178,6 @@ const styles = StyleSheet.create({
         height: 50,
     },
     playPauseImage: {
-        marginLeft: 40,
-        marginRight: 40,
         width: 75, 
         height: 75,
     },
