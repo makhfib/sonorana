@@ -1,11 +1,35 @@
 import React from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text, View, StyleSheet, Image, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../../components/NavigationBar'
+import MultilineInput from '../../../components/MultilineInput'
 import Separator from '../../../components/Separator'
 import { colors, layout } from '../../../constants/Styles'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 export default class Create extends React.Component {
+
+    state = {
+        //textInput: undefined,
+        maxLength: 140,
+        currentLength: 0,
+    }
+
+    _handleCancel() {
+        //this.state._textInput.setNativeProps({text: ''});
+        this.props.navigation.goBack()
+    }
+
+    _onChangeText(text) {
+        this.setState({ currentLength: text.length })
+    }
+
+    _handleRecord() {
+        this.props.navigation.navigate('Main', {
+            screen: 'Record'
+        })
+    }
 
     render() {
         return (
@@ -13,8 +37,8 @@ export default class Create extends React.Component {
                 flex: 1,
                 backgroundColor: colors.safearea
             }}>
-                <NavigationBar 
-                    leftIconOnPress={() => this.props.navigation.goBack()}
+                <NavigationBar
+                    leftIconOnPress={() => this._handleCancel()}
                     leftIconImage={require('../../../assets/icons/cancel.png')}
                     rightIconOnPress={() => this._handlePost()}
                     rightIconImage={require('../../../assets/icons/send.png')}
@@ -22,14 +46,35 @@ export default class Create extends React.Component {
                 <Separator />
                 <View
                     style={{
-                        height: layout.inputContainerHeight*2,
-                        backgroundColor: colors.background
+                        paddingHorizontal: layout.paddingHorizontal,
+                        paddingVertical: layout.paddingHorizontal/2,
+                        backgroundColor: colors.background,
                     }}
                 >
-
+                    <MultilineInput 
+                        style={{
+                            flexWrap: 'wrap',
+                            flexDirection: 'column',
+                            justifyContent: "flex-start",
+                            textAlignVertical: "top",
+                        }}
+                        maxLines={1}
+                        maxLength={this.state.maxLength}
+                        placeholder={'What\'s on your mind?'}
+                        //ref={component => this.state._textInput = component }
+                        onChangeText={(text) => this._onChangeText(text)}
+                    />
+                    <Text
+                        style={{
+                            color: colors.gray,
+                            alignSelf: 'flex-end'
+                        }}
+                    >{this.state.currentLength}/{this.state.maxLength}</Text>
                 </View>
                 <Separator />
-                <View
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => this._handleRecord()}
                     style={{
                         height: layout.inputContainerHeight,
                         paddingHorizontal: layout.paddingHorizontal,
@@ -38,7 +83,7 @@ export default class Create extends React.Component {
                         alignItems: 'center',
                     }}
                 >
-                    <Image 
+                    <Image
                         style={{
                             height: 40,
                             width: 40,
@@ -54,15 +99,15 @@ export default class Create extends React.Component {
                     >
                         Record
                     </Text>
-                    <Image 
+                    <Image
                         style={{
                             height: 20,
                             width: 20,
                         }}
                         source={require('../../../assets/icons/right_arrow.png')}
                     />
-                </View>
+                </TouchableOpacity>
             </SafeAreaView>
-        ); 
+        );
     }
 }
