@@ -101,11 +101,6 @@ export default class SignUp extends Component {
                             </Text>
                             </TouchableOpacity>
                         </LinearGradient>
-
-                    </View>
-                    <View
-                        style={styles.alternativesContainer}
-                    >
                         <TouchableOpacity
                             activeOpacity={1}
                             style={styles.loginContainer}
@@ -137,6 +132,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        minHeight: 100,
     },
     logo: {
         height: 160,
@@ -161,6 +157,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         justifyContent: 'center',
         borderRadius: 5,
+        marginBottom: 50,
     },
     signupText: {
         paddingVertical: 13,
@@ -183,13 +180,10 @@ const styles = StyleSheet.create({
         tintColor: colors.tint,
         alignSelf: 'center'
     },
-    alternativesContainer: {
-        flex: 1,
-        alignItems: 'stretch',
-        justifyContent: 'center',
-    },
     loginContainer: {
         height: layout.inputContainerHeight,
+        marginBottom: 50,
+        marginTop: 50,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',

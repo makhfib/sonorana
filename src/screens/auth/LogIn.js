@@ -72,10 +72,6 @@ export default class LogIn extends Component {
                                 LOG IN
                             </Text>
                         </TouchableOpacity>
-                    </View>
-                    <View
-                        style={styles.alternativesContainer}
-                    >
                         <TouchableOpacity
                             activeOpacity={1}
                             style={styles.forgotContainer}
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
         width: 160,
     },
     formContainer: {
-        flex: 1,
+        flex: 2,
         alignItems: 'stretch',
         marginHorizontal: layout.paddingHorizontal,
     },
@@ -137,6 +133,7 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         height: layout.inputContainerHeight,
+        marginBottom: 50,
         borderRadius: 5,
         justifyContent: 'center',
         borderRadius: 5,
@@ -159,11 +156,6 @@ const styles = StyleSheet.create({
         tintColor: colors.background,
         alignSelf: 'center'
     },
-    alternativesContainer: {
-        flex: 1,
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-    },
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
@@ -180,7 +172,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        marginHorizontal: layout.paddingHorizontal,
         backgroundColor: colors.background,
         alignContent: 'center',
     },
