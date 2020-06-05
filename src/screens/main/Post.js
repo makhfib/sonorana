@@ -16,12 +16,11 @@ const REPEAT_ICON = [
 
 export default class Post extends Component {
     state = {
-        liked: this.props.route.params.liked,
-        value: 0.2,
         p_id: this.props.route.params.id,
+        u_liked: this.props.route.params.item.u_liked,
+        value: 0.2,
         playing: false,
         repeat: 0,
-        u_id: this.props.route.params.posts[this.props.route.params.id].u_id,
     }
 
     _onBackPress() {
@@ -29,7 +28,7 @@ export default class Post extends Component {
     }
 
     _onLikePress = () => {
-        this.setState({ liked: !this.state.liked })
+        this.setState({ u_liked: !this.state.u_liked })
     }
 
     _onPlayPausePress = () => {
@@ -41,24 +40,29 @@ export default class Post extends Component {
     }
 
     render() {
+        const {
+            item,
+            feed
+        } = this.props.route.params
+
         return (
             <SafeAreaView style={styles.safe}>
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this._onBackPress()}
-                    title={this.props.route.params.users[this.state.u_id].user}
+                    title={item.u_username}
                     rightIconImage={REPEAT_ICON[this.state.repeat]}
                     rightIconOnPress={() => this._onRepeatPress()}
                 />
                 <View style={styles.container}>
                     <View style={styles.profileContainer}>
                         <Image 
-                            source={this.props.route.params.users[this.state.u_id].image}
+                            source={{uri: item.u_photo}}
                             style={styles.profileImage}
                         />
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{this.props.route.params.posts[this.state.p_id].p_description}</Text>
+                        <Text style={styles.descriptionText}>{item.p_description}</Text>
                     </View>
                     <View style={styles.sliderContainer}>
                         <Text style={styles.durationText}>0:45</Text>
@@ -71,7 +75,7 @@ export default class Post extends Component {
                             thumbStyle={styles.thumb}
                             trackStyle={styles.track}
                         />
-                        <Text style={styles.durationText}>-{this.props.route.params.posts[this.state.p_id].p_duration}</Text>
+                        <Text style={styles.durationText}>-{item.p_duration}</Text>
                     </View>
                     <View style={styles.controls}>
                         <TouchableOpacity activeOpacity={1}>
@@ -98,13 +102,13 @@ export default class Post extends Component {
                     <View style={styles.actionsContainer}>
                         <TouchableOpacity activeOpacity={1} onPress={this._onLikePress}>
                             <Image 
-                                source={ this.state.liked
+                                source={ this.state.u_liked
                                     ? require('../../assets/icons/liked.png')
                                     : require('../../assets/icons/like.png')}
-                                style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
+                                style={[styles.likeImage, {tintColor: this.state.u_liked ? colors.pink : colors.tint}]}
                             />
                             <View style={styles.likes}>
-                                <Text style={[styles.actionsText, { color: this.state.liked ? colors.pink : colors.gray }]}>{this.props.route.params.posts[this.state.p_id].p_numLikes}</Text>
+                                <Text style={[styles.actionsText, { color: this.state.u_liked ? colors.pink : colors.tint }]}>{item.p_numLikes}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -143,6 +147,7 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontWeight: 'bold',
         fontSize: 14,
+        textAlign: 'center'
     },
     sliderContainer: {
         flex: 0.1,
@@ -200,7 +205,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     actionsText: {
-        fontSize: 11,
+        fontSize: 14,
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',

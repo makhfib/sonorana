@@ -159,9 +159,8 @@ const styles = StyleSheet.create({
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
-        justifyContent: 'center',
+        alignSelf:'center',
         marginBottom: 50,
-        marginHorizontal: layout.paddingHorizontal,
     },
     forgotText: {
         fontWeight: 'bold',

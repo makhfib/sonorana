@@ -43,11 +43,12 @@ export default class NavigationBar extends Component {
                                         this.props.title.constructor === String
                                             ? <Text
                                                 style={styles.text}
+                                                numberOfLines={1}
                                             >
                                                 {this.props.title}
                                             </Text>
                                             : <Image
-                                                style={[styles.icon, { width: '100%' }]}
+                                                style={[{ height: 40, resizeMode: 'contain'}]}
                                                 source={this.props.title}
                                             />
                                     }
@@ -98,15 +99,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     leftItemContainer: {
-        flex: 1,
+        flex: 0.25,
     },
     middleItemContainer: {
         flex: 1,
+        height: 30,
         justifyContent: 'center',
         alignItems: 'center',
     },
     rightItemContainer: {
-        flex: 1,
+        flex: 0.25,
         justifyContent: 'center',
         alignItems: 'flex-end',
     },
@@ -116,6 +118,6 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
 })
