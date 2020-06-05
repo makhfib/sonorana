@@ -14,7 +14,7 @@ export default class MainStack extends Component {
     render() {
 
         return (
-            <Stack.Navigator headerMode='none' initialRouteName='BottomTab'>
+            <Stack.Navigator headerMode='none' initialRouteName='Record'>
                 <Stack.Screen name='BottomTab' component={BottomTab} />
                 <Stack.Screen name='Post' component={Post} />
                 <Stack.Screen name='Record' component={Record} />
