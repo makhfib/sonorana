@@ -96,16 +96,26 @@ export default class Profile extends Component {
                         </View>
                     </View>
                     <View style={styles.basicInfoContainer}>
-                        <Text style={{ fontWeight: 'bold' }}>
+                        <Text style={{ fontWeight: 'bold', marginBottom: 10, }}>
                             {u_name}
                         </Text>
-                        <Text style={{ marginVertical: 10, }}>
-                            {u_description}
-                        </Text>
-                        <Text style={{ color: colors.blue }}>
-                            {u_website}
-                        </Text>
-                        <View style={{ flexDirection: 'row', marginVertical: 10, }}>
+                        {
+                            u_description !== null
+                                ? <Text style={{ marginBottom: 10, }}>
+                                    {u_description}
+                                </Text>
+                                : <></>
+
+                        }
+                        {
+                            u_website !== null
+                                ? <Text style={{ color: colors.blue, marginBottom: 10, }}>
+                                    {u_website}
+                                </Text>
+                                : <></>
+
+                        }
+                        <View style={{ flexDirection: 'row', marginBottom: 10, }}>
                             <Text style={{ fontWeight: 'bold' }}>
                                 {u_numFollowing}
                             </Text>
