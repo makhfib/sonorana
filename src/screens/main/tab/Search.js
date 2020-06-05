@@ -5,7 +5,6 @@ import SearchBar from '../../../components/SearchBar'
 import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
 import { clipsList } from '../../../data/clipsList'
-import { usersList } from '../../../data/usersList'
 import { colors, layout } from '../../../constants/Styles'
 import SectionHeader from '../../../components/SectionHeader';
 import Profile from '../../../components/Profile';

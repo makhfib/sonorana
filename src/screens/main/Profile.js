@@ -9,7 +9,6 @@ import Separator from '../../components/Separator';
 import SectionHeader from '../../components/SectionHeader';
 import Post from '../../components/Post';
 import Feed from '../../data/clipsList'
-import { usersList } from '../../data/usersList'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { goToURL } from '../../functions/utils'
 
@@ -24,15 +23,20 @@ export default class Profile extends Component {
 
     }
 
-    _onPostPress(id, liked) {
+    _onPostPress(item) {
         this.props.navigation.navigate('Main', {
             screen: 'Post',
-            params: {
-                id,
-                liked,
-                users: usersList,
-                posts: clipsList,
+            params: { 
+                item,
+                feed: Feed
             }
+        })
+    }
+
+    _onProfilePress(item) {
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: item
         })
     }
 
@@ -89,12 +93,12 @@ export default class Profile extends Component {
                     <Separator />
                     <View
                         style={[styles.images, {
-                            height: this._props().u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
+                            height: u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
                         }]}
                     >
                         <ImageBackground
                             style={styles.profileHeader}
-                            source={{ uri: u_header }}
+                            source={u_header !== null ? { uri: u_header } : null }
                         >
                         </ImageBackground>
                         <View
@@ -197,6 +201,7 @@ export default class Profile extends Component {
                             <Post
                                 item={item}
                                 onPostPress={this._onPostPress.bind(this)}
+                                onProfilePress={this._onProfilePress.bind(this)}
                                 navigation={this.props.navigation}
                             />
                         )}

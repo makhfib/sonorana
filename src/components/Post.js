@@ -57,7 +57,7 @@ export default class Post extends Component {
                 </View>
                 <TouchableOpacity activeOpacity={1} style={styles.bodyContainer} onPress={() => this._onPostPress()}>
                     <ImageBackground
-                        source={require('../assets/fake/fake-audio.png')}
+                        //source={require('../assets/fake/fake-audio.png')}
                         style={styles.imageBackground}
                     >
                         <View style={styles.infoContainer}>

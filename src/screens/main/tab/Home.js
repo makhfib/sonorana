@@ -5,7 +5,6 @@ import NavigationBar from '../../../components/NavigationBar'
 import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
 import Feed from '../../../data/clipsList'
-import { usersList } from '../../../data/usersList'
 import { colors, layout } from '../../../constants/Styles'
 
 export default class Home extends React.Component {
