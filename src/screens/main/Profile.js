@@ -9,6 +9,8 @@ import SectionHeader from '../../components/SectionHeader';
 import Post from '../../components/Post';
 import { clipsList } from '../../data/clipsList'
 import { usersList } from '../../data/usersList'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { goToURL } from '../../functions/utils'
 
 export default class Profile extends Component {
 
@@ -39,7 +41,8 @@ export default class Profile extends Component {
 
     _handleEdit() {
         this.props.navigation.navigate('Main', {
-            screen: 'EditProfile'
+            screen: 'EditProfile',
+            params: this._props()
         })
     }
 
@@ -109,9 +112,14 @@ export default class Profile extends Component {
                         }
                         {
                             u_website !== null
-                                ? <Text style={{ color: colors.blue, marginBottom: 10, }}>
-                                    {u_website}
-                                </Text>
+                                ? <TouchableOpacity
+                                    activeOpacity={0.5}
+                                    onPress={() => goToURL(u_website)}
+                                >
+                                    <Text style={{ color: colors.blue, marginBottom: 10, }}>
+                                        {u_website.replace(/https?:\/\//i, "")}
+                                    </Text>
+                                </TouchableOpacity>
                                 : <></>
 
                         }

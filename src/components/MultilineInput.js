@@ -24,7 +24,6 @@ export default class MultiLine extends Component {
 
   onSubmitEditing = () => {
     Keyboard.dismiss()
-    
   }
 
   onChangeText = text => {
@@ -48,7 +47,7 @@ export default class MultiLine extends Component {
         multiline={true}
         value={this.state.value}
         onChangeText={this.onChangeText}
-        //onKeyPress={this.onSubmitEditing}
+        onKeyPress={this.onSubmitEditing}
       />
     );
   }
