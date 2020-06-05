@@ -22,7 +22,9 @@ export default class Record extends Component {
         this.setState({ playing: !this.state.playing })
     }
 
-    _onRecord() {}
+    _onRecord() {
+        this.setState({ recording: !this.state.recording })
+    }
 
     _onStop() {}
 
@@ -68,7 +70,9 @@ export default class Record extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.recordButton} activeOpacity={1} onPress={() => this._onRecord()}>
                             <Image 
-                                source={require('../../assets/icons/mic.png')}
+                                source={ this.state.recording
+                                    ? require('../../assets/icons/pause.png')
+                                    : require('../../assets/icons/mic.png')}
                                 style={styles.recordImage}
                             />
                         </TouchableOpacity>
