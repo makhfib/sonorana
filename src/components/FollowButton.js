@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
 import { colors, layout } from '../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import ActionButton from './ActionButton'
 
 export default class FollowButton extends Component {
 
@@ -16,42 +17,22 @@ export default class FollowButton extends Component {
     render() {
         const { u_following } = this.state
         return (
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => this.onFollow()}
+            <ActionButton
+                icon={u_following
+                    ? require('../assets/icons/following_user.png')
+                    : require('../assets/icons/follow_user.png')
+                }
+                title={
+                    u_following
+                        ? 'Following'
+                        : 'Follow'
+                }
                 style={{
                     width: 120,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 5,
                     backgroundColor: u_following ? colors.green : colors.blue,
                 }}
-            >
-                <Image
-                    style={{
-                        width: 30,
-                        height: 30,
-                        tintColor: colors.lightgray
-                    }}
-                    source={u_following
-                        ? require('../assets/icons/following_user.png')
-                        : require('../assets/icons/follow_user.png')
-                    }
-                />
-                <Text
-                    style={{
-                        fontWeight: 'bold',
-                        color: colors.lightgray
-                    }}
-                >
-                    {
-                        u_following
-                            ? 'Following'
-                            : 'Follow'
-                    }
-                </Text>
-            </TouchableOpacity>
+                onPress={() => this.onFollow()}
+            />
         )
     }
 }
