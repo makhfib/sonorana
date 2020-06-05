@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextInput } from "react-native";
+import { TextInput, Keyboard } from "react-native";
 import PropTypes from "prop-types";
 
 export default class MultiLine extends Component {
@@ -22,6 +22,11 @@ export default class MultiLine extends Component {
     }
   }
 
+  onSubmitEditing = () => {
+    Keyboard.dismiss()
+    
+  }
+
   onChangeText = text => {
     const { maxLines, onChangeText } = this.props;
     const lines = text.split("\n");
@@ -29,6 +34,8 @@ export default class MultiLine extends Component {
     if (lines.length <= (maxLines || 1)) {
       onChangeText(text);
       this.setState({ value: text });
+    } else {
+      Keyboard.dismiss()
     }
   };
 
@@ -41,6 +48,7 @@ export default class MultiLine extends Component {
         multiline={true}
         value={this.state.value}
         onChangeText={this.onChangeText}
+        //onKeyPress={this.onSubmitEditing}
       />
     );
   }

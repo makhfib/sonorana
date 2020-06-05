@@ -12,7 +12,7 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={{flex: 1, backgroundColor: colors.lightgray}}>
+            <SafeAreaView style={{flex: 1, backgroundColor: colors.safearea}}>
                     <NavigationBar 
                         title={require('../../../assets/brand/Black-Text.png')}
                     />
