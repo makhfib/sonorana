@@ -15,6 +15,18 @@ export default class Profile extends Component {
         this.props.navigation.goBack()
     }
 
+    _handleEdit() {
+        this.props.navigation.navigate('Main', {
+            screen: 'EditProfile'
+        })
+    }
+
+    _handleSettings() {
+        this.props.navigation.navigate('Main', {
+            screen: 'Settings'
+        })
+    }
+
     render() {
         return (
             <>
@@ -28,7 +40,8 @@ export default class Profile extends Component {
                     style={{
                         height: 90 + 75 / 2,
                         justifyContent: 'flex-end',
-                        paddingHorizontal: layout.paddingHorizontal
+                        paddingHorizontal: layout.paddingHorizontal,
+                        backgroundColor: colors.background
                     }}
                 >
                     <ImageBackground
@@ -67,6 +80,7 @@ export default class Profile extends Component {
                     style={{
                         paddingHorizontal: layout.paddingHorizontal,
                         paddingVertical: layout.paddingHorizontal / 2,
+                        backgroundColor: colors.background
                     }}
                 >
                     <Text
@@ -105,13 +119,10 @@ export default class Profile extends Component {
                         </Text>
                         <Text
                             style={{
-                                
+                                marginRight: 10,
                             }}
                         >
                             {' following'}
-                        </Text>
-                        <Text>
-                            {'    '}
                         </Text>
                         <Text
                             style={{
@@ -138,9 +149,26 @@ export default class Profile extends Component {
                             icon={require('../../assets/icons/edit.png')}
                             title={'Edit profile'}
                             style={{
-                                paddingHorizontal: 30,
-                                backgroundColor: colors.blue
+                                backgroundColor: colors.blue,
+                                marginRight: 10,
                             }}
+                            onPress={() => this._handleEdit()}
+                        />
+                        <ActionButton
+                            icon={require('../../assets/icons/configuration.png')}
+                            title={'Settings'}
+                            style={{
+                                borderWidth: 2,
+                                borderColor: colors.blue,
+                                backgroundColor: colors.background
+                            }}
+                            iconStyle={{
+                                tintColor: colors.blue
+                            }}
+                            textStyle={{
+                                color: colors.blue
+                            }}
+                            onPress={() => this._handleSettings()}
                         />
                     </View>
                 </View>
