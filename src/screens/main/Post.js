@@ -6,8 +6,6 @@ import NavigationBar from '../../components/NavigationBar'
 
 import { colors } from '../../constants/Styles'
 import { layout } from '../../constants/Styles'
-import { clipsList } from '../../data/clipsList'
-import { usersList } from '../../data/usersList'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const REPEAT_ICON = [
@@ -43,22 +41,22 @@ export default class Post extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safe}>
-                <View style={styles.container}>
-                    <NavigationBar 
+                <NavigationBar
                         leftIconImage={require('../../assets/icons/left_arrow.png')}
                         leftIconOnPress={() => this._onBackPress()}
-                        title={require('../../assets/brand/Black-Text.png')}
+                        title={this.props.route.params.user.user}
                         rightIconImage={REPEAT_ICON[this.state.repeat]}
                         rightIconOnPress={() => this._onRepeatPress()}
-                    />
+                />
+                <View style={styles.container}>
                     <View style={styles.profileContainer}>
                         <Image 
-                            source={usersList[0].image}
+                            source={this.props.route.params.user.image}
                             style={styles.profileImage}
                         />
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{clipsList[0].p_description}</Text>
+                        <Text style={styles.descriptionText}>{this.props.route.params.post.p_description}</Text>
                     </View>
                     <View style={styles.sliderContainer}>
                         <Text style={styles.durationText}>0:45</Text>
@@ -71,7 +69,7 @@ export default class Post extends Component {
                             thumbStyle={styles.thumb}
                             trackStyle={styles.track}
                         />
-                        <Text style={styles.durationText}>-{clipsList[0].p_duration}</Text>
+                        <Text style={styles.durationText}>-{this.props.route.params.post.p_duration}</Text>
                     </View>
                     <View style={styles.controls}>
                         <TouchableOpacity activeOpacity={1}>
@@ -95,7 +93,7 @@ export default class Post extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.actions}>
+                    <View style={styles.actionsContainer}>
                         <TouchableOpacity activeOpacity={1} onPress={this._onLikePress}>
                             <Image 
                                 source={ this.state.liked
@@ -104,7 +102,7 @@ export default class Post extends Component {
                                 style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
                             />
                             <View style={styles.likes}>
-                                <Text style={styles.actionsText}>{clipsList[0].p_numLikes}</Text>
+                                <Text style={styles.actionsText}>{this.props.route.params.post.p_numLikes}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
     },
     profileContainer: {
-        flex: 0.33,
+        flex: 0.4,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -185,8 +183,9 @@ const styles = StyleSheet.create({
         width: 75, 
         height: 75,
     },
-    actions: {
+    actionsContainer: {
         flex: 0.1,
+        marginBottom: layout.paddingHorizontal,
         justifyContent: 'center',
         alignItems: 'center',
     },

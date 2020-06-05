@@ -20,14 +20,12 @@ export default class Home extends React.Component {
                         data={clipsList}
                         renderItem={({ item }) => (
                             <Post
-                                duration={item.p_duration}
-                                id={item.id}
+                                post={item}
                                 user={usersList[item.u_id]}
-                                description={item.p_description}
-                                date={item.p_date}
-                                userId={item.u_id}
+                                navigation={this.props.navigation}
                             />
                         )}
+                        keyExtractor={item => item.p_id}
                         ItemSeparatorComponent={Separator}
                     />
             </SafeAreaView>
