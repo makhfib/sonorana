@@ -1,7 +1,7 @@
 export const clipsList = [
     {
         p_duration: "03:20",
-        id: 0,
+        p_id: 0,
         p_audio: "https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3",
         p_description: "Comfort Fit - “Sorry”",
         p_date: '1 month ago',
@@ -10,7 +10,7 @@ export const clipsList = [
     },
     {
         p_duration: "00:27",
-        id: 1,
+        p_id: 1,
         p_audio: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
         p_description: "Big Buck Bunny",
         p_date: '1 month ago',
@@ -19,7 +19,7 @@ export const clipsList = [
     },
     {
         p_duration: "03:18",
-        id: 2,
+        p_id: 2,
         p_audio: "https://ia800304.us.archive.org/34/items/PaulWhitemanwithMildredBailey/PaulWhitemanwithMildredBailey-AllofMe.mp3",
         p_description: "Mildred Bailey – “All Of Me”",
         p_date: '1 month ago',
@@ -28,7 +28,7 @@ export const clipsList = [
     },
     {
         p_duration: "06:06",
-        id: 3,
+        p_id: 3,
         p_audio: "https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4",
         p_description: "Popeye - I don't scare",
         p_date: '1 month ago',
@@ -37,7 +37,7 @@ export const clipsList = [
     },
     {
         p_duration: "02:28",
-        id: 4,
+        p_id: 4,
         p_audio: "https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Podington_Bear_-_Rubber_Robot.mp3",
         p_description: "Podington Bear - “Rubber Robot”",
         p_date: '4 month ago',
@@ -46,7 +46,7 @@ export const clipsList = [
     },
     {
         p_duration: "01:29",
-        id: 5,
+        p_id: 5,
         p_audio: "https://ia800904.us.archive.org/20/items/tvtunes_3349/Ghost%20in%20the%20Shell%20-%20Stand%20Alone%20Complex%20-%20Ending.mp3",
         p_description: "Stand Alone Complex - Ending",
         p_date: 'today at 14:05',
@@ -58,7 +58,7 @@ export const clipsList = [
         p_datetime: "2020-6-3",
         p_description: "Stand Alone Complex - Ending",
         p_duration: "01:29",
-        id: 6,
+        p_id: 6,
         p_numLikes: 1,
         u_id: 0,
         u_liked: [2]
@@ -68,7 +68,7 @@ export const clipsList = [
         p_datetime: "2020-6-3",
         p_description: "Stand Alone Complex - Ending",
         p_duration: "01:29",
-        id: 7,
+        p_id: 7,
         p_numLikes: 1,
         u_id: 2,
         u_liked: [1]
@@ -78,7 +78,7 @@ export const clipsList = [
         p_datetime: "2020-6-3",
         p_description: "Stand Alone Complex - Ending",
         p_duration: "01:29",
-        id: 8,
+        p_id: 8,
         p_numLikes: 0,
         u_id: 1,
         u_liked: []
@@ -88,7 +88,7 @@ export const clipsList = [
         p_datetime: "2020-6-3",
         p_description: "Stand Alone Complex - Ending",
         p_duration: "01:29",
-        id: 9,
+        p_id: 9,
         p_numLikes: 2,
         u_id: 2,
         u_liked: [1, 2]
