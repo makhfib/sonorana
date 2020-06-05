@@ -19,13 +19,7 @@ export default class Post extends Component {
     }
 
     _onPostPress() {
-        this.props.navigation.navigate('Main', {
-            screen: 'Post',
-            params: {
-                user: this.props.user,
-                post: this.props.post
-            }
-        })
+        this.props.onPostPress(this.props.post.p_id, this.state.liked)
     }
 
     render() {

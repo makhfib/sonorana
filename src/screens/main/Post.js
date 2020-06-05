@@ -16,10 +16,12 @@ const REPEAT_ICON = [
 
 export default class Post extends Component {
     state = {
-        liked: false,
+        liked: this.props.route.params.liked,
         value: 0.2,
+        p_id: this.props.route.params.id,
         playing: false,
         repeat: 0,
+        u_id: this.props.route.params.posts[this.props.route.params.id].u_id,
     }
 
     _onBackPress() {
@@ -44,19 +46,19 @@ export default class Post extends Component {
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this._onBackPress()}
-                    title={this.props.route.params.user.user}
+                    title={this.props.route.params.users[this.state.u_id].user}
                     rightIconImage={REPEAT_ICON[this.state.repeat]}
                     rightIconOnPress={() => this._onRepeatPress()}
                 />
                 <View style={styles.container}>
                     <View style={styles.profileContainer}>
                         <Image 
-                            source={this.props.route.params.user.image}
+                            source={this.props.route.params.users[this.state.u_id].image}
                             style={styles.profileImage}
                         />
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{this.props.route.params.post.p_description}</Text>
+                        <Text style={styles.descriptionText}>{this.props.route.params.posts[this.state.p_id].p_description}</Text>
                     </View>
                     <View style={styles.sliderContainer}>
                         <Text style={styles.durationText}>0:45</Text>
@@ -69,7 +71,7 @@ export default class Post extends Component {
                             thumbStyle={styles.thumb}
                             trackStyle={styles.track}
                         />
-                        <Text style={styles.durationText}>-{this.props.route.params.post.p_duration}</Text>
+                        <Text style={styles.durationText}>-{this.props.route.params.posts[this.state.p_id].p_duration}</Text>
                     </View>
                     <View style={styles.controls}>
                         <TouchableOpacity activeOpacity={1}>
@@ -102,7 +104,7 @@ export default class Post extends Component {
                                 style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
                             />
                             <View style={styles.likes}>
-                                <Text style={styles.actionsText}>{this.props.route.params.post.p_numLikes}</Text>
+                                <Text style={styles.actionsText}>{this.props.route.params.posts[this.state.p_id].p_numLikes}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
