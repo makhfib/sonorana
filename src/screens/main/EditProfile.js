@@ -152,7 +152,7 @@ export default class EditProfile extends Component {
                             source={require('../../assets/icons/profile_selected.png')}
                         />
                         <TextInput
-                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center', flex: 1, }]}
+                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
                             maxLength={30}
                             placeholder={'Your name'}
                             value={u_name}
@@ -167,7 +167,7 @@ export default class EditProfile extends Component {
                 </View>
                 <Separator />
                 <View
-                    style={styles.fieldContainer}
+                    style={[styles.fieldContainer, { paddingVertical: 10 }]}
                 >
                     <View
                         style={{
@@ -205,7 +205,7 @@ export default class EditProfile extends Component {
                             source={require('../../assets/icons/link.png')}
                         />
                         <TextInput
-                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center', flex: 1, }]}
+                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center'}]}
                             maxLength={30}
                             placeholder={'Your website'}
                             value={u_website}
@@ -257,15 +257,15 @@ const styles = StyleSheet.create({
     },
     fieldContainer: {
         paddingHorizontal: layout.paddingHorizontal,
-        paddingVertical: layout.paddingHorizontal / 2,
         backgroundColor: colors.background,
     },
     textInput: {
-        flexWrap: 'wrap',
+        flex: 1,
         flexDirection: 'column',
         justifyContent: "flex-start",
         textAlignVertical: "top",
         paddingLeft: 10,
+        minHeight: layout.paddingHorizontal*2,
     },
     counter: {
         color: colors.gray,
