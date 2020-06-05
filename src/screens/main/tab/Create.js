@@ -24,6 +24,10 @@ export default class Create extends React.Component {
         this.props.navigation.goBack()
     }
 
+    _handlePost() {
+        console.log('Button not handled!')
+    }
+
     _onChangeText = (text) => {
         if(this.state.clear) { this.setState({ clear: false }) }
         this.setState({
