@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Text, View, ImageBackground, Image, StyleSheet, FlatList, ScrollView } from 'react-native'
 import { colors, layout } from '../../constants/Styles'
+import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import ActionButton from '../../components/ActionButton'
 import FollowButton from '../../components/FollowButton'
 import Separator from '../../components/Separator';
 import SectionHeader from '../../components/SectionHeader';
 import Post from '../../components/Post';
-import { clipsList } from '../../data/clipsList'
+import Feed from '../../data/clipsList'
 import { usersList } from '../../data/usersList'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { goToURL } from '../../functions/utils'
@@ -16,7 +17,7 @@ export default class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
-            return this.props.route.params.item;
+            return this.props.route.params;
         } else {
             return this.props;
         }
@@ -68,7 +69,12 @@ export default class Profile extends Component {
         // future animations scrollview https://medium.com/hackernoon/react-native-animated-header-using-animated-and-scrollview-9749255c149a
 
         return (
-            <>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: colors.safearea
+                }}
+            >
                 <NavigationBar
                     leftIconOnPress={this.props.route !== undefined ? () => this._handleBack() : undefined} // null gives error, undefined doesn't
                     leftIconImage={this.props.route !== undefined ? require('../../assets/icons/left_arrow.png') : undefined}
@@ -108,7 +114,6 @@ export default class Profile extends Component {
                                     {u_description}
                                 </Text>
                                 : <></>
-
                         }
                         {
                             u_website !== null
@@ -150,7 +155,7 @@ export default class Profile extends Component {
                                         onPress={() => this._handleEdit()}
                                     />
                                     : <FollowButton
-                                        u_following={true}
+                                        u_following={u_following}
                                         style={{
                                             marginRight: 10,
                                         }}
@@ -185,11 +190,10 @@ export default class Profile extends Component {
                         title={'Recent posts'}
                     />
                     <FlatList
-                        data={clipsList}
+                        data={Feed}
                         renderItem={({ item }) => (
                             <Post
-                                post={item}
-                                user={usersList[item.u_id]}
+                                item={item}
                                 onPostPress={this._onPostPress.bind(this)}
                                 navigation={this.props.navigation}
                             />
@@ -197,8 +201,7 @@ export default class Profile extends Component {
                         keyExtractor={item => item.p_id}
                     />
                 </ScrollView>
-
-            </>
+            </SafeAreaView>
         )
     }
 }

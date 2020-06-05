@@ -4,21 +4,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../../components/NavigationBar'
 import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
-import { clipsList } from '../../../data/clipsList'
+import Feed from '../../../data/clipsList'
 import { usersList } from '../../../data/usersList'
 import { colors, layout } from '../../../constants/Styles'
 
 export default class Home extends React.Component {
 
-    _onPostPress(id, liked) {
+    _onPostPress(item) {
         this.props.navigation.navigate('Main', {
             screen: 'Post',
             params: { 
-                id,
-                liked,
-                users: usersList,
-                posts: clipsList,
+                item,
+                feed: Feed
             }
+        })
+    }
+
+    _onProfilePress(item) {
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: item
         })
     }
 
@@ -29,12 +34,12 @@ export default class Home extends React.Component {
                         title={require('../../../assets/brand/Black-Text.png')}
                     />
                     <FlatList
-                        data={clipsList}
+                        data={Feed}
                         renderItem={({ item }) => (
                             <Post
-                                post={item}
-                                user={usersList[item.u_id]}
+                                item={item}
                                 onPostPress={this._onPostPress.bind(this)}
+                                onProfilePress={this._onProfilePress.bind(this)}
                                 navigation={this.props.navigation}
                             />
                         )}
