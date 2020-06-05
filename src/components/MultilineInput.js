@@ -22,9 +22,11 @@ export default class MultiLine extends Component {
     }
   }
 
-  onSubmitEditing = () => {
-    Keyboard.dismiss()
-  }
+  onSubmitEditing = ({ nativeEvent }) => {
+    if (nativeEvent.key === 'Enter') {
+      Keyboard.dismiss()
+    }
+  };
 
   onChangeText = text => {
     const { maxLines, onChangeText } = this.props;
@@ -33,8 +35,6 @@ export default class MultiLine extends Component {
     if (lines.length <= (maxLines || 1)) {
       onChangeText(text);
       this.setState({ value: text });
-    } else {
-      Keyboard.dismiss()
     }
   };
 
