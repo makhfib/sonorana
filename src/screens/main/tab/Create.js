@@ -34,7 +34,7 @@ export default class Create extends React.Component {
 
     _handleRecord() {
         this.props.navigation.navigate('Main', {
-            screen: 'Record'
+            screen: 'Record',
         })
     }
 

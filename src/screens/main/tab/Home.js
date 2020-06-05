@@ -10,6 +10,18 @@ import { colors, layout } from '../../../constants/Styles'
 
 export default class Home extends React.Component {
 
+    _onPostPress(id, liked) {
+        this.props.navigation.navigate('Main', {
+            screen: 'Post',
+            params: { 
+                id,
+                liked,
+                users: usersList,
+                posts: clipsList,
+            }
+        })
+    }
+
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: colors.safearea}}>
@@ -20,14 +32,13 @@ export default class Home extends React.Component {
                         data={clipsList}
                         renderItem={({ item }) => (
                             <Post
-                                duration={item.p_duration}
-                                id={item.id}
+                                post={item}
                                 user={usersList[item.u_id]}
-                                description={item.p_description}
-                                date={item.p_date}
-                                userId={item.u_id}
+                                onPostPress={this._onPostPress.bind(this)}
+                                navigation={this.props.navigation}
                             />
                         )}
+                        keyExtractor={item => item.p_id}
                         ItemSeparatorComponent={Separator}
                     />
             </SafeAreaView>
