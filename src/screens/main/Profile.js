@@ -88,7 +88,9 @@ export default class Profile extends Component {
                 >
                     <Separator />
                     <View
-                        style={styles.images}
+                        style={[styles.images, {
+                            height: this._props().u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
+                        }]}
                     >
                         <ImageBackground
                             style={styles.profileHeader}
