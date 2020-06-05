@@ -18,6 +18,10 @@ export default class Post extends Component {
         this.setState({ playing: !this.state.playing })
     }
 
+    _onPostPress() {
+        this.props.onPostPress(this.props.post.p_id, this.state.liked)
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -40,17 +44,17 @@ export default class Post extends Component {
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity activeOpacity={1}  style={styles.bodyContainer}>
+                <TouchableOpacity activeOpacity={1}  style={styles.bodyContainer} onPress={()=>this._onPostPress()}>
                     <ImageBackground 
                         source={require('../assets/fake/fake-audio.png')} 
                         style={styles.imageBackground}
                     >
                         <View style={styles.infoContainer}>
                             <View style={styles.textContainer}>
-                                <Text style={styles.boldText}>{this.props.description}</Text>
+                                <Text style={styles.boldText}>{this.props.post.p_description}</Text>
                             </View>
                             <View>
-                                <Text>{this.props.duration}</Text>
+                                <Text>{this.props.post.p_duration}</Text>
                             </View>
                         </View>
                     </ImageBackground>
