@@ -42,11 +42,11 @@ export default class Post extends Component {
         return (
             <SafeAreaView style={styles.safe}>
                 <NavigationBar
-                        leftIconImage={require('../../assets/icons/left_arrow.png')}
-                        leftIconOnPress={() => this._onBackPress()}
-                        title={this.props.route.params.user.user}
-                        rightIconImage={REPEAT_ICON[this.state.repeat]}
-                        rightIconOnPress={() => this._onRepeatPress()}
+                    leftIconImage={require('../../assets/icons/left_arrow.png')}
+                    leftIconOnPress={() => this._onBackPress()}
+                    title={this.props.route.params.user.user}
+                    rightIconImage={REPEAT_ICON[this.state.repeat]}
+                    rightIconOnPress={() => this._onRepeatPress()}
                 />
                 <View style={styles.container}>
                     <View style={styles.profileContainer}>
