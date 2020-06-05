@@ -1,14 +1,36 @@
 import React, { Component } from 'react'
-import { Text, View, ImageBackground, Image, StyleSheet } from 'react-native'
+import { Text, View, ImageBackground, Image, StyleSheet, FlatList, ScrollView } from 'react-native'
 import { colors, layout } from '../../constants/Styles'
 import NavigationBar from '../../components/NavigationBar'
 import ActionButton from '../../components/ActionButton'
+import FollowButton from '../../components/FollowButton'
 import Separator from '../../components/Separator';
+import SectionHeader from '../../components/SectionHeader';
+import Post from '../../components/Post';
+import { clipsList } from '../../data/clipsList'
+import { usersList } from '../../data/usersList'
 
 export default class Profile extends Component {
 
     _props() {
+        if (this.props.route !== undefined) {
+            return this.props.route.params.item;
+        } else {
+            return this.props;
+        }
 
+    }
+
+    _onPostPress(id, liked) {
+        this.props.navigation.navigate('Main', {
+            screen: 'Post',
+            params: {
+                id,
+                liked,
+                users: usersList,
+                posts: clipsList,
+            }
+        })
     }
 
     _handleBack() {
@@ -28,83 +50,136 @@ export default class Profile extends Component {
     }
 
     render() {
+        const {
+            u_username,
+            u_name,
+            u_photo,
+            u_header,
+            u_description,
+            u_website,
+            u_numFollowing,
+            u_numFollowers,
+            u_following,
+        } = this._props();
+
+        // future animations scrollview https://medium.com/hackernoon/react-native-animated-header-using-animated-and-scrollview-9749255c149a
+
         return (
             <>
                 <NavigationBar
-                    leftIconOnPress={() => this._handleBack()}
-                    leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    title={'makhfib'}
+                    leftIconOnPress={this.props.route !== undefined ? () => this._handleBack() : undefined} // null gives error, undefined doesn't
+                    leftIconImage={this.props.route !== undefined ? require('../../assets/icons/left_arrow.png') : undefined}
+                    title={u_username}
                 />
-                <Separator />
-                <View
-                    style={styles.images}
+                <ScrollView
+                    // read more https://stackoverflow.com/questions/38581562/sticky-component-inside-scrollview
+                    stickyHeaderIndices={[4]}
+                    alwaysBounceVertical={true}
+                    showsVerticalScrollIndicator={false}
                 >
-                    <ImageBackground
-                        style={styles.profileHeader}
-                        source={{ uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hdwallpaper.nu%2Fwp-content%2Fuploads%2F2017%2F03%2Fvalley-16.jpg&f=1&nofb=1' }}
-                    >
-                    </ImageBackground>
+                    <Separator />
                     <View
-                        style={styles.photoContainer}
+                        style={styles.images}
                     >
-                        <Image
-                            style={styles.profilePhoto}
-                            source={{ uri: 'https://media-exp1.licdn.com/dms/image/C4D03AQEy3CR_2OAw6Q/profile-displayphoto-shrink_200_200/0?e=1596672000&v=beta&t=_YkGI9DUd9QiWFE3xLpVcif1KqOsaHnvZxmgU8WxUDw' }}
-                        />
+                        <ImageBackground
+                            style={styles.profileHeader}
+                            source={{ uri: u_header }}
+                        >
+                        </ImageBackground>
+                        <View
+                            style={styles.photoContainer}
+                        >
+                            <Image
+                                style={styles.profilePhoto}
+                                source={{ uri: u_photo }}
+                            />
+                        </View>
                     </View>
-                </View>
-                <View style={styles.basicInfoContainer}>
-                    <Text style={{ fontWeight: 'bold' }}>
-                        Mohammed Makhfi
-                    </Text>
-                    <Text style={{ marginVertical: 10, }}>
-                        {'Currently building the future. Chairman of Sonorana'}
-                    </Text>
-                    <Text style={{ color: colors.blue }}>
-                        {'makhfib.com'}
-                    </Text>
-                    <View style={{ flexDirection: 'row', marginVertical: 10, }}>
+                    <View style={styles.basicInfoContainer}>
                         <Text style={{ fontWeight: 'bold' }}>
-                            {'31'}
+                            {u_name}
                         </Text>
-                        <Text style={{ marginRight: 10, }} >
-                            {' following'}
+                        <Text style={{ marginVertical: 10, }}>
+                            {u_description}
                         </Text>
-                        <Text style={{ fontWeight: 'bold' }} >
-                            {'158'}
+                        <Text style={{ color: colors.blue }}>
+                            {u_website}
                         </Text>
-                        <Text style={{  }} >
-                            {' following'}
-                        </Text>
+                        <View style={{ flexDirection: 'row', marginVertical: 10, }}>
+                            <Text style={{ fontWeight: 'bold' }}>
+                                {u_numFollowing}
+                            </Text>
+                            <Text style={{ marginRight: 10, }} >
+                                {' following'}
+                            </Text>
+                            <Text style={{ fontWeight: 'bold' }} >
+                                {u_numFollowers}
+                            </Text>
+                            <Text style={{}} >
+                                {' following'}
+                            </Text>
+                        </View>
+                        <View style={styles.buttonsContainer}>
+                            {
+                                u_username === 'makhfib'
+                                    ? <ActionButton
+                                        icon={require('../../assets/icons/edit.png')}
+                                        title={'Edit profile'}
+                                        style={{
+                                            backgroundColor: colors.blue,
+                                            marginRight: 10,
+                                        }}
+                                        onPress={() => this._handleEdit()}
+                                    />
+                                    : <FollowButton
+                                        u_following={true}
+                                        style={{
+                                            marginRight: 10,
+                                        }}
+                                    />
+                            }
+
+                            {
+                                u_username === 'makhfib'
+                                    ? <ActionButton
+                                        icon={require('../../assets/icons/configuration.png')}
+                                        title={'Settings'}
+                                        style={{
+                                            borderWidth: 2,
+                                            borderColor: colors.blue,
+                                            backgroundColor: colors.background
+                                        }}
+                                        iconStyle={{
+                                            tintColor: colors.blue
+                                        }}
+                                        textStyle={{
+                                            color: colors.blue
+                                        }}
+                                        onPress={() => this._handleSettings()}
+                                    />
+                                    : <></>
+                            }
+                        </View>
                     </View>
-                    <View style={styles.buttonsContainer}>
-                        <ActionButton
-                            icon={require('../../assets/icons/edit.png')}
-                            title={'Edit profile'}
-                            style={{
-                                backgroundColor: colors.blue,
-                                marginRight: 10,
-                            }}
-                            onPress={() => this._handleEdit()}
-                        />
-                        <ActionButton
-                            icon={require('../../assets/icons/configuration.png')}
-                            title={'Settings'}
-                            style={{
-                                borderWidth: 2,
-                                borderColor: colors.blue,
-                                backgroundColor: colors.background
-                            }}
-                            iconStyle={{
-                                tintColor: colors.blue
-                            }}
-                            textStyle={{
-                                color: colors.blue
-                            }}
-                            onPress={() => this._handleSettings()}
-                        />
-                    </View>
-                </View>
+                    <Separator />
+                    <SectionHeader
+                        icon={require('../../assets/icons/feed.png')}
+                        title={'Recent posts'}
+                    />
+                    <FlatList
+                        data={clipsList}
+                        renderItem={({ item }) => (
+                            <Post
+                                post={item}
+                                user={usersList[item.u_id]}
+                                onPostPress={this._onPostPress.bind(this)}
+                                navigation={this.props.navigation}
+                            />
+                        )}
+                        keyExtractor={item => item.p_id}
+                    />
+                </ScrollView>
+
             </>
         )
     }
@@ -137,8 +212,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     profilePhoto: {
-        height: profilePhotoHeight-5,
-        width: profilePhotoHeight-5,
+        height: profilePhotoHeight - 5,
+        width: profilePhotoHeight - 5,
         borderRadius: profilePhotoHeight / 2,
         backgroundColor: colors.background,
     },

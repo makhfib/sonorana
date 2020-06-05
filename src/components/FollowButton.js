@@ -27,10 +27,10 @@ export default class FollowButton extends Component {
                         ? 'Following'
                         : 'Follow'
                 }
-                style={{
+                style={[{
                     width: 120,
                     backgroundColor: u_following ? colors.green : colors.blue,
-                }}
+                }, this.props.style]}
                 onPress={() => this.onFollow()}
             />
         )
