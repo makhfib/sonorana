@@ -104,7 +104,7 @@ export default class Post extends Component {
                                 style={[styles.likeImage, {tintColor: this.state.liked ? colors.pink : colors.gray}]}
                             />
                             <View style={styles.likes}>
-                                <Text style={styles.actionsText}>{this.props.route.params.posts[this.state.p_id].p_numLikes}</Text>
+                                <Text style={[styles.actionsText, { color: this.state.liked ? colors.pink : colors.gray }]}>{this.props.route.params.posts[this.state.p_id].p_numLikes}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
-        color: colors.gray,
     }
     // 75, 25, 17
 })

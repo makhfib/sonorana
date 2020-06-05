@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         justifyContent: 'center',
         alignItems: 'center',
-        color: 'gray',
+        color: colors.gray,
     },
     slider: {
         width: '100%',
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     playPauseImage: {
-        width: 52, 
-        height: 52,
+        width: 40, 
+        height: 40,
     },
     recordButton: {
         width: 75,
@@ -159,12 +159,12 @@ const styles = StyleSheet.create({
         backgroundColor: colors.red
     },
     recordImage: {
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         tintColor: 'white',
     },
     stopImage: {
-        width: 52, 
-        height: 52,
+        width: 40, 
+        height: 40,
     },
 })
