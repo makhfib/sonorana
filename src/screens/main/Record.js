@@ -33,6 +33,7 @@ export default class Record extends Component {
                     leftIconImage={require('../../assets/icons/cancel.png')}
                     leftIconOnPress={() => this._onBackPress()}
                     rightIconImage={require('../../assets/icons/done.png')}
+                    rightIconOnPress={() => this._onBackPress()}
                 />
                 <View style={styles.timeContainer}>
                     <Text style={styles.timeText}>0:08.80</Text>

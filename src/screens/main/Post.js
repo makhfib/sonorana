@@ -44,14 +44,6 @@ export default class Post extends Component {
         return (
             <SafeAreaView style={styles.safe}>
                 <NavigationBar
-<<<<<<< HEAD
-                    leftIconImage={require('../../assets/icons/cancel.png')}
-                    leftIconOnPress={() => this._onBackPress()}
-                    leftIconImage={require('../../assets/icons/done.png')}
-                    rightIconOnPress={() => this._onRepeatPress()}
-                />
-                <Text> Post </Text>
-=======
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this._onBackPress()}
                     title={this.props.route.params.users[this.state.u_id].user}
@@ -117,7 +109,6 @@ export default class Post extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
->>>>>>> master
             </SafeAreaView>
         )
     }
@@ -128,8 +119,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.safearea,
     },
-<<<<<<< HEAD
-=======
     container: {
         flex: 1,
         paddingLeft: layout.paddingHorizontal,
@@ -218,5 +207,4 @@ const styles = StyleSheet.create({
         color: colors.gray,
     }
     // 75, 25, 17
->>>>>>> master
 })
