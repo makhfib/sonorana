@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class SignUp extends Component {
 
@@ -21,99 +22,101 @@ export default class SignUp extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <View
-                    style={styles.background}
-                >
+                <KeyboardAwareScrollView>
                     <View
-                        style={styles.logoContainer}
+                        style={styles.background}
                     >
-                        <Image
-                            style={styles.logo}
-                            source={require('../../assets/brand/Original-Icon.png')}
-                        />
-                    </View>
-                    <View
-                        style={styles.formContainer}
-                    >
-                        <LinearGradient
-                            colors={[colors.pink, colors.orange, colors.yellow]}
-                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                            style={styles.gradientContainer}
+                        <View
+                            style={styles.logoContainer}
                         >
-                            <View style={styles.inputContainer}>
-                                <TextInput
-                                    placeholder={'Username'}
-                                    placeholderTextColor={colors.tint}
-                                    style={styles.input}
-                                />
-                            </View>
-                        </LinearGradient>
-                        <LinearGradient
-                            colors={[colors.pink, colors.orange, colors.yellow]}
-                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                            style={styles.gradientContainer}
+                            <Image
+                                style={styles.logo}
+                                source={require('../../assets/brand/Original-Icon.png')}
+                            />
+                        </View>
+                        <View
+                            style={styles.formContainer}
                         >
+                            <LinearGradient
+                                colors={[colors.pink, colors.orange, colors.yellow]}
+                                start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                                style={styles.gradientContainer}
+                            >
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        placeholder={'Username'}
+                                        placeholderTextColor={colors.tint}
+                                        style={styles.input}
+                                    />
+                                </View>
+                            </LinearGradient>
+                            <LinearGradient
+                                colors={[colors.pink, colors.orange, colors.yellow]}
+                                start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                                style={styles.gradientContainer}
+                            >
 
-                            <View style={styles.inputContainer}>
-                                <TextInput
-                                    placeholder={'Email'}
-                                    placeholderTextColor={colors.tint}
-                                    style={styles.input}
-                                />
-                            </View>
-                        </LinearGradient>
-                        <LinearGradient
-                            colors={[colors.pink, colors.orange, colors.yellow]}
-                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                            style={styles.gradientContainer}
-                        >
-                            <View
-                                style={styles.inputContainer}>
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        placeholder={'Email'}
+                                        placeholderTextColor={colors.tint}
+                                        style={styles.input}
+                                    />
+                                </View>
+                            </LinearGradient>
+                            <LinearGradient
+                                colors={[colors.pink, colors.orange, colors.yellow]}
+                                start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                                style={styles.gradientContainer}
+                            >
+                                <View
+                                    style={styles.inputContainer}>
 
-                                <TextInput
-                                    placeholder={'Password'}
-                                    placeholderTextColor={colors.tint}
-                                    secureTextEntry={true}
-                                    style={[styles.input, {
-                                        paddingRight: layout.paddingHorizontal,
-                                    }]}
-                                />
-                                <Image
-                                    style={styles.inputIcon}
-                                    source={require('../../assets/icons/appearance.png')}
-                                />
-                            </View>
-                        </LinearGradient>
+                                    <TextInput
+                                        placeholder={'Password'}
+                                        placeholderTextColor={colors.tint}
+                                        secureTextEntry={true}
+                                        style={[styles.input, {
+                                            paddingRight: layout.paddingHorizontal,
+                                        }]}
+                                    />
+                                    <Image
+                                        style={styles.inputIcon}
+                                        source={require('../../assets/icons/appearance.png')}
+                                    />
+                                </View>
+                            </LinearGradient>
 
-                        <LinearGradient
-                            colors={[colors.yellow, colors.orange, colors.pink]}
-                            start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
-                            style={styles.signupContainer}
-                        >
+                            <LinearGradient
+                                colors={[colors.yellow, colors.orange, colors.pink]}
+                                start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
+                                style={styles.signupContainer}
+                            >
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => this._handleSignUp()}
+                                >
+                                    <Text
+                                        style={styles.signupText}
+                                    >
+                                        CREATE ACCOUNT
+                                </Text>
+                                </TouchableOpacity>
+                            </LinearGradient>
                             <TouchableOpacity
                                 activeOpacity={1}
-                                onPress={() => this._handleSignUp()}
+                                style={styles.loginContainer}
+                                onPress={() => this._handleLogIn()}
                             >
                                 <Text
-                                    style={styles.signupText}
+                                    style={styles.loginText}
                                 >
-                                    CREATE ACCOUNT
-                            </Text>
+                                    LOG IN
+                                </Text>
                             </TouchableOpacity>
-                        </LinearGradient>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.loginContainer}
-                            onPress={() => this._handleLogIn()}
-                        >
-                            <Text
-                                style={styles.loginText}
-                            >
-                                LOG IN
-                            </Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }

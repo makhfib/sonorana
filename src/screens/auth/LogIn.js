@@ -3,6 +3,7 @@ import { Text, View, ImageBackground, Image, TextInput, StyleSheet } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class LogIn extends Component {
 
@@ -29,6 +30,7 @@ export default class LogIn extends Component {
                     style={styles.background}
                     source={require('../../assets/images/linear-background.png')}
                 >
+                <KeyboardAwareScrollView style={styles.container}>
                     <View
                         style={styles.logoContainer}
                     >
@@ -95,6 +97,7 @@ export default class LogIn extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                </KeyboardAwareScrollView>
                 </ImageBackground>
             </SafeAreaView>
         )
@@ -102,6 +105,9 @@ export default class LogIn extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     safearea: {
         flex: 1,
         backgroundColor: colors.safearea

@@ -6,6 +6,7 @@ import NavigationBar from '../../components/NavigationBar'
 import MultilineInput from '../../components/MultilineInput'
 import Separator from '../../components/Separator';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class EditProfile extends Component {
 
@@ -82,138 +83,140 @@ export default class EditProfile extends Component {
                     backgroundColor: colors.safearea
                 }}
             >
-                <NavigationBar
-                    leftIconOnPress={() => this._handleBack()}
-                    leftIconImage={require('../../assets/icons/cancel.png')}
-                    rightIconOnPress={() => this._handleDone()}
-                    rightIconImage={require('../../assets/icons/done.png')}
-                />
-                <Separator />
-                <View
-                    style={styles.images}
-                >
-                    <ImageBackground
-                        style={styles.profileHeader}
-                        source={{ uri: u_header }}
-                    >
-                        <TouchableOpacity
-                            activeOpacity={0.5}
-                            onPress={() => this._changeHeader()}
-                            style={styles.changeHeaderButton}
-                        >
-                            <Image
-                                style={styles.changeHeaderButtonIcon}
-                                source={require('../../assets/icons/image.png')}
-                            />
-                            <Text
-                                style={styles.changeHeaderButtonText}
-                            >Change header</Text>
-                        </TouchableOpacity>
-                    </ImageBackground>
+                <KeyboardAwareScrollView>
+                    <NavigationBar
+                        leftIconOnPress={() => this._handleBack()}
+                        leftIconImage={require('../../assets/icons/cancel.png')}
+                        rightIconOnPress={() => this._handleDone()}
+                        rightIconImage={require('../../assets/icons/done.png')}
+                    />
+                    <Separator />
                     <View
-                        style={styles.photoContainer}
+                        style={styles.images}
                     >
                         <ImageBackground
-                            style={styles.profilePhoto}
-                            source={{ uri: u_photo }}
+                            style={styles.profileHeader}
+                            source={{ uri: u_header }}
                         >
                             <TouchableOpacity
                                 activeOpacity={0.5}
-                                onPress={() => this._changePhoto()}
-                                style={[
-                                    styles.profilePhoto,
-                                    {
-                                        backgroundColor: 'rgba(0,0,0,0.5)',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }
-                                ]}
+                                onPress={() => this._changeHeader()}
+                                style={styles.changeHeaderButton}
                             >
                                 <Image
                                     style={styles.changeHeaderButtonIcon}
-                                    source={require('../../assets/icons/camera.png')}
+                                    source={require('../../assets/icons/image.png')}
                                 />
                                 <Text
                                     style={styles.changeHeaderButtonText}
-                                >Edit photo</Text>
+                                >Change header</Text>
                             </TouchableOpacity>
                         </ImageBackground>
+                        <View
+                            style={styles.photoContainer}
+                        >
+                            <ImageBackground
+                                style={styles.profilePhoto}
+                                source={{ uri: u_photo }}
+                            >
+                                <TouchableOpacity
+                                    activeOpacity={0.5}
+                                    onPress={() => this._changePhoto()}
+                                    style={[
+                                        styles.profilePhoto,
+                                        {
+                                            backgroundColor: 'rgba(0,0,0,0.5)',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }
+                                    ]}
+                                >
+                                    <Image
+                                        style={styles.changeHeaderButtonIcon}
+                                        source={require('../../assets/icons/camera.png')}
+                                    />
+                                    <Text
+                                        style={styles.changeHeaderButtonText}
+                                    >Edit photo</Text>
+                                </TouchableOpacity>
+                            </ImageBackground>
+                        </View>
                     </View>
-                </View>
-                <Separator />
-                <View
-                    style={styles.fieldContainer}
-                >
+                    <Separator />
                     <View
-                        style={styles.rowContainer}
+                        style={styles.fieldContainer}
                     >
-                        <Image
-                            style={styles.fieldIcon}
-                            source={require('../../assets/icons/profile_selected.png')}
-                        />
-                        <TextInput
-                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
-                            maxLength={30}
-                            placeholder={'Your name'}
-                            value={u_name}
-                            onChangeText={(text) => this._onChangeText(text, 'u_name')}
-                            clear={this.state.clear}
-                        />
+                        <View
+                            style={styles.rowContainer}
+                        >
+                            <Image
+                                style={styles.fieldIcon}
+                                source={require('../../assets/icons/profile_selected.png')}
+                            />
+                            <TextInput
+                                style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
+                                maxLength={30}
+                                placeholder={'Your name'}
+                                value={u_name}
+                                onChangeText={(text) => this._onChangeText(text, 'u_name')}
+                                clear={this.state.clear}
+                            />
+                            <Text
+                                style={[styles.counter, { alignSelf: 'center' }]}
+                            >{this.state.currentNameLength}/{this.state.nameMaxLength}</Text>
+                        </View>
+
+                    </View>
+                    <Separator />
+                    <View
+                        style={[styles.fieldContainer, { paddingVertical: 10 }]}
+                    >
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'flex-start',
+                            }}
+                        >
+                            <Image
+                                style={styles.fieldIcon}
+                                source={require('../../assets/icons/quote.png')}
+                            />
+                            <MultilineInput
+                                style={styles.textInput}
+                                maxLines={1}
+                                maxLength={this.state.descriptionMaxLength}
+                                placeholder={'A brief description of your profile'}
+                                value={u_description}
+                                onChangeText={(text) => this._onChangeText(text, 'u_description')}
+                            />
+                        </View>
+
                         <Text
-                            style={[styles.counter, { alignSelf: 'center' }]}
-                        >{this.state.currentNameLength}/{this.state.nameMaxLength}</Text>
+                            style={styles.counter}
+                        >{this.state.currentDescriptionLength}/{this.state.descriptionMaxLength}</Text>
                     </View>
-
-                </View>
-                <Separator />
-                <View
-                    style={[styles.fieldContainer, { paddingVertical: 10 }]}
-                >
+                    <Separator />
                     <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-start',
-                        }}
+                        style={styles.fieldContainer}
                     >
-                        <Image
-                            style={styles.fieldIcon}
-                            source={require('../../assets/icons/quote.png')}
-                        />
-                        <MultilineInput
-                            style={styles.textInput}
-                            maxLines={1}
-                            maxLength={this.state.descriptionMaxLength}
-                            placeholder={'A brief description of your profile'}
-                            value={u_description}
-                            onChangeText={(text) => this._onChangeText(text, 'u_description')}
-                        />
+                        <View
+                            style={styles.rowContainer}
+                        >
+                            <Image
+                                style={styles.fieldIcon}
+                                source={require('../../assets/icons/link.png')}
+                            />
+                            <TextInput
+                                style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center'}]}
+                                maxLength={30}
+                                placeholder={'Your website'}
+                                value={u_website}
+                                onChangeText={(text) => this._onChangeText(text, 'u_website')}
+                                clear={this.state.clear}
+                            />
+                        </View>
                     </View>
-
-                    <Text
-                        style={styles.counter}
-                    >{this.state.currentDescriptionLength}/{this.state.descriptionMaxLength}</Text>
-                </View>
-                <Separator />
-                <View
-                    style={styles.fieldContainer}
-                >
-                    <View
-                        style={styles.rowContainer}
-                    >
-                        <Image
-                            style={styles.fieldIcon}
-                            source={require('../../assets/icons/link.png')}
-                        />
-                        <TextInput
-                            style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center'}]}
-                            maxLength={30}
-                            placeholder={'Your website'}
-                            value={u_website}
-                            onChangeText={(text) => this._onChangeText(text, 'u_website')}
-                            clear={this.state.clear}
-                        />
-                    </View>
-                </View>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }
