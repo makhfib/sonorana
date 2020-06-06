@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signIn, reset } from '../../modules/Auth/actions'
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class LogIn extends Component {
 
@@ -58,6 +59,7 @@ class LogIn extends Component {
                     style={styles.background}
                     source={require('../../assets/images/linear-background.png')}
                 >
+                <KeyboardAwareScrollView style={styles.container}>
                     <View
                         style={styles.logoContainer}
                     >
@@ -133,6 +135,7 @@ class LogIn extends Component {
                             />
                             : <></>
                     }
+                </KeyboardAwareScrollView>
                 </ImageBackground>
             </SafeAreaView>
         )
@@ -140,6 +143,9 @@ class LogIn extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     safearea: {
         flex: 1,
         backgroundColor: colors.safearea
