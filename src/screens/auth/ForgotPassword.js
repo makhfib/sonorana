@@ -5,13 +5,37 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import { colors, layout } from '../../constants/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { forgotPassword, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
-export default class ForgotPassword extends Component {
+class ForgotPassword extends Component {
+
+    state = {
+        username: ''
+    }
+    
+    _onChangeText = (text, field) => {
+        switch (field) {
+            case 'username':
+                this.setState({
+                    username: text,
+                })
+                break
+            default:
+                break
+        }
+    }
 
     _handleContinue() {
-        this.props.navigation.navigate('Auth', {
-            screen: 'ConfirmForgotPassword'
-        })
+        const { username } = this.state
+        this.props.forgotPassword(username, this.props.navigation)
+    }
+
+    _handleBack() {
+        this.props.navigation.goBack()
+        this.props.reset()
     }
 
     render() {
@@ -21,7 +45,7 @@ export default class ForgotPassword extends Component {
             >
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    leftIconOnPress={() => this.props.navigation.goBack()}
+                    leftIconOnPress={() => this._handleBack()}
                 />
                 <View
                     style={styles.contentContainer}
@@ -48,6 +72,7 @@ export default class ForgotPassword extends Component {
                                 placeholder={'Username or email'}
                                 placeholderTextColor={colors.tint}
                                 style={styles.input}
+                                onChangeText={(text) => this._onChangeText(text, 'username')}
                             />
                         </View>
                     </LinearGradient>
@@ -67,6 +92,13 @@ export default class ForgotPassword extends Component {
                             </Text>
                         </TouchableOpacity>
                     </LinearGradient>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </View>
 
             </SafeAreaView>
@@ -124,3 +156,21 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
     },
 })
+
+ForgotPassword.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
+})
+
+const mapDispatchToProps = {
+    forgotPassword,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)

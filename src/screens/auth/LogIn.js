@@ -3,24 +3,53 @@ import { Text, View, ImageBackground, Image, TextInput, StyleSheet } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { signIn, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-export default class LogIn extends Component {
+class LogIn extends Component {
+
+    state = {
+        username: '',
+        password: '',
+    }
+
+    _onChangeText = (text, field) => {
+        switch (field) {
+            case 'username':
+                this.setState({
+                    username: text,
+                })
+                break
+            case 'password':
+                this.setState({
+                    password: text,
+                })
+                break
+            default:
+                break
+        }
+    }
 
     _handleLogIn() {
-        console.log('Hello log in!')
+        const { username, password } = this.state
+        this.props.signIn(username, password, this.props.navigation)
     }
 
     _handleForgotPassword() {
         this.props.navigation.navigate('Auth', {
             screen: 'ForgotPassword'
         })
+        this.props.reset()
     }
 
     _handleSignUp() {
         this.props.navigation.navigate('Auth', {
             screen: 'SignUp'
         })
+        this.props.reset()
     }
 
     render() {
@@ -47,6 +76,7 @@ export default class LogIn extends Component {
                                 placeholder={'Username or email'}
                                 placeholderTextColor={colors.lightgray}
                                 style={styles.input}
+                                onChangeText={(text) => this._onChangeText(text, 'username')}
                             />
                         </View>
                         <View style={styles.inputContainer}>
@@ -57,6 +87,7 @@ export default class LogIn extends Component {
                                 style={[styles.input, {
                                     paddingRight: layout.paddingHorizontal,
                                 }]}
+                                onChangeText={(text) => this._onChangeText(text, 'password')}
                             />
                             <Image
                                 style={styles.inputIcon}
@@ -97,6 +128,13 @@ export default class LogIn extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </KeyboardAwareScrollView>
                 </ImageBackground>
             </SafeAreaView>
@@ -165,7 +203,7 @@ const styles = StyleSheet.create({
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
-        alignSelf:'center',
+        alignSelf: 'center',
         marginBottom: 50,
     },
     forgotText: {
@@ -187,4 +225,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-})  
+})
+
+LogIn.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
+})
+
+const mapDispatchToProps = {
+    signIn,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn)

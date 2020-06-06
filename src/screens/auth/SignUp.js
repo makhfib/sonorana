@@ -4,19 +4,50 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { signUp, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-export default class SignUp extends Component {
+class SignUp extends Component {
+
+    state = {
+        username: '',
+        email: '',
+        password: '',
+    }
+
+    _onChangeText = (text, field) => {
+        switch (field) {
+            case 'username':
+                this.setState({
+                    username: text,
+                })
+                break
+            case 'email':
+                this.setState({
+                    email: text,
+                })
+                break
+            case 'password':
+                this.setState({
+                    password: text,
+                })
+                break
+            default:
+                break
+        }
+    }
 
     _handleSignUp() {
-        this.props.navigation.navigate('Auth', {
-            screen: 'ConfirmSignUp'
-        })
-        console.log('Sign up')
+        const { email, username, password } = this.state
+        this.props.signUp(email, username, password, this.props.navigation)
     }
 
     _handleLogIn() {
         this.props.navigation.goBack()
+        this.props.reset()
     }
 
     render() {
@@ -55,7 +86,6 @@ export default class SignUp extends Component {
                                 start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
                                 style={styles.gradientContainer}
                             >
-
                                 <View style={styles.inputContainer}>
                                     <TextInput
                                         placeholder={'Email'}
@@ -86,7 +116,6 @@ export default class SignUp extends Component {
                                     />
                                 </View>
                             </LinearGradient>
-
                             <LinearGradient
                                 colors={[colors.yellow, colors.orange, colors.pink]}
                                 start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
@@ -116,6 +145,14 @@ export default class SignUp extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
+                </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
         )
@@ -200,4 +237,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-})  
+})
+
+SignUp.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
+})
+
+const mapDispatchToProps = {
+    signUp,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

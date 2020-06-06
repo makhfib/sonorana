@@ -5,15 +5,46 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import { colors, layout } from '../../constants/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { confirmSignUp, resendCode, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
-export default class ConfirmSignUp extends Component {
+class ConfirmSignUp extends Component {
+
+    state = {
+        code: '',
+    }
+
+    _onChangeText = (text, field) => {
+        switch (field) {
+            case 'code':
+                this.setState({
+                    code: text,
+                })
+                break
+            default:
+                break
+        }
+    }
 
     _handleConfirm() {
-        console.log('Not handled!')
+        const { code } = this.state
+        this.props.confirmSignUp(
+            this.props.route.params.username,
+            this.props.route.params.password,
+            code,
+            this.props.navigation
+        )
     }
 
     _handleResend() {
-        console.log('Not handled!')
+        this.props.resendCode(this.props.route.params.username)
+    }
+
+    _handleBack() {
+        this.props.navigation.goBack()
+        this.props.reset()
     }
 
     render() {
@@ -23,7 +54,7 @@ export default class ConfirmSignUp extends Component {
             >
                 <NavigationBar
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    leftIconOnPress={() => this.props.navigation.goBack()}
+                    leftIconOnPress={() => this._handleBack()}
                 />
                 <View
                     style={styles.contentContainer}
@@ -50,10 +81,11 @@ export default class ConfirmSignUp extends Component {
                                 placeholder={'Code'}
                                 placeholderTextColor={colors.tint}
                                 style={styles.input}
+                                onChangeText={(text) => this._onChangeText(text, 'code')}
                             />
                         </View>
                     </LinearGradient>
-                    
+
                     <LinearGradient
                         colors={[colors.yellow, colors.orange, colors.pink]}
                         start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
@@ -85,8 +117,14 @@ export default class ConfirmSignUp extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </View>
-
             </SafeAreaView>
         )
     }
@@ -168,3 +206,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
+
+ConfirmSignUp.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
+})
+
+const mapDispatchToProps = {
+    confirmSignUp,
+    resendCode,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmSignUp)

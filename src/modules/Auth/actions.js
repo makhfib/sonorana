@@ -23,8 +23,7 @@ import {
     CONFIRM_FORGOT_PASSWORD_ERROR,
     CONFIRM_FORGOT_PASSWORD_SUCCESS
 } from './types'
-import InputInvalid from '../../functions/InputInvalid'
-import { get_user, get_feed } from '../Api/actions'
+import { isEmpty } from '../../functions/input'
 
 // Made it a private function because it is called
 // in 'signIn' and 'confirmSignUp'
@@ -51,17 +50,6 @@ function _signIn(username, password, navigation) {
                 routes: [{ name: 'Root' }]
             });
 
-            dispatch(
-                get_user({
-                    u_username: CognitoUser['username']
-                }),
-                get_feed({
-                    u_username: CognitoUser['username']
-                })
-            )
-
-            console.log('dispatch from auth')
-
         }).catch((err) => {
             dispatch({
                 type: SIGNIN_ERROR,
@@ -85,7 +73,7 @@ function _signIn(username, password, navigation) {
 
 export function signIn(username, password, navigation) {
     return function (dispatch) {
-        if (InputInvalid.isEmpty(username) || InputInvalid.isEmpty(password)) {
+        if (isEmpty(username) || isEmpty(password)) {
             dispatch({
                 type: SIGNIN_ERROR,
                 payload: {
@@ -132,7 +120,7 @@ export function signOut(navigation) {
 
 export function signUp(email, username, password, navigation) {
     return function (dispatch) {
-        if (InputInvalid.isEmpty(email) || InputInvalid.isEmpty(username) || InputInvalid.isEmpty(password)) {
+        if (isEmpty(email) || isEmpty(username) || isEmpty(password)) {
             dispatch({
                 type: SIGNUP_ERROR,
                 payload: {
@@ -143,7 +131,7 @@ export function signUp(email, username, password, navigation) {
             dispatch({
                 type: SIGNUP,
                 payload: {
-                    
+
                 }
             })
 
@@ -158,7 +146,7 @@ export function signUp(email, username, password, navigation) {
                 dispatch({
                     type: SIGNUP_SUCCESS,
                     payload: {
-                        
+
                     }
                 })
 
@@ -186,7 +174,7 @@ export function signUp(email, username, password, navigation) {
 
 export function confirmSignUp(username, password, code, navigation) {
     return function (dispatch) {
-        if (InputInvalid.isEmpty(code)) {
+        if (isEmpty(code)) {
             dispatch({
                 type: CONFIRM_SIGNUP_ERROR,
                 payload: {
@@ -232,7 +220,7 @@ export function resendCode(username) {
         dispatch({
             type: RESEND_CODE,
             payload: {
-                
+
             }
         })
 
@@ -240,7 +228,7 @@ export function resendCode(username) {
             dispatch({
                 type: RESEND_CODE_SUCCESS,
                 payload: {
-                    
+
                 }
             })
         }).catch((err) => {
@@ -257,7 +245,7 @@ export function resendCode(username) {
 
 export function forgotPassword(username, navigation) {
     return function (dispatch) {
-        if (InputInvalid.isEmpty(username)) {
+        if (isEmpty(username)) {
             dispatch({
                 type: FORGOT_PASSWORD_ERROR,
                 payload: {
@@ -268,7 +256,7 @@ export function forgotPassword(username, navigation) {
             dispatch({
                 type: FORGOT_PASSWORD,
                 payload: {
-                    
+
                 }
             })
 
@@ -276,12 +264,12 @@ export function forgotPassword(username, navigation) {
                 dispatch({
                     type: FORGOT_PASSWORD_SUCCESS,
                     payload: {
-                        
+
                     }
                 })
 
                 navigation.navigate('Auth', {
-                    screen: 'ConfirmResetPassword',
+                    screen: 'ConfirmForgotPassword',
                     params: {
                         username
                     }
@@ -302,7 +290,7 @@ export function forgotPassword(username, navigation) {
 
 export function forgotPasswordSubmit(username, code, newPassword, navigation) {
     return function (dispatch) {
-        if (InputInvalid.isEmpty(username) || InputInvalid.isEmpty(code) || InputInvalid.isEmpty(newPassword)) {
+        if (isEmpty(username) || isEmpty(code) || isEmpty(newPassword)) {
             dispatch({
                 type: CONFIRM_FORGOT_PASSWORD_ERROR,
                 payload: {
@@ -313,7 +301,7 @@ export function forgotPasswordSubmit(username, code, newPassword, navigation) {
             dispatch({
                 type: CONFIRM_FORGOT_PASSWORD,
                 payload: {
-                    
+
                 }
             })
 
@@ -321,7 +309,7 @@ export function forgotPasswordSubmit(username, code, newPassword, navigation) {
                 dispatch({
                     type: CONFIRM_FORGOT_PASSWORD_SUCCESS,
                     payload: {
-                        
+
                     }
                 })
 
