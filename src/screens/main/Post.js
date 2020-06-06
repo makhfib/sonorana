@@ -44,7 +44,7 @@ export default class Post extends Component {
     }
 
     _onRepeatPress() {
-        this.setState({ repeat: (this.state.repeat+1)%3 })
+        this.setState({ repeat: (this.state.repeat + 1) % 3 })
     }
 
     render() {
@@ -65,10 +65,15 @@ export default class Post extends Component {
                 />
                 <View style={styles.container}>
                     <View style={styles.profileContainer}>
-                        <Image 
-                            source={{uri: item.u_photo}}
-                            style={styles.profileImage}
-                        />
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() => this._handleUsernameOnPress()}
+                        >
+                            <Image
+                                source={{ uri: item.u_photo }}
+                                style={styles.profileImage}
+                            />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.descriptionContainer}>
                         <Text style={styles.descriptionText}>{item.p_description}</Text>
@@ -88,21 +93,21 @@ export default class Post extends Component {
                     </View>
                     <View style={styles.controls}>
                         <TouchableOpacity activeOpacity={1}>
-                            <Image 
+                            <Image
                                 source={require('../../assets/icons/rewind.png')}
                                 style={styles.buttonImage}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={this._onPlayPausePress}>
-                            <Image 
-                                source={ this.state.playing 
+                            <Image
+                                source={this.state.playing
                                     ? require('../../assets/icons/pause_circle.png')
                                     : require('../../assets/icons/play_circle.png')}
                                 style={styles.playPauseImage}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1}>
-                            <Image 
+                            <Image
                                 source={require('../../assets/icons/fastforward.png')}
                                 style={styles.buttonImage}
                             />
@@ -110,11 +115,11 @@ export default class Post extends Component {
                     </View>
                     <View style={styles.actionsContainer}>
                         <TouchableOpacity activeOpacity={1} onPress={this._onLikePress}>
-                            <Image 
-                                source={ this.state.u_liked
+                            <Image
+                                source={this.state.u_liked
                                     ? require('../../assets/icons/liked.png')
                                     : require('../../assets/icons/like.png')}
-                                style={[styles.likeImage, {tintColor: this.state.u_liked ? colors.pink : colors.tint}]}
+                                style={[styles.likeImage, { tintColor: this.state.u_liked ? colors.pink : colors.tint }]}
                             />
                             <View style={styles.likes}>
                                 <Text style={[styles.actionsText, { color: this.state.u_liked ? colors.pink : colors.tint }]}>{item.p_numLikes}</Text>
@@ -138,15 +143,15 @@ const styles = StyleSheet.create({
         paddingRight: layout.paddingHorizontal,
         backgroundColor: colors.background,
     },
-    profileContainer: {
+    profileContainer: {
         flex: 0.4,
         justifyContent: 'center',
         alignItems: 'center',
     },
     profileImage: {
-        width: 150, 
-        height: 150, 
-        borderRadius: 150/2,
+        width: 150,
+        height: 150,
+        borderRadius: 150 / 2,
         backgroundColor: colors.background,
     },
     descriptionContainer: {
@@ -158,7 +163,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center'
     },
-    sliderContainer: {
+    sliderContainer: {
         flex: 0.1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
         borderWidth: 1.4,
         borderColor: colors.pink,
     },
-    track:{
+    track: {
         height: 2.5,
     },
     controls: {
@@ -192,14 +197,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonImage: {
-        width: 50, 
+        width: 50,
         height: 50,
     },
     playPauseImage: {
-        width: 75, 
+        width: 75,
         height: 75,
     },
-    actionsContainer: {
+    actionsContainer: {
         flex: 0.1,
         marginBottom: layout.paddingHorizontal,
         justifyContent: 'center',

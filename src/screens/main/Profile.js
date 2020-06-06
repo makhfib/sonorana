@@ -102,7 +102,7 @@ export default class Profile extends Component {
                             item.u_website !== undefined && item.u_website !== null
                                 ? <TouchableOpacity
                                     activeOpacity={0.5}
-                                    onPress={() => goToURL(u_website)}
+                                    onPress={() => goToURL(item.u_website)}
                                 >
                                     <Text style={{ color: colors.blue, marginBottom: 10, }}>
                                         {item.u_website.replace(/https?:\/\//i, "")}

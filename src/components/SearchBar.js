@@ -100,6 +100,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
         paddingHorizontal: layout.paddingHorizontal,
         justifyContent: 'flex-end',
+        borderBottomColor: colors.lightgray,
+        borderBottomWidth: 1,
     },
     itemsContainer: {
         flexDirection: 'row',

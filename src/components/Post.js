@@ -42,8 +42,9 @@ export default class Post extends Component {
                     <TouchableOpacity
                         activeOpacity={1}
                         style={{
-                            flex: 1,
                             flexDirection: 'row',
+                            alignItems:'center',
+                            paddingRight: layout.paddingHorizontal/2,
                         }}
                         onPress={() => this._onProfilePress()}
                     >
@@ -51,10 +52,10 @@ export default class Post extends Component {
                             source={{ uri: this.props.item.u_photo }}
                             style={styles.profileImage}
                         />
-                        <View style={styles.userContainer}>
-                            <Text maxLength={15} style={styles.boldText}>{this.props.item.u_username}</Text>
-                        </View>
+                        <Text maxLength={15} style={styles.boldText}>{this.props.item.u_username}</Text>
+  
                     </TouchableOpacity>
+                    <View style={{flex:1}}/>
                     <TouchableOpacity activeOpacity={1} style={styles.likeButton} onPress={() => this._onLikePress()}>
                         <Image
                             source={this.state.liked
@@ -117,11 +118,12 @@ const styles = StyleSheet.create({
     },
     userContainer: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     likeButton: {
         flexDirection: 'row',
         alignItems: 'center',
+        paddingLeft: 10, // to avoid precision errors
     },
     bodyContainer: {
         flexDirection: 'row',
@@ -131,7 +133,6 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         resizeMode: 'contain',
-        backgroundColor: colors.background
     },
     infoContainer: {
         flex: 1,

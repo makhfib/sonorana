@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     username: {
         flex: 1,
         marginLeft: layout.paddingHorizontal / 2,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
 
 })
