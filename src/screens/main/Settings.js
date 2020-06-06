@@ -7,6 +7,7 @@ import { colors, layout } from '../../constants/Styles'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signOut, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
 class Settings extends React.Component {
 
@@ -68,19 +69,27 @@ class Settings extends React.Component {
                         source={require('../../assets/icons/right_arrow.png')}
                     />
                 </TouchableOpacity>
+                {
+                    this.props.loading
+                        ? <CustomActivityIndicator
+                            loading={this.props.loading}
+                        />
+                        : <></>
+                }
             </SafeAreaView>
         );
     }
 }
 
 Settings.propTypes = {
-    
+
 }
 
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
 })
 
 const mapDispatchToProps = {

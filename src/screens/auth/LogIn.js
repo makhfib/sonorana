@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signIn, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
 class LogIn extends Component {
 
@@ -125,6 +126,13 @@ class LogIn extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </ImageBackground>
             </SafeAreaView>
         )
@@ -189,7 +197,7 @@ const styles = StyleSheet.create({
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
-        alignSelf:'center',
+        alignSelf: 'center',
         marginBottom: 50,
     },
     forgotText: {
@@ -211,16 +219,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-})  
+})
 
 LogIn.propTypes = {
-    
+
 }
 
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
 })
 
 const mapDispatchToProps = {

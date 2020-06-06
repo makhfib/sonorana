@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { forgotPassword, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
 class ForgotPassword extends Component {
 
@@ -91,6 +92,13 @@ class ForgotPassword extends Component {
                             </Text>
                         </TouchableOpacity>
                     </LinearGradient>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </View>
 
             </SafeAreaView>
@@ -156,7 +164,8 @@ ForgotPassword.propTypes = {
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
 })
 
 const mapDispatchToProps = {

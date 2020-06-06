@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { confirmSignUp, resendCode, reset } from '../../modules/Auth/actions'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
 class ConfirmSignUp extends Component {
 
@@ -116,8 +117,14 @@ class ConfirmSignUp extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.loading
+                            ? <CustomActivityIndicator
+                                loading={this.props.loading}
+                            />
+                            : <></>
+                    }
                 </View>
-
             </SafeAreaView>
         )
     }
@@ -207,7 +214,8 @@ ConfirmSignUp.propTypes = {
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading
 })
 
 const mapDispatchToProps = {
