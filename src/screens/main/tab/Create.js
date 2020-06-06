@@ -6,7 +6,7 @@ import MultilineInput from '../../../components/MultilineInput'
 import Separator from '../../../components/Separator'
 import { colors, layout } from '../../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class Create extends React.Component {
 
@@ -45,48 +45,50 @@ export default class Create extends React.Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <NavigationBar
-                    leftIconOnPress={() => this._handleCancel()}
-                    leftIconImage={require('../../../assets/icons/cancel.png')}
-                    rightIconOnPress={() => this._handlePost()}
-                    rightIconImage={require('../../../assets/icons/send.png')}
-                />
-                <Separator />
-                <View
-                    style={styles.container}
-                >
-                    <MultilineInput
-                        style={styles.textInput}
-                        maxLines={1}
-                        maxLength={this.state.maxLength}
-                        placeholder={'What\'s on your mind?'}
-                        onChangeText={this._onChangeText}
-                        clear={this.state.clear}
+                <KeyboardAwareScrollView>
+                    <NavigationBar
+                        leftIconOnPress={() => this._handleCancel()}
+                        leftIconImage={require('../../../assets/icons/cancel.png')}
+                        rightIconOnPress={() => this._handlePost()}
+                        rightIconImage={require('../../../assets/icons/send.png')}
                     />
-                    <Text
-                        style={styles.counter}
-                    >{this.state.currentLength}/{this.state.maxLength}</Text>
-                </View>
-                <Separator />
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => this._handleRecord()}
-                    style={styles.optionContainer}
-                >
-                    <Image
-                        style={styles.optionIcon}
-                        source={require('../../../assets/icons/mic.png')}
-                    />
-                    <Text
-                        style={styles.optionText}
+                    <Separator />
+                    <View
+                        style={styles.container}
                     >
-                        Record
-                    </Text>
-                    <Image
-                        style={styles.optionArrow}
-                        source={require('../../../assets/icons/right_arrow.png')}
-                    />
-                </TouchableOpacity>
+                        <MultilineInput
+                            style={styles.textInput}
+                            maxLines={1}
+                            maxLength={this.state.maxLength}
+                            placeholder={'What\'s on your mind?'}
+                            onChangeText={this._onChangeText}
+                            clear={this.state.clear}
+                        />
+                        <Text
+                            style={styles.counter}
+                        >{this.state.currentLength}/{this.state.maxLength}</Text>
+                    </View>
+                    <Separator />
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._handleRecord()}
+                        style={styles.optionContainer}
+                    >
+                        <Image
+                            style={styles.optionIcon}
+                            source={require('../../../assets/icons/mic.png')}
+                        />
+                        <Text
+                            style={styles.optionText}
+                        >
+                            Record
+                        </Text>
+                        <Image
+                            style={styles.optionArrow}
+                            source={require('../../../assets/icons/right_arrow.png')}
+                        />
+                    </TouchableOpacity>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         );
     }
