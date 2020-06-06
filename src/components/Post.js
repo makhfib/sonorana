@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-
 import { colors } from '../constants/Styles'
 import { layout } from '../constants/Styles'
 
@@ -19,11 +18,21 @@ export default class Post extends Component {
     }
 
     _onPostPress() {
-        this.props.onPostPress(this.props.item)
+        this.props.navigation.navigate('Main', {
+            screen: 'Post',
+            params: {
+                item: this.props.item
+            }
+        })
     }
 
     _onProfilePress() {
-        this.props.onProfilePress(this.props.item)
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: {
+                item: this.props.item
+            }
+        })
     }
 
     render() {
@@ -86,6 +95,9 @@ export default class Post extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.background,
+        borderColor: colors.lightgray,
+        borderBottomWidth: 0.5,
+        borderTopWidth: 0.5,
     },
     headerContainer: {
         flexDirection: 'row',

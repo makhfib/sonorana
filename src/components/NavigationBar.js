@@ -41,39 +41,45 @@ export default class NavigationBar extends Component {
                                     {
                                         // read more https://stackoverflow.com/questions/332422/get-the-name-of-an-objects-type
                                         this.props.title.constructor === String
-                                            ? <Text
-                                                style={styles.text}
-                                                numberOfLines={1}
+                                            ?
+                                            <TouchableOpacity
+                                                activeOpacity={1}
+                                                onPress={this.props.titleOnPress}
                                             >
-                                                {this.props.title}
-                                            </Text>
-                                            : <Image
-                                                style={[{ height: 40, resizeMode: 'contain'}]}
-                                                source={this.props.title}
-                                            />
-                                    }
+                                                <Text
+                                                    style={styles.text}
+                                                    numberOfLines={1}
+                                                >
+                                                    {this.props.title}
+                                                    </Text>
+                                            </TouchableOpacity>
+                                : <Image
+                                    style={[{ height: 40, resizeMode: 'contain' }]}
+                                    source={this.props.title}
+                                />
+                        }
                                 </> : <></>
                         }
                     </View>
 
-                    <View
-                        style={styles.rightItemContainer}>
-                        {
-                            this.props.rightIconImage !== undefined ?
+                <View
+                    style={styles.rightItemContainer}>
+                    {
+                        this.props.rightIconImage !== undefined ?
 
-                                <TouchableOpacity
-                                    onPress={() => this.props.rightIconOnPress()}
-                                >
-                                    <Image
-                                        style={styles.icon}
-                                        source={this.props.rightIconImage}
-                                    />
-                                </TouchableOpacity>
-                                : <></>
-                        }
-                    </View>
+                            <TouchableOpacity
+                                onPress={() => this.props.rightIconOnPress()}
+                            >
+                                <Image
+                                    style={styles.icon}
+                                    source={this.props.rightIconImage}
+                                />
+                            </TouchableOpacity>
+                            : <></>
+                    }
                 </View>
             </View>
+            </View >
         )
     }
 }

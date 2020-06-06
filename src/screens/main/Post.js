@@ -16,7 +16,6 @@ const REPEAT_ICON = [
 
 export default class Post extends Component {
     state = {
-        p_id: this.props.route.params.id,
         u_liked: this.props.route.params.item.u_liked,
         value: 0.2,
         playing: false,
@@ -25,6 +24,15 @@ export default class Post extends Component {
 
     _onBackPress() {
         this.props.navigation.goBack()
+    }
+
+    _handleUsernameOnPress() {
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: {
+                item: this.props.route.params.item
+            }
+        })
     }
 
     _onLikePress = () => {
@@ -51,6 +59,7 @@ export default class Post extends Component {
                     leftIconImage={require('../../assets/icons/left_arrow.png')}
                     leftIconOnPress={() => this._onBackPress()}
                     title={item.u_username}
+                    titleOnPress={() => this._handleUsernameOnPress()}
                     rightIconImage={REPEAT_ICON[this.state.repeat]}
                     rightIconOnPress={() => this._onRepeatPress()}
                 />

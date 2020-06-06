@@ -3,25 +3,42 @@ import { Text, View, Image, StyleSheet } from 'react-native'
 import { colors, layout } from '../constants/Styles'
 import FollowButton from './FollowButton'
 import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends Component {
+    _handleProfileOnPress() {
+        this.props.navigation.navigate('Main', {
+            screen: 'Profile',
+            params: {
+                item: this.props.item
+            }
+        })
+    }
+
     render() {
         return (
-            <View
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this._handleProfileOnPress()}
                 style={styles.container}
             >
                 <Image
                     style={styles.photo}
-                    source={this.props.item.u_photo}
+                    source={{ uri: this.props.item.u_photo }}
                 />
                 <Text
                     style={styles.username}
                     numberOfLines={1}
                 >{this.props.item.u_username}</Text>
-                <FollowButton
-                    u_following={this.props.item.u_following}
-                />
-            </View>
+                {
+                    this.props.item.u_username !== 'makhfib'
+                        ? <FollowButton
+                            u_following={this.props.item.u_following}
+                        />
+                        : <></>
+                }
+
+            </TouchableOpacity>
         )
     }
 }
@@ -37,15 +54,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: layout.paddingHorizontal,
         backgroundColor: colors.background,
         alignItems: 'center',
+        borderColor: colors.lightgray,
+        borderBottomWidth: 0.5,
+        borderTopWidth: 0.5,
     },
     photo: {
         height: 30,
         width: 30,
-        borderRadius: 30/2,
+        borderRadius: 30 / 2,
     },
     username: {
         flex: 1,
-        marginLeft: layout.paddingHorizontal/2,
+        marginLeft: layout.paddingHorizontal / 2,
         fontWeight: 'bold'
     },
 

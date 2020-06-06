@@ -23,23 +23,6 @@ export default class Profile extends Component {
 
     }
 
-    _onPostPress(item) {
-        this.props.navigation.navigate('Main', {
-            screen: 'Post',
-            params: { 
-                item,
-                feed: Feed
-            }
-        })
-    }
-
-    _onProfilePress(item) {
-        this.props.navigation.navigate('Main', {
-            screen: 'Profile',
-            params: item
-        })
-    }
-
     _handleBack() {
         this.props.navigation.goBack()
     }
@@ -59,15 +42,7 @@ export default class Profile extends Component {
 
     render() {
         const {
-            u_username,
-            u_name,
-            u_photo,
-            u_header,
-            u_description,
-            u_website,
-            u_numFollowing,
-            u_numFollowers,
-            u_following,
+            item
         } = this._props();
 
         // future animations scrollview https://medium.com/hackernoon/react-native-animated-header-using-animated-and-scrollview-9749255c149a
@@ -82,7 +57,7 @@ export default class Profile extends Component {
                 <NavigationBar
                     leftIconOnPress={this.props.route !== undefined ? () => this._handleBack() : undefined} // null gives error, undefined doesn't
                     leftIconImage={this.props.route !== undefined ? require('../../assets/icons/left_arrow.png') : undefined}
-                    title={u_username}
+                    title={item.u_username}
                 />
                 <ScrollView
                     // read more https://stackoverflow.com/questions/38581562/sticky-component-inside-scrollview
@@ -93,12 +68,12 @@ export default class Profile extends Component {
                     <Separator />
                     <View
                         style={[styles.images, {
-                            height: u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
+                            height: item.u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
                         }]}
                     >
                         <ImageBackground
                             style={styles.profileHeader}
-                            source={u_header !== null ? { uri: u_header } : null }
+                            source={item.u_header !== null ? { uri: item.u_header } : null }
                         >
                         </ImageBackground>
                         <View
@@ -106,29 +81,29 @@ export default class Profile extends Component {
                         >
                             <Image
                                 style={styles.profilePhoto}
-                                source={{ uri: u_photo }}
+                                source={{ uri: item.u_photo }}
                             />
                         </View>
                     </View>
                     <View style={styles.basicInfoContainer}>
                         <Text style={{ fontWeight: 'bold', marginBottom: 10, }}>
-                            {u_name}
+                            {item.u_name}
                         </Text>
                         {
-                            u_description !== null
+                            item.u_description !== undefined && item.u_description !== null
                                 ? <Text style={{ marginBottom: 10, }}>
-                                    {u_description}
+                                    {item.u_description}
                                 </Text>
                                 : <></>
                         }
                         {
-                            u_website !== null
+                            item.u_website !== undefined && item.u_website !== null
                                 ? <TouchableOpacity
                                     activeOpacity={0.5}
                                     onPress={() => goToURL(u_website)}
                                 >
                                     <Text style={{ color: colors.blue, marginBottom: 10, }}>
-                                        {u_website.replace(/https?:\/\//i, "")}
+                                        {item.u_website.replace(/https?:\/\//i, "")}
                                     </Text>
                                 </TouchableOpacity>
                                 : <></>
@@ -136,13 +111,13 @@ export default class Profile extends Component {
                         }
                         <View style={{ flexDirection: 'row', marginBottom: 10, }}>
                             <Text style={{ fontWeight: 'bold' }}>
-                                {u_numFollowing}
+                                {item.u_numFollowing}
                             </Text>
                             <Text style={{ marginRight: 10, }} >
                                 {' following'}
                             </Text>
                             <Text style={{ fontWeight: 'bold' }} >
-                                {u_numFollowers}
+                                {item.u_numFollowers}
                             </Text>
                             <Text style={{}} >
                                 {' following'}
@@ -150,7 +125,7 @@ export default class Profile extends Component {
                         </View>
                         <View style={styles.buttonsContainer}>
                             {
-                                u_username === 'makhfib'
+                                item.u_username === 'makhfib'
                                     ? <ActionButton
                                         icon={require('../../assets/icons/edit.png')}
                                         title={'Edit profile'}
@@ -161,7 +136,7 @@ export default class Profile extends Component {
                                         onPress={() => this._handleEdit()}
                                     />
                                     : <FollowButton
-                                        u_following={u_following}
+                                        u_following={item.u_following}
                                         style={{
                                             marginRight: 10,
                                         }}
@@ -169,7 +144,7 @@ export default class Profile extends Component {
                             }
 
                             {
-                                u_username === 'makhfib'
+                                item.u_username === 'makhfib'
                                     ? <ActionButton
                                         icon={require('../../assets/icons/configuration.png')}
                                         title={'Settings'}
@@ -200,12 +175,10 @@ export default class Profile extends Component {
                         renderItem={({ item }) => (
                             <Post
                                 item={item}
-                                onPostPress={this._onPostPress.bind(this)}
-                                onProfilePress={this._onProfilePress.bind(this)}
                                 navigation={this.props.navigation}
                             />
                         )}
-                        keyExtractor={item => item.p_id}
+                        keyExtractor={post => post.p_id}
                     />
                 </ScrollView>
             </SafeAreaView>

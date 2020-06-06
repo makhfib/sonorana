@@ -8,9 +8,11 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Root from './src/navigation'
 import Amplify from 'aws-amplify'
 import { awsconfig } from './aws-exports'
+import { enableScreens } from 'react-native-screens';
 
 Amplify.configure(awsconfig);
 const Application = createStackNavigator();
+enableScreens(); // improves performance https://reactnavigation.org/docs/react-native-screens
 
 export default class App extends React.Component {
     constructor(props) {

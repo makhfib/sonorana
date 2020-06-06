@@ -17,7 +17,11 @@ export default class MainStack extends Component {
             <Stack.Navigator headerMode='none' initialRouteName='BottomTab'>
                 <Stack.Screen name='BottomTab' component={BottomTab} />
                 <Stack.Screen name='Post' component={Post} />
-                <Stack.Screen name='Record' component={Record} />
+                <Stack.Screen name='Record' component={Record} options={
+                    {
+                        animationEnabled: false,
+                    }
+                }/>
                 <Stack.Screen name='Profile' component={Profile} />
                 <Stack.Screen name='Settings' component={Settings} />
                 <Stack.Screen name='EditProfile' component={EditProfile} />

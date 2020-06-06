@@ -9,23 +9,6 @@ import { colors, layout } from '../../../constants/Styles'
 
 export default class Home extends React.Component {
 
-    _onPostPress(item) {
-        this.props.navigation.navigate('Main', {
-            screen: 'Post',
-            params: { 
-                item,
-                feed: Feed
-            }
-        })
-    }
-
-    _onProfilePress(item) {
-        this.props.navigation.navigate('Main', {
-            screen: 'Profile',
-            params: item
-        })
-    }
-
     render() {
         return (
             <SafeAreaView style={{flex: 1, backgroundColor: colors.safearea}}>
@@ -37,8 +20,6 @@ export default class Home extends React.Component {
                         renderItem={({ item }) => (
                             <Post
                                 item={item}
-                                onPostPress={this._onPostPress.bind(this)}
-                                onProfilePress={this._onProfilePress.bind(this)}
                                 navigation={this.props.navigation}
                             />
                         )}
