@@ -24,7 +24,6 @@ export default class Home extends React.Component {
                             />
                         )}
                         keyExtractor={item => item.p_id}
-                        ItemSeparatorComponent={Separator}
                     />
             </SafeAreaView>
         ); 

@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
         alignItems: 'center',
         borderColor: colors.lightgray,
-        borderBottomWidth: 0.5,
-        borderTopWidth: 0.5,
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
     },
     photo: {
         height: 30,
