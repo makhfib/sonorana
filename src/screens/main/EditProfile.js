@@ -14,13 +14,13 @@ export default class EditProfile extends Component {
     }
 
     state = {
-        u_name: this._props().u_name,
-        u_photo: this._props().u_photo,
-        u_header: this._props().u_header,
-        u_description: this._props().u_description,
-        u_website: this._props().u_website,
-        currentNameLength: this._props().u_name.length,
-        currentDescriptionLength: this._props().u_description.length,
+        u_name: this._props().item.u_name,
+        u_photo: this._props().item.u_photo,
+        u_header: this._props().item.u_header,
+        u_description: this._props().item.u_description,
+        u_website: this._props().item.u_website,
+        currentNameLength: this._props().item.u_name.length,
+        currentDescriptionLength: this._props().item.u_description.length,
         nameMaxLength: 30,
         descriptionMaxLength: 140,
         allowSave: true,

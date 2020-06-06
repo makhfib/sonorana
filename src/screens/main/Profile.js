@@ -30,7 +30,9 @@ export default class Profile extends Component {
     _handleEdit() {
         this.props.navigation.navigate('Main', {
             screen: 'EditProfile',
-            params: this._props()
+            params: {
+                item: this._props().item
+            }
         })
     }
 
