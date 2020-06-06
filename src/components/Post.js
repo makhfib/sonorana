@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.background,
         borderColor: colors.lightgray,
-        borderBottomWidth: 1,
         borderTopWidth: 1,
     },
     headerContainer: {

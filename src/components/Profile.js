@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
         alignItems: 'center',
         borderColor: colors.lightgray,
-        borderBottomWidth: 1,
         borderTopWidth: 1,
     },
     photo: {
