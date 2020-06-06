@@ -4,15 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import Separator from '../../components/Separator'
 import { colors, layout } from '../../constants/Styles'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { signOut, reset } from '../../modules/Auth/actions'
 
-export default class Settings extends React.Component {
+class Settings extends React.Component {
 
     _handleBack() {
         this.props.navigation.goBack()
     }
 
     _handleLogOut() {
-
+        this.props.signOut(this.props.navigation)
     }
 
     render() {
@@ -69,3 +72,20 @@ export default class Settings extends React.Component {
         );
     }
 }
+
+Settings.propTypes = {
+    
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage
+})
+
+const mapDispatchToProps = {
+    signOut,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

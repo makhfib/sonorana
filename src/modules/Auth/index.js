@@ -81,6 +81,7 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: true,
                 errorMessage: 'Unable to sign out',
+                loading: false,
             }
         case SIGNUP:
             return {
@@ -149,6 +150,7 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: false,
                 errorMessage: null,
+                loading: true,
             }
         case FORGOT_PASSWORD_SUCCESS:
             return {

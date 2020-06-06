@@ -4,18 +4,48 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { signUp, reset } from '../../modules/Auth/actions'
 
-export default class SignUp extends Component {
+class SignUp extends Component {
+
+    state = {
+        username: '',
+        email: '',
+        password: '',
+    }
+
+    _onChangeText = (text, field) => {
+        switch (field) {
+            case 'username':
+                this.setState({
+                    username: text,
+                })
+                break
+            case 'email':
+                this.setState({
+                    email: text,
+                })
+                break
+            case 'password':
+                this.setState({
+                    password: text,
+                })
+                break
+            default:
+                break
+        }
+    }
 
     _handleSignUp() {
-        this.props.navigation.navigate('Auth', {
-            screen: 'ConfirmSignUp'
-        })
-        console.log('Sign up')
+        const { email, username, password } = this.state
+        this.props.signUp(email, username, password, this.props.navigation)
     }
 
     _handleLogIn() {
         this.props.navigation.goBack()
+        this.props.reset()
     }
 
     render() {
@@ -45,6 +75,7 @@ export default class SignUp extends Component {
                                     placeholder={'Username'}
                                     placeholderTextColor={colors.tint}
                                     style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'username')}
                                 />
                             </View>
                         </LinearGradient>
@@ -59,6 +90,7 @@ export default class SignUp extends Component {
                                     placeholder={'Email'}
                                     placeholderTextColor={colors.tint}
                                     style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'email')}
                                 />
                             </View>
                         </LinearGradient>
@@ -77,6 +109,7 @@ export default class SignUp extends Component {
                                     style={[styles.input, {
                                         paddingRight: layout.paddingHorizontal,
                                     }]}
+                                    onChangeText={(text) => this._onChangeText(text, 'password')}
                                 />
                                 <Image
                                     style={styles.inputIcon}
@@ -197,4 +230,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-})  
+})
+
+SignUp.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    error: state.auth.error,
+    errorMessage: state.auth.errorMessage
+})
+
+const mapDispatchToProps = {
+    signUp,
+    reset
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
