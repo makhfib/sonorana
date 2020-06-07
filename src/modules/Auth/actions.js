@@ -58,14 +58,19 @@ function _signIn(username, password, navigation) {
                 }
             })
             if (err.code === 'UserNotConfirmedException') {
+                dispatch({
+                    type: RESET
+                })
                 navigation.navigate('Auth', {
                     screen: 'ConfirmSignUp',
                     params: {
-                        email,
+                        email: null,
                         username,
                         password
                     }
                 });
+            } else {
+                
             }
         });
     }

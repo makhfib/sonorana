@@ -40,6 +40,7 @@ export default function(state = INITIAL_STATE, action) {
                 ...state,
                 error: false,
                 errorMessage: null,
+                loading: false,
             }
         case SIGNIN:
             return {
