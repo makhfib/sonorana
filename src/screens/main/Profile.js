@@ -127,7 +127,7 @@ export default class Profile extends Component {
                         </View>
                         <View style={styles.buttonsContainer}>
                             {
-                                item.u_username === 'makhfib'
+                                item.u_username === 'freshlygrounded'
                                     ? <ActionButton
                                         icon={require('../../assets/icons/edit.png')}
                                         title={'Edit profile'}
@@ -146,7 +146,7 @@ export default class Profile extends Component {
                             }
 
                             {
-                                item.u_username === 'makhfib'
+                                item.u_username === 'freshlygrounded'
                                     ? <ActionButton
                                         icon={require('../../assets/icons/configuration.png')}
                                         title={'Settings'}
