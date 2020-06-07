@@ -20,8 +20,14 @@ const persistConfig = {
     stateReconciler: autoMergeLevel2,
 }
 
+const authPersistConfig = {
+  key: 'auth',
+  storage: AsyncStorage,
+  whitelist: ['CognitoUser'] // only CognitoUser will be persisted
+}
+
 const rootReducer = combineReducers({
-  auth: Auth,
+  auth: persistReducer(authPersistConfig, Auth),
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
