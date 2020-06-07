@@ -7,7 +7,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signUp, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class SignUp extends Component {
@@ -70,6 +71,17 @@ class SignUp extends Component {
                         <View
                             style={styles.formContainer}
                         >
+                            {
+                                this.props.error
+                                    ? <FloatingMessage
+                                        errorMessage={this.props.errorMessage}
+                                        onCancel={() => this.props.reset()}
+                                        style={{
+                                            backgroundColor: colors.red
+                                        }}
+                                    />
+                                    : <></>
+                            }
                             <LinearGradient
                                 colors={[colors.pink, colors.orange, colors.yellow]}
                                 start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
@@ -153,7 +165,7 @@ class SignUp extends Component {
                         </View>
                         {
                             this.props.loading
-                                ? <CustomActivityIndicator
+                                ? <FloatingActivityIndicator
                                     loading={this.props.loading}
                                 />
                                 : <></>

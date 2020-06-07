@@ -7,7 +7,7 @@ import { colors, layout } from '../../constants/Styles'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signOut, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
 
 class Settings extends React.Component {
 
@@ -71,7 +71,7 @@ class Settings extends React.Component {
                 </TouchableOpacity>
                 {
                     this.props.loading
-                        ? <CustomActivityIndicator
+                        ? <FloatingActivityIndicator
                             loading={this.props.loading}
                         />
                         : <></>

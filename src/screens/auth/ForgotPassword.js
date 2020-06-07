@@ -8,7 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { forgotPassword, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class ForgotPassword extends Component {
@@ -62,7 +63,17 @@ class ForgotPassword extends Component {
                         >
                             Enter your username or recovery email
                     </Text>
-
+                        {
+                            this.props.error
+                                ? <FloatingMessage
+                                    errorMessage={this.props.errorMessage}
+                                    onCancel={() => this.props.reset()}
+                                    style={{
+                                        backgroundColor: colors.red
+                                    }}
+                                />
+                                : <></>
+                        }
                         <LinearGradient
                             colors={[colors.pink, colors.orange, colors.yellow]}
                             start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
@@ -96,7 +107,7 @@ class ForgotPassword extends Component {
                         </LinearGradient>
                         {
                             this.props.loading
-                                ? <CustomActivityIndicator
+                                ? <FloatingActivityIndicator
                                     loading={this.props.loading}
                                 />
                                 : <></>

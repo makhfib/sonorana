@@ -6,8 +6,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signIn, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ThemeColors } from 'react-navigation';
 
 class LogIn extends Component {
 
@@ -55,7 +57,9 @@ class LogIn extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+                <KeyboardAwareScrollView
+                    contentContainerStyle={styles.container}
+                >
                     <ImageBackground
                         style={styles.background}
                         source={require('../../assets/images/linear-background.png')}
@@ -71,6 +75,17 @@ class LogIn extends Component {
                         <View
                             style={styles.formContainer}
                         >
+                            {
+                                this.props.error
+                                    ? <FloatingMessage
+                                        errorMessage={this.props.errorMessage}
+                                        onCancel={() => this.props.reset()}
+                                        style={{
+                                            backgroundColor: colors.red
+                                        }}
+                                    />
+                                    : <></>
+                            }
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     placeholder={'Username or email'}
@@ -105,37 +120,42 @@ class LogIn extends Component {
                                     LOG IN
                             </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={styles.forgotContainer}
-                                onPress={() => this._handleForgotPassword()}
+                            <View
+                                style={styles.alternativesContainer}
                             >
-                                <Text
-                                    style={styles.forgotText}
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.forgotContainer}
+                                    onPress={() => this._handleForgotPassword()}
                                 >
-                                    I forgot my password
-                            </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={styles.signupContainer}
-                                onPress={() => this._handleSignUp()}
-                            >
-                                <Text
-                                    style={styles.signupText}
+                                    <Text
+                                        style={styles.forgotText}
+                                    >
+                                        I forgot my password
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.signupContainer}
+                                    onPress={() => this._handleSignUp()}
                                 >
-                                    CREATE ACCOUNT
-                            </Text>
-                            </TouchableOpacity>
+                                    <Text
+                                        style={styles.signupText}
+                                    >
+                                        CREATE ACCOUNT
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
                         </View>
                         {
                             this.props.loading
-                                ? <CustomActivityIndicator
+                                ? <FloatingActivityIndicator
                                     loading={this.props.loading}
                                 />
                                 : <></>
                         }
-                </ImageBackground>
+                    </ImageBackground>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
         )
@@ -166,6 +186,7 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'stretch',
         marginHorizontal: layout.paddingHorizontal,
+        marginBottom: layout.paddingHorizontal
     },
     inputContainer: {
         flexDirection: 'row',
@@ -177,7 +198,6 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         height: layout.inputContainerHeight,
-        marginBottom: 50,
         borderRadius: 5,
         justifyContent: 'center',
         borderRadius: 5,
@@ -197,14 +217,18 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         resizeMode: 'contain',
-        tintColor: colors.background,
+        tintColor: 'white',
         alignSelf: 'center'
+    },
+    alternativesContainer: {
+        flex: 1,
+        minHeight: 100,
+        justifyContent: 'space-around'
     },
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
         alignSelf: 'center',
-        marginBottom: 50,
     },
     forgotText: {
         fontWeight: 'bold',
