@@ -55,100 +55,100 @@ class LogIn extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <ImageBackground
-                    style={styles.background}
-                    source={require('../../assets/images/linear-background.png')}
-                >
-                <KeyboardAwareScrollView style={styles.container}>
-                    <View
-                        style={styles.logoContainer}
+                <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+                    <ImageBackground
+                        style={styles.background}
+                        source={require('../../assets/images/linear-background.png')}
                     >
-                        <Image
-                            style={styles.logo}
-                            source={require('../../assets/brand/White-Icon.png')}
-                        />
-                    </View>
-                    <View
-                        style={styles.formContainer}
-                    >
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Username or email'}
-                                placeholderTextColor={colors.lightgray}
-                                style={styles.input}
-                                onChangeText={(text) => this._onChangeText(text, 'username')}
-                            />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Password'}
-                                placeholderTextColor={colors.lightgray}
-                                secureTextEntry={true}
-                                style={[styles.input, {
-                                    paddingRight: layout.paddingHorizontal,
-                                }]}
-                                onChangeText={(text) => this._onChangeText(text, 'password')}
-                            />
+                        <View
+                            style={styles.logoContainer}
+                        >
                             <Image
-                                style={styles.inputIcon}
-                                source={require('../../assets/icons/appearance.png')}
+                                style={styles.logo}
+                                source={require('../../assets/brand/White-Icon.png')}
                             />
                         </View>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.loginContainer}
-                            onPress={() => this._handleLogIn()}
+                        <View
+                            style={styles.formContainer}
                         >
-                            <Text
-                                style={styles.loginText}
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Username or email'}
+                                    placeholderTextColor={colors.lightgray}
+                                    style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'username')}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Password'}
+                                    placeholderTextColor={colors.lightgray}
+                                    secureTextEntry={true}
+                                    style={[styles.input, {
+                                        paddingRight: layout.paddingHorizontal,
+                                    }]}
+                                    onChangeText={(text) => this._onChangeText(text, 'password')}
+                                />
+                                <Image
+                                    style={styles.inputIcon}
+                                    source={require('../../assets/icons/appearance.png')}
+                                />
+                            </View>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.loginContainer}
+                                onPress={() => this._handleLogIn()}
                             >
-                                LOG IN
+                                <Text
+                                    style={styles.loginText}
+                                >
+                                    LOG IN
                             </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.forgotContainer}
-                            onPress={() => this._handleForgotPassword()}
-                        >
-                            <Text
-                                style={styles.forgotText}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.forgotContainer}
+                                onPress={() => this._handleForgotPassword()}
                             >
-                                I forgot my password
+                                <Text
+                                    style={styles.forgotText}
+                                >
+                                    I forgot my password
                             </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.signupContainer}
-                            onPress={() => this._handleSignUp()}
-                        >
-                            <Text
-                                style={styles.signupText}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.signupContainer}
+                                onPress={() => this._handleSignUp()}
                             >
-                                CREATE ACCOUNT
+                                <Text
+                                    style={styles.signupText}
+                                >
+                                    CREATE ACCOUNT
                             </Text>
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
-                </KeyboardAwareScrollView>
+                            </TouchableOpacity>
+                        </View>
+                        {
+                            this.props.loading
+                                ? <CustomActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
                 </ImageBackground>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     safearea: {
         flex: 1,
         backgroundColor: colors.safearea
+    },
+    container: {
+        flex: 1,
     },
     background: {
         flex: 1,

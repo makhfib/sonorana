@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { confirmSignUp, resendCode, reset } from '../../modules/Auth/actions'
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class ConfirmSignUp extends Component {
 
@@ -52,79 +53,81 @@ class ConfirmSignUp extends Component {
             <SafeAreaView
                 style={styles.safearea}
             >
-                <NavigationBar
-                    leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    leftIconOnPress={() => this._handleBack()}
-                />
-                <View
-                    style={styles.contentContainer}
-                >
-                    <Text
-                        style={styles.title}
-                    >
-                        Verify account
-                    </Text>
-                    <Text
-                        style={styles.text}
-                    >
-                        Enter the verification code we sent to your email
-                    </Text>
-
-                    <LinearGradient
-                        colors={[colors.pink, colors.orange, colors.yellow]}
-                        start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                        style={styles.gradientContainer}
-                    >
-
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Code'}
-                                placeholderTextColor={colors.tint}
-                                style={styles.input}
-                                onChangeText={(text) => this._onChangeText(text, 'code')}
-                            />
-                        </View>
-                    </LinearGradient>
-
-                    <LinearGradient
-                        colors={[colors.yellow, colors.orange, colors.pink]}
-                        start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
-                        style={styles.buttonContainer}
-                    >
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => this._handleConfirm()}
-                        >
-                            <Text
-                                style={styles.buttonText}
-                            >
-                                VERIFY ACCOUNT
-                            </Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
+                <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                    <NavigationBar
+                        leftIconImage={require('../../assets/icons/left_arrow.png')}
+                        leftIconOnPress={() => this._handleBack()}
+                    />
                     <View
-                        style={styles.alternativeContainer}
+                        style={styles.contentContainer}
                     >
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.alternativeButtonContainer}
-                            onPress={() => this._handleResend()}
+                        <Text
+                            style={styles.title}
                         >
-                            <Text
-                                style={styles.alternativeButtonText}
+                            Verify account
+                    </Text>
+                        <Text
+                            style={styles.text}
+                        >
+                            Enter the verification code we sent to your email
+                    </Text>
+
+                        <LinearGradient
+                            colors={[colors.pink, colors.orange, colors.yellow]}
+                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                            style={styles.gradientContainer}
+                        >
+
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Code'}
+                                    placeholderTextColor={colors.tint}
+                                    style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'code')}
+                                />
+                            </View>
+                        </LinearGradient>
+
+                        <LinearGradient
+                            colors={[colors.yellow, colors.orange, colors.pink]}
+                            start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
+                            style={styles.buttonContainer}
+                        >
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => this._handleConfirm()}
                             >
-                                RESEND CODE
+                                <Text
+                                    style={styles.buttonText}
+                                >
+                                    VERIFY ACCOUNT
                             </Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <View
+                            style={styles.alternativeContainer}
+                        >
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.alternativeButtonContainer}
+                                onPress={() => this._handleResend()}
+                            >
+                                <Text
+                                    style={styles.alternativeButtonText}
+                                >
+                                    RESEND CODE
+                            </Text>
+                            </TouchableOpacity>
+                        </View>
+                        {
+                            this.props.loading
+                                ? <CustomActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
                     </View>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
-                </View>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }

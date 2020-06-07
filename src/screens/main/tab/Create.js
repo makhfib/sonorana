@@ -45,13 +45,13 @@ export default class Create extends React.Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <KeyboardAwareScrollView>
                     <NavigationBar
                         leftIconOnPress={() => this._handleCancel()}
                         leftIconImage={require('../../../assets/icons/cancel.png')}
                         rightIconOnPress={() => this._handlePost()}
                         rightIconImage={require('../../../assets/icons/send.png')}
                     />
+                <KeyboardAwareScrollView contentContainerStyle={{flex: 1,}}>
                     <Separator />
                     <View
                         style={styles.container}

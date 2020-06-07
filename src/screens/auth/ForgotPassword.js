@@ -9,13 +9,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { forgotPassword, reset } from '../../modules/Auth/actions'
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class ForgotPassword extends Component {
 
     state = {
         username: ''
     }
-    
+
     _onChangeText = (text, field) => {
         switch (field) {
             case 'username':
@@ -43,64 +44,65 @@ class ForgotPassword extends Component {
             <SafeAreaView
                 style={styles.safearea}
             >
-                <NavigationBar
-                    leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    leftIconOnPress={() => this._handleBack()}
-                />
-                <View
-                    style={styles.contentContainer}
-                >
-                    <Text
-                        style={styles.title}
+                <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                    <NavigationBar
+                        leftIconImage={require('../../assets/icons/left_arrow.png')}
+                        leftIconOnPress={() => this._handleBack()}
+                    />
+                    <View
+                        style={styles.contentContainer}
                     >
-                        Reset Password
-                    </Text>
-                    <Text
-                        style={styles.text}
-                    >
-                        Enter your username or recovery email
-                    </Text>
-
-                    <LinearGradient
-                        colors={[colors.pink, colors.orange, colors.yellow]}
-                        start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                        style={styles.gradientContainer}
-                    >
-
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Username or email'}
-                                placeholderTextColor={colors.tint}
-                                style={styles.input}
-                                onChangeText={(text) => this._onChangeText(text, 'username')}
-                            />
-                        </View>
-                    </LinearGradient>
-                    <LinearGradient
-                        colors={[colors.yellow, colors.orange, colors.pink]}
-                        start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
-                        style={styles.buttonContainer}
-                    >
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => this._handleContinue()}
+                        <Text
+                            style={styles.title}
                         >
-                            <Text
-                                style={styles.buttonText}
-                            >
-                                CONTINUE
-                            </Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
-                </View>
+                            Reset Password
+                    </Text>
+                        <Text
+                            style={styles.text}
+                        >
+                            Enter your username or recovery email
+                    </Text>
 
+                        <LinearGradient
+                            colors={[colors.pink, colors.orange, colors.yellow]}
+                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                            style={styles.gradientContainer}
+                        >
+
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Username or email'}
+                                    placeholderTextColor={colors.tint}
+                                    style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'username')}
+                                />
+                            </View>
+                        </LinearGradient>
+                        <LinearGradient
+                            colors={[colors.yellow, colors.orange, colors.pink]}
+                            start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
+                            style={styles.buttonContainer}
+                        >
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => this._handleContinue()}
+                            >
+                                <Text
+                                    style={styles.buttonText}
+                                >
+                                    CONTINUE
+                            </Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        {
+                            this.props.loading
+                                ? <CustomActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
+                    </View>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }
