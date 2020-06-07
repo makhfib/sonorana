@@ -96,7 +96,7 @@ SearchBar.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        height: 70,
+        height: 60,
         backgroundColor: colors.background,
         paddingHorizontal: layout.paddingHorizontal,
         justifyContent: 'flex-end',

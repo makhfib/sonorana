@@ -94,7 +94,7 @@ NavigationBar.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        height: 70,
+        height: 60,
         backgroundColor: colors.background,
         paddingBottom: 10,
         paddingHorizontal: layout.paddingHorizontal,

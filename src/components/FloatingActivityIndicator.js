@@ -23,12 +23,12 @@ export default class FloatingActivityIndicator extends Component {
                         width: 100,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: 'white',
-                        borderColor: colors.orange,
-                        borderWidth: 1,
+                        backgroundColor: '#00000080',
+                        //borderColor: colors.tint,
+                        //borderWidth: 1,
                         borderRadius: 5,
                     }}>
-                    <ActivityIndicator animating={this.props.loading} size="large" color={colors.orange} />
+                    <ActivityIndicator animating={this.props.loading} size="large" color={'white'} />
                 </View>
             </View>
         )
