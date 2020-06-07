@@ -31,7 +31,7 @@ export default class Profile extends Component {
                     numberOfLines={1}
                 >{this.props.item.u_username}</Text>
                 {
-                    this.props.item.u_username !== 'makhfib'
+                    this.props.item.u_username !== 'freshlygrounded'
                         ? <FollowButton
                             u_following={this.props.item.u_following}
                         />

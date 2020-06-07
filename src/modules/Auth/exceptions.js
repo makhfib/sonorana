@@ -7,30 +7,30 @@ export const AuthExceptionMessage = (err) => {
         console.log('----------------------------------------')
     switch (err.code) {
         case 'NotValidException':
-            return 'Invalid input  ͡❛ ͜ʖ ͡❛'
+            return 'Invalid input :/'
 
         case 'UserNotConfirmedException':
-            return 'Verify your email, please  ͡ᵔ ͜ʖ ͡ᵔ'
+            return 'Please, verify your email'
 
         case 'PasswordResetRequiredException':
             return 'Please, reset your password' 
 
         case 'NotAuthorizedException':
-            return 'Incorrect username or password ( ͡ᵔ - ͡ᵔ)'
+            return 'Incorrect username or password'
 
         case 'UserNotFoundException':
-            return 'Incorrect username or password ( ͡ᵔ - ͡ᵔ)'
+            return 'Incorrect username or password'
 
         case 'CodeDeliveryFailureException':
-            return 'Not able to send confirmation code ( ͡ᵔ - ͡ᵔ)' 
+            return 'Not able to send confirmation code' 
 
         case 'InvalidPasswordException':
             return 'Password must contain at least 6 characters'
 
-        case 'UsernameExistsException ( ͡ᵔ - ͡ᵔ)':
-            return 'Username taken'
+        case 'UsernameExistsException':
+            return 'Username exists'
 
-        case 'UserLambdaValidationException ( ͡ᵔ - ͡ᵔ)':
+        case 'UserLambdaValidationException':
             return 'Email already being used'
 
         case 'CodeMismatchException ':

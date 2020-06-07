@@ -20,11 +20,11 @@ export default class Search extends React.Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: colors.safearea }}>
-                <KeyboardAwareScrollView>
                     <SearchBar
                         onChangeText={this._onChangeText}
                         onSubmit={this._onSubmit}
                     />
+                <KeyboardAwareScrollView  contentContainerStyle={{flex: 1,}}>
                     <ScrollView>
                         <Separator />
                         <SectionHeader

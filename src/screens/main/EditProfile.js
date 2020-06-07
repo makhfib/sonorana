@@ -83,13 +83,13 @@ export default class EditProfile extends Component {
                     backgroundColor: colors.safearea
                 }}
             >
-                <KeyboardAwareScrollView>
                     <NavigationBar
                         leftIconOnPress={() => this._handleBack()}
                         leftIconImage={require('../../assets/icons/cancel.png')}
                         rightIconOnPress={() => this._handleDone()}
                         rightIconImage={require('../../assets/icons/done.png')}
                     />
+                <KeyboardAwareScrollView contentContainerStyle={{flex: 1,}}>
                     <Separator />
                     <View
                         style={styles.images}

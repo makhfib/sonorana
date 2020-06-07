@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, ActivityIndicator } from 'react-native'
 import { colors } from '../constants/Styles'
 
-export default class CustomActivityIndicator extends Component {
+export default class FloatingActivityIndicator extends Component {
     render() {
         return (
             <View

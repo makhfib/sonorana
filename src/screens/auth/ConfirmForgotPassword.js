@@ -8,7 +8,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { forgotPasswordSubmit, resendCode, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class ConfirmForgotPassword extends Component {
 
@@ -37,9 +39,9 @@ class ConfirmForgotPassword extends Component {
     _handleConfirm() {
         const { code, password } = this.state
         this.props.forgotPasswordSubmit(
-            this.props.route.params.username, 
-            code, 
-            password, 
+            this.props.route.params.username,
+            code,
+            password,
             this.props.navigation
         )
     }
@@ -58,40 +60,51 @@ class ConfirmForgotPassword extends Component {
             <SafeAreaView
                 style={styles.safearea}
             >
-                <NavigationBar
-                    leftIconImage={require('../../assets/icons/left_arrow.png')}
-                    leftIconOnPress={() => this._handleBack()}
-                />
-                <View
-                    style={styles.contentContainer}
-                >
-                    <Text
-                        style={styles.title}
+                <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                    <NavigationBar
+                        leftIconImage={require('../../assets/icons/left_arrow.png')}
+                        leftIconOnPress={() => this._handleBack()}
+                    />
+                    <View
+                        style={styles.contentContainer}
                     >
-                        Reset Password
+                        <Text
+                            style={styles.title}
+                        >
+                            Reset Password
                     </Text>
-                    <Text
-                        style={styles.text}
-                    >
-                        Enter the verification code we sent to your email and set a new password
+                        <Text
+                            style={styles.text}
+                        >
+                            Enter the verification code we sent to your email and set a new password
                     </Text>
+                        {
+                            this.props.error
+                                ? <FloatingMessage
+                                    errorMessage={this.props.errorMessage}
+                                    onCancel={() => this.props.reset()}
+                                    style={{
+                                        backgroundColor: colors.red
+                                    }}
+                                />
+                                : <></>
+                        }
+                        <LinearGradient
+                            colors={[colors.pink, colors.orange, colors.yellow]}
+                            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                            style={styles.gradientContainer}
+                        >
 
-                    <LinearGradient
-                        colors={[colors.pink, colors.orange, colors.yellow]}
-                        start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-                        style={styles.gradientContainer}
-                    >
-
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Code'}
-                                placeholderTextColor={colors.tint}
-                                style={styles.input}
-                                onChangeText={(text) => this._onChangeText(text, 'code')}
-                            />
-                        </View>
-                    </LinearGradient>
-                    <LinearGradient
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Code'}
+                                    placeholderTextColor={colors.tint}
+                                    style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'code')}
+                                />
+                            </View>
+                        </LinearGradient>
+                        <LinearGradient
                             colors={[colors.pink, colors.orange, colors.yellow]}
                             start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
                             style={styles.gradientContainer}
@@ -114,45 +127,46 @@ class ConfirmForgotPassword extends Component {
                                 />
                             </View>
                         </LinearGradient>
-                    <LinearGradient
-                        colors={[colors.yellow, colors.orange, colors.pink]}
-                        start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
-                        style={styles.buttonContainer}
-                    >
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => this._handleConfirm()}
+                        <LinearGradient
+                            colors={[colors.yellow, colors.orange, colors.pink]}
+                            start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 1.0 }}
+                            style={styles.buttonContainer}
                         >
-                            <Text
-                                style={styles.buttonText}
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => this._handleConfirm()}
                             >
-                                CHANGE PASSWORD
+                                <Text
+                                    style={styles.buttonText}
+                                >
+                                    CHANGE PASSWORD
                             </Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    <View
-                        style={styles.alternativeContainer}
-                    >
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.alternativeButtonContainer}
-                            onPress={() => this._handleResend()}
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <View
+                            style={styles.alternativeContainer}
                         >
-                            <Text
-                                style={styles.alternativeButtonText}
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.alternativeButtonContainer}
+                                onPress={() => this._handleResend()}
                             >
-                                RESEND CODE
+                                <Text
+                                    style={styles.alternativeButtonText}
+                                >
+                                    RESEND CODE
                             </Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
+                        {
+                            this.props.loading
+                                ? <FloatingActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
                     </View>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
-                </View>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
         )
     }
@@ -215,7 +229,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
     },
     alternativeContainer: {
-        flex: 1,
+        marginTop: 50,
         alignItems: 'stretch',
         justifyContent: 'center',
     },

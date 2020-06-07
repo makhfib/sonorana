@@ -7,7 +7,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signUp, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class SignUp extends Component {
@@ -53,7 +54,9 @@ class SignUp extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView
+                    contentContainerStyle={styles.container}
+                >
                     <View
                         style={styles.background}
                     >
@@ -68,6 +71,17 @@ class SignUp extends Component {
                         <View
                             style={styles.formContainer}
                         >
+                            {
+                                this.props.error
+                                    ? <FloatingMessage
+                                        errorMessage={this.props.errorMessage}
+                                        onCancel={() => this.props.reset()}
+                                        style={{
+                                            backgroundColor: colors.red
+                                        }}
+                                    />
+                                    : <></>
+                            }
                             <LinearGradient
                                 colors={[colors.pink, colors.orange, colors.yellow]}
                                 start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
@@ -132,6 +146,11 @@ class SignUp extends Component {
                                 </Text>
                                 </TouchableOpacity>
                             </LinearGradient>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                        }}>
                             <TouchableOpacity
                                 activeOpacity={1}
                                 style={styles.loginContainer}
@@ -144,15 +163,14 @@ class SignUp extends Component {
                                 </Text>
                             </TouchableOpacity>
                         </View>
+                        {
+                            this.props.loading
+                                ? <FloatingActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
                     </View>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
-                </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
         )
@@ -164,6 +182,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.safearea
     },
+    container: {
+        flex: 1,
+    },
     background: {
         flex: 1,
         backgroundColor: colors.background
@@ -172,7 +193,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: 100,
     },
     logo: {
         height: 160,
@@ -181,6 +201,7 @@ const styles = StyleSheet.create({
     formContainer: {
         alignItems: 'stretch',
         paddingHorizontal: layout.paddingHorizontal,
+        paddingVertical: 20,
     },
     gradientContainer: {
         height: layout.inputContainerHeight,
@@ -197,7 +218,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         justifyContent: 'center',
         borderRadius: 5,
-        marginBottom: 50,
     },
     signupText: {
         paddingVertical: 13,
@@ -222,8 +242,6 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         height: layout.inputContainerHeight,
-        marginBottom: 50,
-        marginTop: 50,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',

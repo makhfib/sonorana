@@ -9,12 +9,12 @@ export default class Profile extends React.Component {
         return (
             <CognitoProfile
                 item={{
-                    u_username: 'makhfib',
-                    u_name: 'Mohammed Makhfi',
-                    u_photo: 'https://media-exp1.licdn.com/dms/image/C4D03AQEy3CR_2OAw6Q/profile-displayphoto-shrink_200_200/0?e=1596672000&v=beta&t=_YkGI9DUd9QiWFE3xLpVcif1KqOsaHnvZxmgU8WxUDw',
-                    u_header: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hdwallpaper.nu%2Fwp-content%2Fuploads%2F2017%2F03%2Fvalley-16.jpg&f=1&nofb=1',
+                    u_username: 'freshlygrounded',
+                    u_name: 'Freshly Grounded',
+                    u_photo: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fis2-ssl.mzstatic.com%2Fimage%2Fthumb%2FMusic128%2Fv4%2Fc9%2F6a%2F40%2Fc96a40d4-bb93-9bed-c9a6-8519cca482c7%2Fsource%2F1200x630bb.jpg&f=1&nofb=1',
+                    u_header: 'https://freshlygrounded.com/wp-content/uploads/2020/02/5M3A0725.jpg',
                     u_description: 'Currently building the future. ',
-                    u_website: 'https://sonorana.com',
+                    u_website: 'https://freshlygrounded.com',
                     u_numFollowing: '31',
                     u_numFollowers: '138',
                 }}

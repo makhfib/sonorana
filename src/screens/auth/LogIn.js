@@ -6,8 +6,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { signIn, reset } from '../../modules/Auth/actions'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator';
+import FloatingMessage from '../../components/FloatingMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ThemeColors } from 'react-navigation';
 
 class LogIn extends Component {
 
@@ -55,100 +57,118 @@ class LogIn extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safearea}>
-                <ImageBackground
-                    style={styles.background}
-                    source={require('../../assets/images/linear-background.png')}
+                <KeyboardAwareScrollView
+                    contentContainerStyle={styles.container}
                 >
-                <KeyboardAwareScrollView style={styles.container}>
-                    <View
-                        style={styles.logoContainer}
+                    <ImageBackground
+                        style={styles.background}
+                        source={require('../../assets/images/linear-background.png')}
                     >
-                        <Image
-                            style={styles.logo}
-                            source={require('../../assets/brand/White-Icon.png')}
-                        />
-                    </View>
-                    <View
-                        style={styles.formContainer}
-                    >
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Username or email'}
-                                placeholderTextColor={colors.lightgray}
-                                style={styles.input}
-                                onChangeText={(text) => this._onChangeText(text, 'username')}
-                            />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder={'Password'}
-                                placeholderTextColor={colors.lightgray}
-                                secureTextEntry={true}
-                                style={[styles.input, {
-                                    paddingRight: layout.paddingHorizontal,
-                                }]}
-                                onChangeText={(text) => this._onChangeText(text, 'password')}
-                            />
+                        <View
+                            style={styles.logoContainer}
+                        >
                             <Image
-                                style={styles.inputIcon}
-                                source={require('../../assets/icons/appearance.png')}
+                                style={styles.logo}
+                                source={require('../../assets/brand/White-Icon.png')}
                             />
                         </View>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.loginContainer}
-                            onPress={() => this._handleLogIn()}
+                        <View
+                            style={styles.formContainer}
                         >
-                            <Text
-                                style={styles.loginText}
+                            {
+                                this.props.error
+                                    ? <FloatingMessage
+                                        errorMessage={this.props.errorMessage}
+                                        onCancel={() => this.props.reset()}
+                                        style={{
+                                            backgroundColor: colors.red
+                                        }}
+                                    />
+                                    : <></>
+                            }
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Username or email'}
+                                    placeholderTextColor={colors.lightgray}
+                                    style={styles.input}
+                                    onChangeText={(text) => this._onChangeText(text, 'username')}
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder={'Password'}
+                                    placeholderTextColor={colors.lightgray}
+                                    secureTextEntry={true}
+                                    style={[styles.input, {
+                                        paddingRight: layout.paddingHorizontal,
+                                    }]}
+                                    onChangeText={(text) => this._onChangeText(text, 'password')}
+                                />
+                                <Image
+                                    style={styles.inputIcon}
+                                    source={require('../../assets/icons/appearance.png')}
+                                />
+                            </View>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={styles.loginContainer}
+                                onPress={() => this._handleLogIn()}
                             >
-                                LOG IN
+                                <Text
+                                    style={styles.loginText}
+                                >
+                                    LOG IN
                             </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.forgotContainer}
-                            onPress={() => this._handleForgotPassword()}
-                        >
-                            <Text
-                                style={styles.forgotText}
+                            </TouchableOpacity>
+                            <View
+                                style={styles.alternativesContainer}
                             >
-                                I forgot my password
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.signupContainer}
-                            onPress={() => this._handleSignUp()}
-                        >
-                            <Text
-                                style={styles.signupText}
-                            >
-                                CREATE ACCOUNT
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        this.props.loading
-                            ? <CustomActivityIndicator
-                                loading={this.props.loading}
-                            />
-                            : <></>
-                    }
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.forgotContainer}
+                                    onPress={() => this._handleForgotPassword()}
+                                >
+                                    <Text
+                                        style={styles.forgotText}
+                                    >
+                                        I forgot my password
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={styles.signupContainer}
+                                    onPress={() => this._handleSignUp()}
+                                >
+                                    <Text
+                                        style={styles.signupText}
+                                    >
+                                        CREATE ACCOUNT
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                        {
+                            this.props.loading
+                                ? <FloatingActivityIndicator
+                                    loading={this.props.loading}
+                                />
+                                : <></>
+                        }
+                    </ImageBackground>
                 </KeyboardAwareScrollView>
-                </ImageBackground>
             </SafeAreaView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     safearea: {
         flex: 1,
         backgroundColor: colors.safearea
+    },
+    container: {
+        flex: 1,
     },
     background: {
         flex: 1,
@@ -166,6 +186,7 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'stretch',
         marginHorizontal: layout.paddingHorizontal,
+        marginBottom: layout.paddingHorizontal
     },
     inputContainer: {
         flexDirection: 'row',
@@ -177,7 +198,6 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         height: layout.inputContainerHeight,
-        marginBottom: 50,
         borderRadius: 5,
         justifyContent: 'center',
         borderRadius: 5,
@@ -197,14 +217,18 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         resizeMode: 'contain',
-        tintColor: colors.background,
+        tintColor: 'white',
         alignSelf: 'center'
+    },
+    alternativesContainer: {
+        flex: 1,
+        minHeight: 100,
+        justifyContent: 'space-around'
     },
     forgotContainer: {
         padding: 15,
         alignItems: 'center',
         alignSelf: 'center',
-        marginBottom: 50,
     },
     forgotText: {
         fontWeight: 'bold',
