@@ -92,6 +92,7 @@ class SignUp extends Component {
                                         placeholder={'Username'}
                                         placeholderTextColor={colors.tint}
                                         style={styles.input}
+                                        onChangeText={(text) => this._onChangeText(text, 'username')}
                                     />
                                 </View>
                             </LinearGradient>
@@ -105,6 +106,7 @@ class SignUp extends Component {
                                         placeholder={'Email'}
                                         placeholderTextColor={colors.tint}
                                         style={styles.input}
+                                        onChangeText={(text) => this._onChangeText(text, 'email')}
                                     />
                                 </View>
                             </LinearGradient>
@@ -123,6 +125,7 @@ class SignUp extends Component {
                                         style={[styles.input, {
                                             paddingRight: layout.paddingHorizontal,
                                         }]}
+                                        onChangeText={(text) => this._onChangeText(text, 'password')}
                                     />
                                     <Image
                                         style={styles.inputIcon}
