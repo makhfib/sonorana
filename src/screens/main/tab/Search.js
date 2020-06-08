@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../../../components/SearchBar'
 import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
-import Users from '../../../data/clipsList'
+import Clips from '../../../data/clipsList'
+import Users from '../../../data/usersList'
 import { colors, layout } from '../../../constants/Styles'
 import SectionHeader from '../../../components/SectionHeader';
 import Profile from '../../../components/Profile';
@@ -47,7 +48,7 @@ export default class Search extends React.Component {
                             title={'Trending'}
                         />
                         <FlatList
-                            data={Users}
+                            data={Clips}
                             renderItem={({ item }) => (
                                 <Post
                                     item={item}
