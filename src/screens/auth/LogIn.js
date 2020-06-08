@@ -14,6 +14,7 @@ import { ThemeColors } from 'react-navigation';
 class LogIn extends Component {
 
     state = {
+        hidePassword: true,
         username: '',
         password: '',
     }
@@ -45,6 +46,10 @@ class LogIn extends Component {
             screen: 'ForgotPassword'
         })
         this.props.reset()
+    }
+
+    _handleHidePassword() {
+        this.setState({ hidePassword: !this.state.hidePassword })
     }
 
     _handleSignUp() {
@@ -98,16 +103,21 @@ class LogIn extends Component {
                                 <TextInput
                                     placeholder={'Password'}
                                     placeholderTextColor={colors.lightgray}
-                                    secureTextEntry={true}
+                                    secureTextEntry={this.state.hidePassword}
                                     style={[styles.input, {
                                         paddingRight: layout.paddingHorizontal,
                                     }]}
                                     onChangeText={(text) => this._onChangeText(text, 'password')}
                                 />
-                                <Image
-                                    style={styles.inputIcon}
-                                    source={require('../../assets/icons/appearance.png')}
-                                />
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => this._handleHidePassword()}
+                                >
+                                    <Image
+                                        style={styles.inputIcon}
+                                        source={require('../../assets/icons/appearance.png')}
+                                    />
+                                </TouchableOpacity>
                             </View>
                             <TouchableOpacity
                                 activeOpacity={1}
@@ -190,6 +200,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         height: layout.inputContainerHeight,
         borderRadius: 5,
         marginBottom: 10,

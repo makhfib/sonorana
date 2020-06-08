@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 class SignUp extends Component {
 
     state = {
+        hidePassword: true,
         username: '',
         email: '',
         password: '',
@@ -39,6 +40,10 @@ class SignUp extends Component {
             default:
                 break
         }
+    }
+
+    _handleHidePassword() {
+        this.setState({ hidePassword: !this.state.hidePassword })
     }
 
     _handleSignUp() {
@@ -121,16 +126,21 @@ class SignUp extends Component {
                                     <TextInput
                                         placeholder={'Password'}
                                         placeholderTextColor={colors.tint}
-                                        secureTextEntry={true}
+                                        secureTextEntry={this.state.hidePassword}
                                         style={[styles.input, {
                                             paddingRight: layout.paddingHorizontal,
                                         }]}
                                         onChangeText={(text) => this._onChangeText(text, 'password')}
                                     />
-                                    <Image
-                                        style={styles.inputIcon}
-                                        source={require('../../assets/icons/appearance.png')}
-                                    />
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                        onPress={() => this._handleHidePassword()}
+                                    >
+                                        <Image
+                                            style={styles.inputIcon}
+                                            source={require('../../assets/icons/appearance.png')}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                             </LinearGradient>
                             <LinearGradient
