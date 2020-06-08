@@ -9,7 +9,7 @@ import Profile from '../screens/main/tab/Profile'
 
 const Tab = createBottomTabNavigator()
 
-const iconSize = 30;
+const iconSize = 35;
 
 export default class BottomTab extends Component {
     render() {
