@@ -89,7 +89,7 @@ export default class EditProfile extends Component {
                         rightIconOnPress={() => this._handleDone()}
                         rightIconImage={require('../../assets/icons/done.png')}
                     />
-                <KeyboardAwareScrollView contentContainerStyle={{flex: 1,}}>
+                <KeyboardAwareScrollView>
                     <Separator />
                     <View
                         style={styles.images}
