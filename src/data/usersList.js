@@ -53,4 +53,14 @@ export default [
       u_numFollowing: '31',
       u_numFollowers: '138',
   },
+  {
+      u_photo: 'https://pbs.twimg.com/profile_images/1255961776035729408/0AjDFNaf_400x400.jpg',
+      u_header: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Terraforming_Mars_transition_horizontal.jpg',
+      u_username: 'elon',
+      u_name: 'Elon Musk',
+      u_description: 'Gateway to Mars.',
+      u_website: 'https://twitter.com/elonmusk',
+      u_numFollowing: '92',
+      u_numFollowers: '35M'
+  },
 ]
