@@ -11,6 +11,7 @@ export default class FollowButton extends Component {
     }
 
     onFollow() {
+        this.props.onPress()
         this.setState({ u_following: !this.state.u_following })
     }
 
