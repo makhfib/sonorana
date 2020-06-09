@@ -11,10 +11,7 @@ export default class Profile extends Component {
     }
 
     _handleProfileOnPress() {
-        console.log('Profile pressed')
-        
         if (this.state.onFollow) {
-            console.log('onFollow=true')
             this.setState({ onFollow: false })
         } else {
             this.props.navigation.navigate('Main', {
@@ -27,9 +24,7 @@ export default class Profile extends Component {
     }
 
     _onFollowPressed() {
-        console.log('Follow press notified')
         this.setState({ onFollow: true })
-        console.log('Finished')
     }
 
     render() {
