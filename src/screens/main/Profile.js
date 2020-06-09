@@ -63,7 +63,7 @@ export default class Profile extends Component {
                 />
                 <ScrollView
                     // read more https://stackoverflow.com/questions/38581562/sticky-component-inside-scrollview
-                    stickyHeaderIndices={[4]}
+                    //stickyHeaderIndices={[4]}
                     alwaysBounceVertical={true}
                     showsVerticalScrollIndicator={false}
                 >
@@ -88,12 +88,12 @@ export default class Profile extends Component {
                         </View>
                     </View>
                     <View style={styles.basicInfoContainer}>
-                        <Text style={{ fontWeight: 'bold', marginBottom: 10, }}>
+                        <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 15, }}>
                             {item.u_name}
                         </Text>
                         {
                             item.u_description !== undefined && item.u_description !== null
-                                ? <Text style={{ marginBottom: 10, }}>
+                                ? <Text style={{ marginBottom: 10, fontSize: 15,}}>
                                     {item.u_description}
                                 </Text>
                                 : <></>
@@ -104,7 +104,7 @@ export default class Profile extends Component {
                                     activeOpacity={0.5}
                                     onPress={() => goToURL(item.u_website)}
                                 >
-                                    <Text style={{ color: colors.blue, marginBottom: 10, }}>
+                                    <Text style={{ color: colors.blue, marginBottom: 10, fontSize: 15,}}>
                                         {item.u_website.replace(/https?:\/\//i, "")}
                                     </Text>
                                 </TouchableOpacity>
@@ -168,10 +168,6 @@ export default class Profile extends Component {
                         </View>
                     </View>
                     <Separator />
-                    <SectionHeader
-                        icon={require('../../assets/icons/feed.png')}
-                        title={'Recent posts'}
-                    />
                     <FlatList
                         data={Feed}
                         renderItem={({ item }) => (

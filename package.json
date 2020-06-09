@@ -17,6 +17,7 @@
     "amazon-cognito-identity-js": "^4.3.0",
     "aws-amplify": "^3.0.13",
     "expo": "^37.0.0",
+    "expo-haptics": "^8.1.0",
     "expo-keep-awake": "~8.1.0",
     "expo-linear-gradient": "^8.1.0",
     "metro-react-native-babel-preset": "^0.59.0",

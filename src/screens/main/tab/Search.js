@@ -41,21 +41,6 @@ export default class Search extends React.Component {
                             )}
                             keyExtractor={item => item.u_username}
                         />
-                        <Separator />
-                        <SectionHeader
-                            icon={require('../../../assets/icons/upper_arrow.png')}
-                            title={'Trending'}
-                        />
-                        <FlatList
-                            data={Users}
-                            renderItem={({ item }) => (
-                                <Post
-                                    item={item}
-                                    navigation={this.props.navigation}
-                                />
-                            )}
-                            keyExtractor={item => item.u_username}
-                        />
                     </ScrollView>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
