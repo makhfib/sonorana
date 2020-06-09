@@ -115,7 +115,12 @@ class LogIn extends Component {
                                 >
                                     <Image
                                         style={styles.inputIcon}
-                                        source={require('../../assets/icons/appearance.png')}
+                                        source={
+                                            this.state.hidePassword 
+                                            ? require('../../assets/icons/appearance.png')
+                                            : require('../../assets/icons/hide.png')
+
+                                        }
                                     />
                                 </TouchableOpacity>
                             </View>
