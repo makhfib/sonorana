@@ -12,6 +12,7 @@ import PropTypes from 'prop-types'
 import { get_feed, refresh_feed, load_more } from '../../../modules/Feed/actions'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { goToURL } from '../../../functions/utils'
+import IllustrationMessage from '../../../components/IllustrationMessage';
 
 
 class Home extends React.Component {
@@ -25,7 +26,7 @@ class Home extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.feed !== this.props.feed) {
+        if (this.props.feed && prevProps.feed !== this.props.feed) {
             this.setState({ feed: this.props.feed })
         }
     }
@@ -72,116 +73,24 @@ class Home extends React.Component {
                                 onEndReachedThreshold={0.3}
                                 onEndReached={() => this._onLoadMore()}
                             />
-                            : !this.props.error
-                                ? <ScrollView
-                                    contentContainerStyle={{
-                                        flex: 1,
-                                        backgroundColor: colors.background,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        paddingHorizontal: layout.paddingHorizontal * 2,
-                                    }}
-                                    refreshControl={
-                                        <RefreshControl
-                                            refreshing={this.props.refreshing}
-                                            onRefresh={() => this._onRefresh()}
-                                        />
-                                    }
-                                >
-                                    <Image
-                                        style={{
-                                            height: 150,
-                                            width: 150,
-                                            resizeMode: 'contain',
-                                        }}
-                                        source={require('../../../assets/illustrations/avatar-network.png')}
-                                    />
-                                    <Text
-                                        style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 15,
-                                            marginVertical: 10,
-                                            textAlign: 'center',
-
-                                        }}
-                                    >
-                                        Follow other people to see their latest posts!
-                                </Text>
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={() => this.props.navigation.navigate('Search')}
-                                    >
-                                        <Text
-                                            style={{
-                                                color: colors.blue,
-                                                fontSize: 15,
-                                                marginVertical: 10,
-                                                textAlign: 'center',
-                                            }}
-                                        >
-                                            Find your friends
-                                    </Text>
-                                    </TouchableOpacity>
-                                </ScrollView>
-                                : <ScrollView
-                                    contentContainerStyle={{
-                                        flex: 1,
-                                        backgroundColor: colors.background,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        paddingHorizontal: layout.paddingHorizontal * 2,
-                                    }}
-                                    refreshControl={
-                                        <RefreshControl
-                                            refreshing={this.props.refreshing}
-                                            onRefresh={() => this._onRefresh()}
-                                        />
-                                    }
-                                >
-                                    <Image
-                                        style={{
-                                            height: 150,
-                                            width: 150,
-                                            resizeMode: 'contain',
-                                        }}
-                                        source={require('../../../assets/illustrations/plug.png')}
-                                    />
-                                    <Text
-                                        style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 15,
-                                            marginVertical: 10,
-                                            textAlign: 'center',
-
-                                        }}
-                                    >
-                                        Oups, something went wrong!
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            fontSize: 15,
-                                            marginVertical: 10,
-                                            textAlign: 'center',
-                                        }}
-                                    >
-                                        Check your internet connection. If that's working, then it might be that our servers are down.
-                                    </Text>
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={() => goToURL('https://instagram.com/sonoranaapp')}
-                                    >
-                                        <Text
-                                            style={{
-                                                color: colors.blue,
-                                                fontSize: 15,
-                                                marginVertical: 10,
-                                                textAlign: 'center',
-                                            }}
-                                        >
-                                            Please, notify our team on Instagram.
-                                        </Text>
-                                    </TouchableOpacity>
-                                </ScrollView>
+                            : !this.props.error && this.props.feed
+                                ? <IllustrationMessage
+                                    refreshing={this.props.refreshing}
+                                    onRefresh={() => this._onRefresh()}
+                                    illustration={require('../../../assets/illustrations/avatar-network.png')}
+                                    title={'Follow other people to see their latest posts'}
+                                    buttonText={'Find your friends'}
+                                    onPress={() => this.props.navigation.navigate('Search')}
+                                />
+                                : <IllustrationMessage
+                                    refreshing={this.props.refreshing}
+                                    onRefresh={() => this._onRefresh()}
+                                    illustration={require('../../../assets/illustrations/plug.png')}
+                                    title={'Oups, something went wrong!'}
+                                    message={'Check your internet connection. If that\'s working, then it might be that our servers are down.'}
+                                    buttonText={'Please, notify our team on Instagram.'}
+                                    onPress={() => goToURL('https://instagram.com/sonoranaapp')}
+                                />
                 }
             </SafeAreaView>
         );

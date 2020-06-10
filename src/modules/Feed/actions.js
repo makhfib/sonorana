@@ -23,7 +23,7 @@ export function get_feed() {
             dispatch({
                 type: TIMEOUT
             })
-        }, 15000) // timeout after 15
+        }, 10000) // timeout after 15
         fetch('http://' + HOST + '/feed', {
             method: 'POST',
             headers: {
@@ -75,7 +75,7 @@ export function refresh_feed() {
             dispatch({
                 type: TIMEOUT
             })
-        }, 15000) // timeout after 15
+        }, 10000) // timeout after 15
         fetch('http://' + HOST + '/feed', {
             method: 'POST',
             headers: {
@@ -127,7 +127,7 @@ export function load_more() {
             dispatch({
                 type: TIMEOUT
             })
-        }, 15000) // timeout after 15
+        }, 10000) // timeout after 15
         fetch('http://' + HOST + '/feed', {
             method: 'POST',
             headers: {
