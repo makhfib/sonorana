@@ -4,6 +4,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import AsyncStorage from '@react-native-community/async-storage';
 import thunk from 'redux-thunk'
 import Auth from './Auth';
+import Feed from './Feed'
 
 
 const INITIAL_STATE = {};
@@ -18,7 +19,7 @@ const persistConfig = {
       Read more: https://blog.reactnativecoach.com/the-definitive-guide-to-redux-persist-84738167975
     */
     stateReconciler: autoMergeLevel2,
-    blacklist: ['auth']
+    blacklist: ['auth', 'feed']
 }
 
 const authPersistConfig = {
@@ -29,6 +30,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, Auth),
+  feed: Feed,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -3,6 +3,7 @@ import { Image, Text, View, StyleSheet, Vibration } from 'react-native'
 import { colors, layout } from '../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Haptics from 'expo-haptics';
+import { timeSince, formatTime } from '../functions/utils'
 
 export default class Post2 extends Component {
 
@@ -91,7 +92,7 @@ export default class Post2 extends Component {
                                 {this.props.item.u_username}
                             </Text>
                             <Text style={styles.subtitle}>
-                                {this.props.item.p_datetime}
+                                {timeSince(this.props.item.p_datetime)}
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -125,7 +126,7 @@ export default class Post2 extends Component {
                         <Text style={{
                             color: colors.gray, marginTop: 5,
                         }}>
-                            {this.props.item.p_duration}
+                            {formatTime(this.props.item.p_duration)}
                         </Text>
                     </View>
                     <TouchableOpacity
