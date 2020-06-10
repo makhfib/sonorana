@@ -171,10 +171,12 @@ export default class Profile extends Component {
                     <FlatList
                         data={Feed}
                         renderItem={({ item }) => (
-                            <Post
-                                item={item}
-                                navigation={this.props.navigation}
-                            />
+                            item.u_username === this._props().item.u_username
+                                ? <Post
+                                    item={item}
+                                    navigation={this.props.navigation}
+                                />
+                                : <></>
                         )}
                         keyExtractor={post => post.p_id}
                     />

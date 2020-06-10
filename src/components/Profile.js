@@ -6,13 +6,25 @@ import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends Component {
+    state = {
+        onFollow: false,
+    }
+
     _handleProfileOnPress() {
-        this.props.navigation.navigate('Main', {
-            screen: 'Profile',
-            params: {
-                item: this.props.item
-            }
-        })
+        if (this.state.onFollow) {
+            this.setState({ onFollow: false })
+        } else {
+            this.props.navigation.navigate('Main', {
+                screen: 'Profile',
+                params: {
+                    item: this.props.item
+                }
+            })
+        }
+    }
+
+    _onFollowPressed() {
+        this.setState({ onFollow: true })
     }
 
     render() {
@@ -34,6 +46,7 @@ export default class Profile extends Component {
                     this.props.item.u_username !== 'freshlygrounded'
                         ? <FollowButton
                             u_following={this.props.item.u_following}
+                            onPress={() => this._onFollowPressed()}
                         />
                         : <></>
                 }
