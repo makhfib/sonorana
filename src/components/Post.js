@@ -1,32 +1,67 @@
 import React, { Component } from 'react'
-import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { colors } from '../constants/Styles'
-import { layout } from '../constants/Styles'
+import { Image, Text, View, StyleSheet, Vibration } from 'react-native'
+import { colors, layout } from '../constants/Styles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import * as Haptics from 'expo-haptics';
+import { timeSince, formatTime } from '../functions/utils'
 
-export default class Post extends Component {
+export default class Post2 extends Component {
+
     state = {
         playing: false,
         liked: this.props.item.u_liked,
+        allowPress: true,
+    }
+
+    _disablePress() {
+        this.setState({ allowPress: false })
+    }
+
+    _onMorePress() {
+        this._disablePress()
+        Haptics.impactAsync()
     }
 
     _onLikePress() {
+        this._disablePress()
         this.setState({ liked: !this.state.liked })
     }
 
+    _onCommentPress() {
+        this._disablePress()
+        Haptics.selectionAsync()
+    }
+
+    _onEchoPress() {
+        this._disablePress()
+        Haptics.selectionAsync()
+    }
+
+    _onSharePress() {
+        this._disablePress()
+        Haptics.selectionAsync()
+    }
+
     _onPlayPausePress() {
+        this._disablePress()
         this.setState({ playing: !this.state.playing })
     }
 
     _onPostPress() {
-        this.props.navigation.navigate('Main', {
-            screen: 'Post',
-            params: {
-                item: this.props.item
-            }
-        })
+        if (this.state.allowPress) {
+            this.props.navigation.navigate('Main', {
+                screen: 'Post',
+                params: {
+                    item: this.props.item
+                }
+            })
+        } else {
+            this.setState({ allowPress: true })
+        }
     }
 
     _onProfilePress() {
+        this._disablePress()
         this.props.navigation.navigate('Main', {
             screen: 'Profile',
             params: {
@@ -37,126 +72,179 @@ export default class Post extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this._onPostPress()}
+                style={styles.container}
+            >
                 <View style={styles.headerContainer}>
                     <TouchableOpacity
                         activeOpacity={1}
-                        style={{
-                            flexDirection: 'row',
-                            alignItems:'center',
-                            paddingRight: layout.paddingHorizontal/2,
-                        }}
                         onPress={() => this._onProfilePress()}
+                        style={styles.profileContainer}
                     >
                         <Image
                             source={{ uri: this.props.item.u_photo }}
-                            style={styles.profileImage}
+                            style={styles.profilePhoto}
                         />
-                        <Text maxLength={15} style={styles.boldText}>{this.props.item.u_username}</Text>
-  
+                        <View style={styles.profileTextContainer}>
+                            <Text style={styles.title}>
+                                {this.props.item.u_username}
+                            </Text>
+                            <Text style={styles.subtitle}>
+                                {timeSince(this.props.item.p_datetime)}
+                            </Text>
+                        </View>
                     </TouchableOpacity>
-                    <View style={{flex:1}}/>
-                    <TouchableOpacity activeOpacity={1} style={styles.likeButton} onPress={() => this._onLikePress()}>
+                    <View style={{ flex: 1 }} />
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onMorePress()}
+                    >
                         <Image
-                            source={this.state.liked
-                                ? require('../assets/icons/liked.png')
-                                : require('../assets/icons/like.png')}
-                            style={[styles.likeImage, { tintColor: this.state.liked ? colors.pink : colors.gray }]}
+                            source={require('../assets/icons/three_horizontal_dots.png')}
+                            style={styles.icon}
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity activeOpacity={1} style={styles.bodyContainer} onPress={() => this._onPostPress()}>
-                    <ImageBackground
-                        //source={require('../assets/fake/fake-audio.png')}
-                        style={styles.imageBackground}
+                <View
+                    style={styles.contentContainer}
+                >
+                    <View
+                        style={{
+                            flex: 1,
+                            marginRight: 20,
+                        }}
                     >
-                        <View style={styles.infoContainer}>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.boldText}>{this.props.item.p_description}</Text>
-                            </View>
-                            <View>
-                                <Text>{this.props.item.p_duration}</Text>
-                            </View>
-                        </View>
-                    </ImageBackground>
-                    <TouchableOpacity activeOpacity={1} style={styles.playPauseButton} onPress={() => this._onPlayPausePress()}>
+                        <Text
+                            style={{
+                                fontSize: 15,
+                            }}
+                        >
+                            {this.props.item.p_description}
+                        </Text>
+                        <Text style={{
+                            color: colors.gray, marginTop: 5,
+                        }}>
+                            {formatTime(this.props.item.p_duration)}
+                        </Text>
+                    </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onPlayPausePress()}
+                    >
                         <Image
                             source={this.state.playing
                                 ? require('../assets/icons/pause_circle.png')
                                 : require('../assets/icons/play_circle.png')}
-                            style={styles.playPauseImage}
+                            style={[{ tintColor: colors.tint, width: 40, height: 40 }]}
                         />
                     </TouchableOpacity>
-                </TouchableOpacity>
-            </View>
+
+                </View>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onLikePress()}
+                        style={styles.iconContainer}
+                    >
+                        <Image
+                            source={this.state.liked
+                                ? require('../assets/icons/liked.png')
+                                : require('../assets/icons/like.png')}
+                            style={[styles.icon, { tintColor: this.state.liked ? colors.pink : colors.gray }]}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onCommentPress()}
+                        style={styles.iconContainer}
+                    >
+                        <Image
+                            source={require('../assets/icons/comment.png')}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onEchoPress()}
+                        style={styles.iconContainer}
+                    >
+                        <Image
+                            source={require('../assets/icons/echo.png')}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onSharePress()}
+                        style={styles.iconContainer}
+                    >
+                        <Image
+                            source={require('../assets/icons/share.png')}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.background,
+        paddingTop: layout.paddingHorizontal / 2,
+        borderTopWidth: 0.75,
+        borderBottomWidth: 0.75,
         borderColor: colors.lightgray,
-        borderTopWidth: 1,
+        backgroundColor: colors.background,
+        paddingHorizontal: layout.paddingHorizontal,
     },
     headerContainer: {
         flexDirection: 'row',
-        paddingHorizontal: layout.paddingHorizontal,
-        paddingRight: layout.paddingHorizontal - 5,
-        borderBottomWidth: 0.5,
-        borderColor: colors.lightgray,
+        alignItems: 'center'
     },
-    profileImage: {
-        width: 25,
-        height: 25,
-        margin: 9,
-        backgroundColor: colors.background,
-        borderRadius: 15
-    },
-    boldText: {
-        fontWeight: 'bold'
-    },
-    userContainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    likeButton: {
+    profileContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingLeft: 10, // to avoid precision errors
+        alignItems: 'center'
     },
-    bodyContainer: {
-        flexDirection: 'row',
-        paddingLeft: 5,
+    profilePhoto: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
     },
-    likeImage: {
-        width: 30,
+    profileTextContainer: {
+        height: 40,
+        marginHorizontal: 10,
+        justifyContent: 'space-around',
+
+    },
+    title: {
+        color: colors.tint,
+        fontWeight: 'bold',
+        fontSize: 15,
+    },
+    subtitle: {
+        color: colors.gray
+    },
+    iconContainer: {
+        padding: 10,
+        paddingHorizontal: 0,
+    },
+    icon: {
         height: 30,
-        resizeMode: 'contain',
-    },
-    infoContainer: {
-        flex: 1,
-        padding: 9,
-        paddingHorizontal: layout.paddingHorizontal + 9 - 5,
-        paddingBottom: 14,
-    },
-    textContainer: {
-        paddingBottom: 5
-    },
-    imageBackground: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    playPauseButton: {
-        justifyContent: 'center',
-        paddingRight: layout.paddingHorizontal - 5,
-    },
-    playPauseImage: {
         width: 30,
-        height: 30,
-        borderRadius: 16,
-        marginLeft: 15,
-        backgroundColor: colors.background,
-        tintColor: colors.black
-    }
+        tintColor: colors.gray,
+    },
+    contentContainer: {
+        marginTop: 20,
+        marginBottom: 10,
+        flexDirection: 'row'
+    },
+
 })

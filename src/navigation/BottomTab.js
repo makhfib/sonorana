@@ -25,11 +25,9 @@ export default class BottomTab extends Component {
                 <Tab.Screen name='Home' component={Home} options={{
                     tabBarIcon: ({ color, focused }) => (<Image
                         source={
-                            focused 
-                            ? require('../assets/icons/home_selected.png')
-                            : require('../assets/icons/home_default.png')
+                            require('../assets/icons/home.png')
                         }
-                        style={[{  width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
+                        style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />)
                 }} />
                 <Tab.Screen name='Search' component={Search} options={{

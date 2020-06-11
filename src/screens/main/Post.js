@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: 15,
         textAlign: 'center'
     },
     sliderContainer: {

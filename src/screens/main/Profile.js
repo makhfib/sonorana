@@ -61,130 +61,124 @@ export default class Profile extends Component {
                     leftIconImage={this.props.route !== undefined ? require('../../assets/icons/left_arrow.png') : undefined}
                     title={item.u_username}
                 />
-                <ScrollView
-                    // read more https://stackoverflow.com/questions/38581562/sticky-component-inside-scrollview
-                    stickyHeaderIndices={[4]}
-                    alwaysBounceVertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <Separator />
-                    <View
-                        style={[styles.images, {
-                            height: item.u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
-                        }]}
-                    >
-                        <ImageBackground
-                            style={styles.profileHeader}
-                            source={item.u_header !== null ? { uri: item.u_header } : null }
-                        >
-                        </ImageBackground>
-                        <View
-                            style={styles.photoContainer}
-                        >
-                            <Image
-                                style={styles.profilePhoto}
-                                source={{ uri: item.u_photo }}
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.basicInfoContainer}>
-                        <Text style={{ fontWeight: 'bold', marginBottom: 10, }}>
-                            {item.u_name}
-                        </Text>
-                        {
-                            item.u_description !== undefined && item.u_description !== null
-                                ? <Text style={{ marginBottom: 10, }}>
-                                    {item.u_description}
-                                </Text>
-                                : <></>
-                        }
-                        {
-                            item.u_website !== undefined && item.u_website !== null
-                                ? <TouchableOpacity
-                                    activeOpacity={0.5}
-                                    onPress={() => goToURL(item.u_website)}
+                <FlatList
+                    // read more https://www.lahteenlahti.com/fixing-virtualizedlists-should-never-be-nested-inside-plain-scrollviews/
+                    ListHeaderComponent={
+                        <>
+                            <Separator />
+                            <View
+                                style={[styles.images, {
+                                    height: item.u_header !== null ? profileHeaderHeight + profilePhotoHeight / 2 : profileHeaderHeight
+                                }]}
+                            >
+                                <ImageBackground
+                                    style={styles.profileHeader}
+                                    source={item.u_header !== null ? { uri: item.u_header } : null}
                                 >
-                                    <Text style={{ color: colors.blue, marginBottom: 10, }}>
-                                        {item.u_website.replace(/https?:\/\//i, "")}
+                                </ImageBackground>
+                                <View
+                                    style={styles.photoContainer}
+                                >
+                                    <Image
+                                        style={styles.profilePhoto}
+                                        source={{ uri: item.u_photo }}
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.basicInfoContainer}>
+                                <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 15, }}>
+                                    {item.u_name}
+                                </Text>
+                                {
+                                    item.u_description !== undefined && item.u_description !== null
+                                        ? <Text style={{ marginBottom: 10, fontSize: 15, }}>
+                                            {item.u_description}
+                                        </Text>
+                                        : <></>
+                                }
+                                {
+                                    item.u_website !== undefined && item.u_website !== null
+                                        ? <TouchableOpacity
+                                            activeOpacity={0.5}
+                                            onPress={() => goToURL(item.u_website)}
+                                        >
+                                            <Text style={{ color: colors.blue, marginBottom: 10, fontSize: 15, }}>
+                                                {item.u_website.replace(/https?:\/\//i, "")}
+                                            </Text>
+                                        </TouchableOpacity>
+                                        : <></>
+
+                                }
+                                <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+                                    <Text style={{ fontWeight: 'bold' }}>
+                                        {item.u_numFollowing}
                                     </Text>
-                                </TouchableOpacity>
-                                : <></>
+                                    <Text style={{ marginRight: 10, }} >
+                                        {' following'}
+                                    </Text>
+                                    <Text style={{ fontWeight: 'bold' }} >
+                                        {item.u_numFollowers}
+                                    </Text>
+                                    <Text style={{}} >
+                                        {' following'}
+                                    </Text>
+                                </View>
+                                <View style={styles.buttonsContainer}>
+                                    {
+                                        item.u_username === 'freshlygrounded'
+                                            ? <ActionButton
+                                                icon={require('../../assets/icons/edit.png')}
+                                                title={'Edit profile'}
+                                                style={{
+                                                    backgroundColor: colors.blue,
+                                                    marginRight: 10,
+                                                }}
+                                                onPress={() => this._handleEdit()}
+                                            />
+                                            : <FollowButton
+                                                u_following={item.u_following}
+                                                style={{
+                                                    marginRight: 10,
+                                                }}
+                                            />
+                                    }
 
-                        }
-                        <View style={{ flexDirection: 'row', marginBottom: 10, }}>
-                            <Text style={{ fontWeight: 'bold' }}>
-                                {item.u_numFollowing}
-                            </Text>
-                            <Text style={{ marginRight: 10, }} >
-                                {' following'}
-                            </Text>
-                            <Text style={{ fontWeight: 'bold' }} >
-                                {item.u_numFollowers}
-                            </Text>
-                            <Text style={{}} >
-                                {' following'}
-                            </Text>
-                        </View>
-                        <View style={styles.buttonsContainer}>
-                            {
-                                item.u_username === 'freshlygrounded'
-                                    ? <ActionButton
-                                        icon={require('../../assets/icons/edit.png')}
-                                        title={'Edit profile'}
-                                        style={{
-                                            backgroundColor: colors.blue,
-                                            marginRight: 10,
-                                        }}
-                                        onPress={() => this._handleEdit()}
-                                    />
-                                    : <FollowButton
-                                        u_following={item.u_following}
-                                        style={{
-                                            marginRight: 10,
-                                        }}
-                                    />
-                            }
-
-                            {
-                                item.u_username === 'freshlygrounded'
-                                    ? <ActionButton
-                                        icon={require('../../assets/icons/configuration.png')}
-                                        title={'Settings'}
-                                        style={{
-                                            borderWidth: 2,
-                                            borderColor: colors.blue,
-                                            backgroundColor: colors.background
-                                        }}
-                                        iconStyle={{
-                                            tintColor: colors.blue
-                                        }}
-                                        textStyle={{
-                                            color: colors.blue
-                                        }}
-                                        onPress={() => this._handleSettings()}
-                                    />
-                                    : <></>
-                            }
-                        </View>
-                    </View>
-                    <Separator />
-                    <SectionHeader
-                        icon={require('../../assets/icons/feed.png')}
-                        title={'Recent posts'}
-                    />
-                    <FlatList
-                        data={Feed}
-                        renderItem={({ item }) => (
-                            item.u_username === this._props().item.u_username
-                                ? <Post
-                                    item={item}
-                                    navigation={this.props.navigation}
-                                />
-                                : <></>
-                        )}
-                        keyExtractor={post => post.p_id}
-                    />
-                </ScrollView>
+                                    {
+                                        item.u_username === 'freshlygrounded'
+                                            ? <ActionButton
+                                                icon={require('../../assets/icons/configuration.png')}
+                                                title={'Settings'}
+                                                style={{
+                                                    borderWidth: 2,
+                                                    borderColor: colors.blue,
+                                                    backgroundColor: colors.background
+                                                }}
+                                                iconStyle={{
+                                                    tintColor: colors.blue
+                                                }}
+                                                textStyle={{
+                                                    color: colors.blue
+                                                }}
+                                                onPress={() => this._handleSettings()}
+                                            />
+                                            : <></>
+                                    }
+                                </View>
+                            </View>
+                            <Separator />
+                        </>
+                    }
+                    data={Feed}
+                    renderItem={({ item }) => (
+                        item.u_username === this._props().item.u_username
+                            ? <Post
+                                item={item}
+                                navigation={this.props.navigation}
+                            />
+                            : <></>
+                    )}
+                    keyExtractor={post => post.p_id}
+                />
             </SafeAreaView>
         )
     }

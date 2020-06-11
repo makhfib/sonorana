@@ -63,7 +63,7 @@ Profile.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        height: layout.inputContainerHeight,
+        height: layout.inputContainerHeight*1.5,
         paddingHorizontal: layout.paddingHorizontal,
         backgroundColor: colors.background,
         alignItems: 'center',
@@ -71,14 +71,15 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     photo: {
-        height: 30,
-        width: 30,
-        borderRadius: 30 / 2,
+        height: 50,
+        width: 50,
+        borderRadius: 50 / 2,
     },
     username: {
         flex: 1,
         marginLeft: layout.paddingHorizontal / 2,
         fontWeight: 'bold',
+        fontSize: 15,
     },
 
 })

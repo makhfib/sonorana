@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, FlatList, SectionList } from 'react-native'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../../../components/SearchBar'
 import Separator from '../../../components/Separator'
@@ -21,44 +21,31 @@ export default class Search extends React.Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: colors.safearea }}>
-                    <SearchBar
-                        onChangeText={this._onChangeText}
-                        onSubmit={this._onSubmit}
-                    />
-                <KeyboardAwareScrollView  contentContainerStyle={{flex: 1,}}>
-                    <ScrollView>
-                        <Separator />
-                        <SectionHeader
-                            icon={require('../../../assets/icons/profile_default.png')}
-                            title={'People you may know'}
-                        />
-                        <FlatList
-                            data={Users}
-                            renderItem={({ item }) => (
-                                <Profile
-                                    item={item}
-                                    navigation={this.props.navigation}
+                <FlatList
+                    ListHeaderComponent={
+                        <>
+                            <KeyboardAwareScrollView>
+                                <SearchBar
+                                    onChangeText={this._onChangeText}
+                                    onSubmit={this._onSubmit}
                                 />
-                            )}
-                            keyExtractor={item => item.u_username}
+                            </KeyboardAwareScrollView>
+                            <Separator />
+                            <SectionHeader
+                                icon={require('../../../assets/icons/profile_default.png')}
+                                title={'People you may know'}
+                            />
+                        </>
+                    }
+                    data={Users}
+                    renderItem={({ item }) => (
+                        <Profile
+                            item={item}
+                            navigation={this.props.navigation}
                         />
-                        <Separator />
-                        <SectionHeader
-                            icon={require('../../../assets/icons/upper_arrow.png')}
-                            title={'Trending'}
-                        />
-                        <FlatList
-                            data={Clips}
-                            renderItem={({ item }) => (
-                                <Post
-                                    item={item}
-                                    navigation={this.props.navigation}
-                                />
-                            )}
-                            keyExtractor={item => item.u_username}
-                        />
-                    </ScrollView>
-                </KeyboardAwareScrollView>
+                    )}
+                    keyExtractor={item => item.u_username}
+                />
             </SafeAreaView>
         );
     }
