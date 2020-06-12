@@ -71,7 +71,7 @@ export default class NavigationBar extends Component {
                                 onPress={() => this.props.rightIconOnPress()}
                             >
                                 <Image
-                                    style={styles.icon}
+                                    style={[styles.icon, this.props.rightIconStyle]}
                                     source={this.props.rightIconImage}
                                 />
                             </TouchableOpacity>
