@@ -37,7 +37,7 @@ export default class FollowButton extends Component {
                         marginRight: 10,
                     }, this.props.textStyle]}
                 >
-                    {this.props.title}
+                    {this.props.title}{' '}
                 </Text>
             </TouchableOpacity>
         )

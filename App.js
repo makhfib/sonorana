@@ -9,6 +9,7 @@ import Root from './src/navigation'
 import Amplify from 'aws-amplify'
 import { awsconfig } from './aws-exports'
 import { enableScreens } from 'react-native-screens';
+import { Audio } from 'expo-av';
 
 Amplify.configure(awsconfig);
 const Application = createStackNavigator();
@@ -19,8 +20,17 @@ export default class App extends React.Component {
         super(props);
     }
 
-    render() {
+    componentDidMount() {
+        Audio.setAudioModeAsync({
+            playsInSilentModeIOS: true,
+            stayActiveInBackground: true,
+            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+            shouldDuckAndroid: false,
+            interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX
+        })
+    }
 
+    render() {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor} >
