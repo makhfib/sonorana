@@ -1,51 +1,39 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, Animated, Alert } from 'react-native'
-import Slider from "react-native-slider"
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../constants/Styles'
 import { layout } from '../../../constants/Styles'
 import NavigationBar from '../../../components/NavigationBar'
 import { formatTime } from '../../../functions/utils'
-import { Audio } from 'expo-av'
-import * as Permissions from 'expo-permissions';
-import * as Haptics from 'expo-haptics';
 import MultilineInput from '../../../components/MultilineInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { isEmpty } from '../../../functions/input';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { send, cancel, start_recording, end_recording, delete_recording, play_pause, edit_title } from '../../../modules/Create/actions'
 
-const maxDuration = 3; // minutes
-
-export default class Record extends Component {
+class Create extends Component {
     state = {
-        title: null,
         textInput: null,
-        canSubmit: false,
         isFocused: false,
-        fileURI: null,
-        isRecording: false,
-        recordingInstance: null,
-        isPaused: false,
-        isPlaying: false,
-        playbackInstance: null,
-        playbackInstanceDuration: null,
-        playbackInstancePosition: null,
     }
 
-    async _havePermissions() {
-        // read more https://docs.expo.io/versions/latest/sdk/permissions/
-        const { status } = await Permissions.getAsync(Permissions.AUDIO_RECORDING);
-        if (status !== 'granted') {
-            const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING)
-            if (status === 'granted') {
-                return true;
-            }
-        } else {
+    _canSubmit() {
+        if (!isEmpty(this.props.title) && this.props.playbackInstance) {
             return true
+        } else {
+            return false
+        }
+    }
+
+    _sendPost() {
+        if (this._canSubmit()) {
+            this.props.send(this.props.navigation)
         }
     }
 
     _cancelPost() {
-        this.props.navigation.goBack()
+        this.props.cancel(this.props.navigation)
     }
 
     _deleteRecording() {
@@ -60,10 +48,7 @@ export default class Record extends Component {
                 },
                 {
                     text: 'Delete',
-                    onPress: () => this.setState({
-                        playbackInstance: null,
-                        playbackInstanceDuration: 0
-                    }),
+                    onPress: () => this.props.delete_recording(),
                     style: 'destructive'
                 }
             ],
@@ -71,86 +56,15 @@ export default class Record extends Component {
         );
     }
 
-    async _playPause() {
-        if (!this.state.isPlaying) {
-            if (!this.state.isPaused) {
-                await this.state.playbackInstance.replayAsync()
-            } else {
-                await this.state.playbackInstance.playAsync()
-                this.setState({ isPaused: false, })
-            }
+    _onPlay() {
+        this.props.play_pause()
+    }
 
+    _onRecord() {
+        if (!this.props.isRecording) {
+            this.props.start_recording()
         } else {
-            this.state.playbackInstance.pauseAsync()
-            this.setState({ isPaused: true, })
-        }
-    }
-
-    _onPlaybackStatusUpdate = (status) => {
-        if (status.isLoaded) {
-            this.setState({
-                isPlaying: status.isPlaying,
-                playbackInstanceDuration: status.durationMillis,
-                playbackInstancePosition: status.positionMillis
-            });
-        }
-    }
-
-    _onRecordingStatusUpdate = (status) => {
-        if (status.durationMillis >= (maxDuration * 60 * 1000) - 1000) {
-            this._endRecording()
-        }
-        this.setState({
-            playbackInstancePosition: status.durationMillis
-        });
-    }
-
-    async _endRecording() {
-        try {
-            await this.state.recordingInstance.stopAndUnloadAsync()
-            await Audio.setAudioModeAsync({ allowsRecordingIOS: false })
-            const { sound, status } = await this.state.recordingInstance.createNewLoadedSoundAsync({}, this._onPlaybackStatusUpdate)
-
-            this.setState({
-                isRecording: false,
-                recordingInstance: null,
-                fileURI: status.uri,
-                playbackInstance: sound,
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    async _startRecording() {
-        if (this._havePermissions()) {
-            if (!this.state.isRecording) {
-                const recording = new Audio.Recording()
-                try {
-
-                    await Audio.setAudioModeAsync({
-                        allowsRecordingIOS: true
-                    })
-
-                    recording.setOnRecordingStatusUpdate(this._onRecordingStatusUpdate)
-                    recording.setProgressUpdateInterval(1000);
-
-                    await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY)
-                    this.setState({
-                        isRecording: true,
-                        playbackInstance: null,
-                        recordingInstance: recording
-                    })
-                    await recording.startAsync()
-
-                } catch (error) {
-                    console.log(error)
-                }
-
-            } else if (this.state.isRecording) {
-                this._endRecording()
-            }
+            this.props.end_recording()
         }
     }
 
@@ -159,10 +73,7 @@ export default class Record extends Component {
     }
 
     _onChangeText(text) {
-        this.setState({ title: text })
-        if (!isEmpty(text)) {
-            this.setState({ canSubmit: true })
-        }
+        this.props.edit_title(text)
     }
 
     _onFocusText() {
@@ -181,9 +92,9 @@ export default class Record extends Component {
                     leftIconOnPress={() => this._cancelPost()}
                     rightIconImage={require('../../../assets/icons/send.png')}
                     rightIconStyle={{
-                        tintColor: this.state.canSubmit ? colors.tint : colors.gray
+                        tintColor: this._canSubmit() ? colors.tint : colors.gray
                     }}
-                    rightIconOnPress={() => this._cancelPost()}
+                    rightIconOnPress={() => this._sendPost()}
                 />
                 <KeyboardAwareScrollView
                     contentContainerStyle={styles.container}
@@ -231,13 +142,13 @@ export default class Record extends Component {
                         <View style={styles.timeContainer}>
                             <Text style={styles.timeText}>{
                                 formatTime(
-                                    this.state.isRecording || this.state.isPlaying || this.state.isPaused ? this.state.playbackInstancePosition / 1000 : 0
+                                    this.props.isRecording || this.props.isPlaying || this.props.isPaused ? this.props.playbackInstancePosition / 1000 : 0
 
                                 )
                             }</Text>
                             <Text style={[styles.timeText, { color: colors.gray }]}> / {
                                 formatTime(
-                                    this.state.playbackInstance ? this.state.playbackInstanceDuration / 1000 : maxDuration * 60
+                                    this.props.playbackInstance ? this.props.playbackInstanceDuration / 1000 : this.props.maxDuration * 60
                                 )
                             }</Text>
                         </View>
@@ -245,42 +156,42 @@ export default class Record extends Component {
                     <View style={styles.controlsContainer}>
                         <View style={styles.controls}>
                             <TouchableOpacity
-                                disabled={this.state.playbackInstance === null}
+                                disabled={this.props.playbackInstance === null}
                                 activeOpacity={1}
                                 onPress={() => this._deleteRecording()}
                                 style={styles.controlsButtonContainer}
                             >
                                 <Image
                                     source={require('../../../assets/icons/bin.png')}
-                                    style={[styles.controlsIcon, { tintColor: this.state.playbackInstance === null ? colors.gray : colors.pink }]}
+                                    style={[styles.controlsIcon, { tintColor: this.props.playbackInstance === null ? colors.gray : colors.pink }]}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                disabled={this.state.playbackInstance !== null}
+                                disabled={this.props.playbackInstance !== null}
                                 style={[styles.recordButton, {
-                                    backgroundColor: this.state.playbackInstance !== null ? colors.gray : colors.pink
+                                    backgroundColor: this.props.playbackInstance !== null ? colors.gray : colors.pink
                                 }]}
                                 activeOpacity={1}
-                                onPress={() => this._startRecording()}
+                                onPress={() => this._onRecord()}
                             >
                                 <Image
-                                    source={this.state.isRecording
+                                    source={this.props.isRecording
                                         ? require('../../../assets/icons/pause.png')
                                         : require('../../../assets/icons/mic.png')}
                                     style={styles.recordImage}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                disabled={this.state.playbackInstance === null}
+                                disabled={this.props.playbackInstance === null}
                                 activeOpacity={1}
-                                onPress={() => this._playPause()}
+                                onPress={() => this._onPlay()}
                                 style={styles.controlsButtonContainer}
                             >
                                 <Image
-                                    source={this.state.isPlaying
+                                    source={this.props.isPlaying
                                         ? require('../../../assets/icons/pause.png')
                                         : require('../../../assets/icons/play.png')}
-                                    style={[styles.controlsIcon, { tintColor: this.state.playbackInstance === null ? colors.gray : colors.tint }]}
+                                    style={[styles.controlsIcon, { tintColor: this.props.playbackInstance === null ? colors.gray : colors.tint }]}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -343,7 +254,7 @@ const styles = StyleSheet.create({
     controlsContainer: {
         flex: 1,
         justifyContent: 'center',
-    },  
+    },
     controls: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -376,3 +287,33 @@ const styles = StyleSheet.create({
         tintColor: 'white',
     },
 })
+
+Create.propTypes = {
+
+}
+
+
+const mapStateToProps = (state) => ({
+    maxDuration: state.create.maxDuration,
+    isRecording: state.create.isRecording,
+    recordingInstance: state.create.recordingInstance,
+    isPaused: state.create.isPaused,
+    isPlaying: state.create.isPlaying,
+    playbackInstance: state.create.playbackInstance,
+    playbackInstanceDuration: state.create.playbackInstanceDuration,
+    playbackInstancePosition: state.create.playbackInstancePosition,
+    error: state.create.error,
+    errorMessage: state.create.errorMessage,
+})
+
+const mapDispatchToProps = {
+    send,
+    cancel,
+    start_recording,
+    end_recording,
+    delete_recording,
+    play_pause,
+    edit_title,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create)

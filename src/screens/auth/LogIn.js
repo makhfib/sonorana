@@ -146,7 +146,7 @@ class LogIn extends Component {
                                     <Text
                                         style={styles.forgotText}
                                     >
-                                        I forgot my password
+                                        I forgot my password 
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
