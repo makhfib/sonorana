@@ -6,7 +6,6 @@ import NavigationBar from '../../components/NavigationBar'
 import ActionButton from '../../components/ActionButton'
 import FollowButton from '../../components/FollowButton'
 import Separator from '../../components/Separator';
-import SectionHeader from '../../components/SectionHeader';
 import Post from '../../components/Post';
 import Feed from '../../data/clipsList'
 import { TouchableOpacity } from 'react-native-gesture-handler'
