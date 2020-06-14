@@ -141,7 +141,7 @@ class Post extends Component {
                     </View>
                     {
                         this.props.post && this.props.post.p_id === this.props.item.p_id && this.props.isBuffering
-                            ? <View style={[{ width: 40, height: 40 }]}><MaterialIndicator color={colors.tint}/></View>
+                            ? <View style={[{ width: 30, height: 30 }]}><MaterialIndicator color={colors.tint}/></View>
                             : <TouchableOpacity
                                 activeOpacity={1}
                                 onPress={() => this._onPlayPausePress()}

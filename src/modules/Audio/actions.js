@@ -72,7 +72,6 @@ export function play(post) {
                     {},
                     false, // downloadFirst = false
                 )
-                await sound.playAsync()
                 dispatch({
                     type: PLAY_SUCCESS,
                     payload: {
@@ -80,11 +79,12 @@ export function play(post) {
                         playbackInstance: sound,
                     }
                 })
+                await sound.playAsync()
             } catch (error) {
                 dispatch({
                     type: PLAY_ERROR
                 })
-                console.log('error audio play')
+                console.log('Error: Audio Module. Actions. Line 87.')
                 console.log(error)
             }
         }
