@@ -3,23 +3,26 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import Slider from "react-native-slider"
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
-
-import { colors } from '../../constants/Styles'
-import { layout } from '../../constants/Styles'
+import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { play, pause, forward, backward, start_seek, end_seek } from '../../modules/Audio/actions'
+import { formatTime } from '../../functions/utils'
+import * as Haptics from 'expo-haptics';
 
 const REPEAT_ICON = [
+    require('../../assets/icons/play_all_repeat.png'),
     require('../../assets/icons/play_all_repeat.png'), // repeat all
     require('../../assets/icons/shuffle_all.png'), // shuffle
     require('../../assets/icons/repeat_one.png'), // repeat one
 ]
 
-export default class Post extends Component {
+class Post extends Component {
     state = {
         u_liked: this.props.route.params.item.u_liked,
-        value: 0.2,
-        playing: false,
         repeat: 0,
+        value: 0,
     }
 
     _onBackPress() {
@@ -39,12 +42,38 @@ export default class Post extends Component {
         this.setState({ u_liked: !this.state.u_liked })
     }
 
-    _onPlayPausePress = () => {
-        this.setState({ playing: !this.state.playing })
+    _onPlayPausePress() {
+        if (this.props.isPlaying) {
+            this.props.pause()
+            if(this.props.post.p_id !== this.props.route.params.item.p_id) {
+                this.props.play({ ...this.props.route.params.item })
+            }
+        } else {
+            this.props.play({ ...this.props.route.params.item })
+        }
     }
 
     _onRepeatPress() {
-        this.setState({ repeat: (this.state.repeat + 1) % 3 })
+        Haptics.selectionAsync()
+        //this.setState({ repeat: (this.state.repeat + 1) % 4 })
+    }
+
+    _onSliding() {
+        if(!this.props.isSeeking) {
+            this.props.start_seek()
+        }
+    }
+
+    _onSlidingComplete(value) {
+        this.props.end_seek(value)
+    }
+
+    _onBackward() {
+        this.props.backward()
+    }
+
+    _onForward() {
+        this.props.forward()
     }
 
     render() {
@@ -61,6 +90,9 @@ export default class Post extends Component {
                     title={item.u_username}
                     titleOnPress={() => this._handleUsernameOnPress()}
                     rightIconImage={REPEAT_ICON[this.state.repeat]}
+                    rightIconStyle={{
+                        tintColor: this.state.repeat === 0 ? colors.gray : colors.tint
+                    }}
                     rightIconOnPress={() => this._onRepeatPress()}
                 />
                 <View style={styles.container}>
@@ -76,37 +108,63 @@ export default class Post extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{item.p_description}</Text>
+                        <Text style={styles.descriptionText}>
+                            {item.p_description}
+                        </Text>
                     </View>
                     <View style={styles.sliderContainer}>
-                        <Text style={styles.durationText}>0:45</Text>
+                        <Text style={styles.durationText}>{
+                            formatTime(
+                                this.props.post && this.props.post.p_id === item.p_id
+                                    ? this.props.playbackInstancePosition/1000
+                                    : 0
+                            )
+                        }</Text>
                         <Slider
                             style={styles.slider}
-                            value={this.state.value}
-                            onValueChange={value => this.setState({ value })}
+                            value={
+                                this.props.post && this.props.post.p_id === item.p_id
+                                ? this.props.playbackInstancePosition
+                                : 0
+                            }
+                            onValueChange={() => this._onSliding()}
+                            onSlidingComplete={(value) => this._onSlidingComplete(value)}
+                            minimumValue={0}
+                            maximumValue={
+                                this.props.post && this.props.post.p_id === item.p_id
+                                ? this.props.playbackInstanceDuration
+                                : item.p_duration*1000
+                            }
                             maximumTrackTintColor='lightgray'
                             minimumTrackTintColor={colors.pink}
                             thumbStyle={styles.thumb}
                             trackStyle={styles.track}
+
                         />
-                        <Text style={styles.durationText}>-{item.p_duration}</Text>
+                        <Text style={styles.durationText}>-{
+                            formatTime(
+                                this.props.post && this.props.post.p_id === item.p_id
+                                    ? (this.props.playbackInstanceDuration - this.props.playbackInstancePosition)/1000
+                                    : item.p_duration
+                            )
+                        }</Text>
                     </View>
                     <View style={styles.controls}>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onBackward()}>
                             <Image
                                 source={require('../../assets/icons/rewind.png')}
                                 style={styles.buttonImage}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={this._onPlayPausePress}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onPlayPausePress()}>
                             <Image
-                                source={this.state.playing
+                                source={this.props.post && this.props.post.p_id === item.p_id && this.props.isPlaying
                                     ? require('../../assets/icons/pause_circle.png')
                                     : require('../../assets/icons/play_circle.png')}
                                 style={styles.playPauseImage}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onForward()}>
                             <Image
                                 source={require('../../assets/icons/fastforward.png')}
                                 style={styles.buttonImage}
@@ -226,3 +284,30 @@ const styles = StyleSheet.create({
     }
     // 75, 25, 17
 })
+
+Post.propTypes = {
+
+}
+
+const mapStateToProps = (state) => ({
+    post: state.audio.post,
+    isSeeking: state.audio.isSeeking,
+    isPaused: state.audio.isPaused,
+    isPlaying: state.audio.isPlaying,
+    playbackInstance: state.audio.playbackInstance,
+    playbackInstanceDuration: state.audio.playbackInstanceDuration,
+    playbackInstancePosition: state.audio.playbackInstancePosition,
+    error: state.audio.error,
+    errorMessage: state.audio.errorMessage,
+})
+
+const mapDispatchToProps = {
+    play,
+    pause,
+    forward,
+    backward,
+    start_seek,
+    end_seek
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -21,15 +21,13 @@ export default class Search extends React.Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: colors.safearea }}>
+                <SearchBar
+                    onChangeText={this._onChangeText}
+                    onSubmit={this._onSubmit}
+                />
                 <FlatList
                     ListHeaderComponent={
                         <>
-                            <KeyboardAwareScrollView>
-                                <SearchBar
-                                    onChangeText={this._onChangeText}
-                                    onSubmit={this._onSubmit}
-                                />
-                            </KeyboardAwareScrollView>
                             <Separator />
                             <SectionHeader
                                 icon={require('../../../assets/icons/profile_default.png')}
