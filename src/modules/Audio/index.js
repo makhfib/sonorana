@@ -11,10 +11,12 @@ import {
     PLAYBACK_STATUS_UPDATE_SUCCESS,
     PLAYBACK_STATUS_UPDATE_ERROR,
     SEEK_POSITION,
+    UNLOAD
 } from './types'
 
 const INITIAL_STATE = {
     post: null, // current post id
+    isProcessing: false,
     isSeeking: false,
     isPaused: false,
     isPlaying: false,
@@ -27,6 +29,7 @@ const INITIAL_STATE = {
 }
 
 export default function (state = INITIAL_STATE, action) {
+    console.log(action.type)
     switch (action.type) {
         case PLAY:
             return {
@@ -34,11 +37,17 @@ export default function (state = INITIAL_STATE, action) {
                 error: false,
             }
         case PLAY_SUCCESS:
+            console.log('SUCCESS')
             return {
                 ...state,
                 error: false,
                 post: action.payload.post,
                 playbackInstance: action.payload.playbackInstance,
+                isPaused: action.payload.isPaused,
+                isPlaying: action.payload.isPlaying,
+                isBuffering: action.payload.isBuffering,
+                playbackInstanceDuration: action.payload.playbackInstanceDuration,
+                playbackInstancePosition: action.payload.playbackInstancePosition,
             }
         case PLAY_ERROR:
             return {
@@ -54,13 +63,13 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 error: false,
-                isPaused: action.payload.isPaused
+                isPaused: false,
             }
         case PAUSE:
             return {
                 ...state,
                 error: false,
-                isPaused: action.payload.isPaused
+                isPaused: true
             }
         case FORWARD:
             return {
@@ -97,6 +106,12 @@ export default function (state = INITIAL_STATE, action) {
                 error: false,
                 isPaused: action.payload.isPaused,
                 isSeeking: action.payload.isSeeking,
+            }
+        case UNLOAD:
+            return {
+                ...state,
+                error: false,
+                playbackInstance: null,
             }
         default:
             return state

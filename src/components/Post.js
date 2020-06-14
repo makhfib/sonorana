@@ -7,13 +7,23 @@ import { timeSince, formatTime } from '../functions/utils'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { play, pause } from '../modules/Audio/actions'
-import { MaterialIndicator } from 'react-native-indicators'
 
 class Post extends Component {
 
     state = {
         liked: this.props.item.u_liked,
+        isPlaying: false,
         allowPress: true,
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.isPlaying !== this.props.isPlaying) {
+            if(this.props.playbackInstance && this.props.post.p_id === this.props.item.p_id && this.props.isPlaying) {
+                this.setState({ isPlaying: true })
+            } else {
+                this.setState({ isPlaying: false })
+            }
+        }
     }
 
     _disablePress() {
@@ -47,13 +57,13 @@ class Post extends Component {
 
     _onPlayPausePress() {
         this._disablePress()
-        if (this.props.isPlaying) {
+        if (!this.props.isPlaying) {
+            this.props.play({ ...this.props.item })
+        } else {
             this.props.pause()
             if (this.props.post.p_id !== this.props.item.p_id) {
                 this.props.play({ ...this.props.item })
             }
-        } else {
-            this.props.play({ ...this.props.item })
         }
     }
 
@@ -139,21 +149,19 @@ class Post extends Component {
                             {formatTime(this.props.item.p_duration)}
                         </Text>
                     </View>
-                    {
-                        this.props.post && this.props.post.p_id === this.props.item.p_id && this.props.isBuffering
-                            ? <View style={[{ width: 30, height: 30 }]}><MaterialIndicator color={colors.tint}/></View>
-                            : <TouchableOpacity
-                                activeOpacity={1}
-                                onPress={() => this._onPlayPausePress()}
-                            >
-                                <Image
-                                    source={this.props.post && this.props.post.p_id === this.props.item.p_id && this.props.isPlaying
-                                        ? require('../assets/icons/pause_circle.png')
-                                        : require('../assets/icons/play_circle.png')}
-                                    style={[{ tintColor: colors.tint, width: 40, height: 40 }]}
-                                />
-                            </TouchableOpacity>
-                    }
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._onPlayPausePress()}
+                    >
+                        <Image
+                            source={
+                                this.state.isPlaying
+                                    ? require('../assets/icons/pause_circle.png')
+                                    : require('../assets/icons/play_circle.png')
+                            }
+                            style={[{ tintColor: colors.tint, width: 40, height: 40 }]}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <View
                     style={{
@@ -268,6 +276,7 @@ Post.propTypes = {
 
 const mapStateToProps = (state) => ({
     post: state.audio.post,
+    isProcessing: state.audio.isProcessing,
     isBuffering: state.audio.isBuffering,
     isPaused: state.audio.isPaused,
     isPlaying: state.audio.isPlaying,

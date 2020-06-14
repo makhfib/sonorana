@@ -10,7 +10,6 @@ import PropTypes from 'prop-types'
 import { play, pause, forward, backward, start_seek, end_seek } from '../../modules/Audio/actions'
 import { formatTime } from '../../functions/utils'
 import * as Haptics from 'expo-haptics';
-import { MaterialIndicator } from 'react-native-indicators'
 
 const REPEAT_ICON = [
     require('../../assets/icons/play_all_repeat.png'),
@@ -23,7 +22,6 @@ class Post extends Component {
     state = {
         u_liked: this.props.route.params.item.u_liked,
         repeat: 0,
-        value: 0,
     }
 
     _onBackPress() {
@@ -49,7 +47,7 @@ class Post extends Component {
             if (this.props.post.p_id !== this.props.route.params.item.p_id) {
                 this.props.play({ ...this.props.route.params.item })
             }
-        } else {
+        } else if (!this.props.isPlaying) {
             this.props.play({ ...this.props.route.params.item })
         }
     }
@@ -132,7 +130,7 @@ class Post extends Component {
                             onSlidingComplete={(value) => this._onSlidingComplete(value)}
                             minimumValue={0}
                             maximumValue={
-                                this.props.post && this.props.post.p_id === item.p_id
+                                this.props.playbackInstanceDuration && this.props.post.p_id === item.p_id
                                     ? this.props.playbackInstanceDuration
                                     : item.p_duration * 1000
                             }
@@ -157,19 +155,14 @@ class Post extends Component {
                                 style={styles.buttonImage}
                             />
                         </TouchableOpacity>
-                        {
-                            this.props.post && this.props.post.p_id === item.p_id && this.props.isBuffering
-                                ? <View style={[{ width: 30, height: 30 }]}><MaterialIndicator color={colors.tint} /></View>
-                                :
-                                <TouchableOpacity activeOpacity={1} onPress={() => this._onPlayPausePress()}>
-                                    <Image
-                                        source={this.props.post && this.props.post.p_id === item.p_id && this.props.isPlaying
-                                            ? require('../../assets/icons/pause_circle.png')
-                                            : require('../../assets/icons/play_circle.png')}
-                                        style={styles.playPauseImage}
-                                    />
-                                </TouchableOpacity>
-                        }
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onPlayPausePress()}>
+                            <Image
+                                source={this.props.post && this.props.post.p_id === item.p_id && this.props.isPlaying
+                                    ? require('../../assets/icons/pause_circle.png')
+                                    : require('../../assets/icons/play_circle.png')}
+                                style={styles.playPauseImage}
+                            />
+                        </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={() => this._onForward()}>
                             <Image
                                 source={require('../../assets/icons/fastforward.png')}

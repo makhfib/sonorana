@@ -125,7 +125,7 @@ export function end_recording() {
         try {
             await getState().create.recordingInstance.stopAndUnloadAsync()
             await Audio.setAudioModeAsync({ allowsRecordingIOS: false })
-            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({}, function(status) {
+            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({positionMillis: 0}, function(status) {
                 dispatch(_onPlaybackStatusUpdate(status))
             })
 

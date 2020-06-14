@@ -11,6 +11,7 @@ import {
     PLAYBACK_STATUS_UPDATE_SUCCESS,
     PLAYBACK_STATUS_UPDATE_ERROR,
     SEEK_POSITION,
+    UNLOAD
 } from './types'
 import { Audio } from 'expo-av'
 
@@ -37,73 +38,70 @@ _onPlaybackStatusUpdate = (status) => {
     }
 }
 
-export function play(post) {
+export function play(post={}) {
     return async function (dispatch, getState) {
         dispatch({
-            type: PLAY
+            type: PLAY,
         })
-
-        let audio = getState().audio
-
-        if (audio.isPaused && post.p_id === audio.post.p_id) {
-            audio.playbackInstance.playAsync()
-            dispatch({
-                type: RESUME,
-                payload: {
-                    isPaused: false,
-                }
-            })
-        } else if (audio.playbackInstance && !audio.isPlaying && post.p_id === audio.post.p_id) {
-            audio.playbackInstance.replayAsync()
-            dispatch({
-                type: REPLAY
-            })
-        } else {
-            try {
-                if (audio.playbackInstance && post.p_id !== audio.post.p_id) {
-                    await audio.playbackInstance.unloadAsync()
-                }
-                const sound = new Audio.Sound();
-                sound.setOnPlaybackStatusUpdate(
-                    function (status) { dispatch(_onPlaybackStatusUpdate(status)) }
-                )
-                await sound.loadAsync(
-                    { uri: post.p_audio },
-                    {},
-                    false, // downloadFirst = false
-                )
+        const audio = getState().audio;
+        console.log('// PLAY')
+        if (audio.playbackInstance) {
+            if (!post || audio.post.p_id !== post.p_id) {
+                await audio.playbackInstance.stopAsync()
+                await audio.playbackInstance.unloadAsync()
                 dispatch({
-                    type: PLAY_SUCCESS,
-                    payload: {
-                        post,
-                        playbackInstance: sound,
-                    }
+                    type: UNLOAD
                 })
-                await sound.playAsync()
-            } catch (error) {
+            } else if (audio.isPaused) {
+                console.log('// RESUME')
+                audio.playbackInstance.playAsync()
                 dispatch({
-                    type: PLAY_ERROR
+                    type: RESUME
                 })
-                console.log('Error: Audio Module. Actions. Line 87.')
-                console.log(error)
+                return;
+            } else if (!audio.isPaused && !audio.isPlaying) {
+                console.log('// REPLAY')
+                audio.playbackInstance.replayAsync()
+                dispatch({
+                    type: REPLAY
+                })
+                return;
             }
+        }
+        const sound = new Audio.Sound();
+        try {
+            console.log('// LOAD AND PLAY NEW')
+            await sound.loadAsync(
+                { uri: post.p_audio },
+                {},
+                false
+            );
+            sound.setOnPlaybackStatusUpdate(function (status) { dispatch(_onPlaybackStatusUpdate(status)) });
+            await sound.playAsync();
+            dispatch({
+                type: PLAY_SUCCESS,
+                payload: {
+                    post,
+                    isPaused: false,
+                    playbackInstance: sound,
+                }
+            })
+        } catch (error) {
+            dispatch({
+                type: PLAY_ERROR
+            })
+            console.log(error)
         }
     }
 }
 
 export function pause() {
     return function (dispatch, getState) {
-
-        let audio = getState().audio
-
-        audio.playbackInstance.pauseAsync()
-
         dispatch({
             type: PAUSE,
-            payload: {
-                isPaused: true,
-            }
         })
+        const audio = getState().audio;
+        audio.playbackInstance.pauseAsync()
     }
 }
 
@@ -115,7 +113,7 @@ export function forward() {
 
         let audio = getState().audio
 
-        audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition+15000)
+        audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition + 15000)
     }
 }
 
@@ -124,10 +122,10 @@ export function backward() {
         dispatch({
             type: BACKWARD
         })
-        
+
         let audio = getState().audio
 
-        audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition-15000)
+        audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition - 15000)
     }
 }
 
