@@ -29,12 +29,12 @@ const INITIAL_STATE = {
 }
 
 export default function (state = INITIAL_STATE, action) {
-    console.log(action.type)
     switch (action.type) {
         case PLAY:
             return {
                 ...state,
                 error: false,
+                playbackInstance: action.payload.playbackInstance,
             }
         case PLAY_SUCCESS:
             console.log('SUCCESS')
@@ -111,7 +111,7 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 error: false,
-                playbackInstance: null,
+                playbackInstance: action.payload.playbackInstance,
             }
         default:
             return state

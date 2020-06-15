@@ -17,6 +17,11 @@ class Post extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        console.log('PLAYBACK INSTANCE: ' + this.props.playbackInstance)
+        console.log('CURRENT POST: ' + this.props.post)
+        console.log('POST: ' +  this.props.item)
+        console.log('PLAYING: ' + this.props.isPlaying)
+
         if(prevProps.isPlaying !== this.props.isPlaying) {
             if(this.props.playbackInstance && this.props.post.p_id === this.props.item.p_id && this.props.isPlaying) {
                 this.setState({ isPlaying: true })

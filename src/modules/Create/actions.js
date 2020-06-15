@@ -18,7 +18,8 @@ import {
     EDIT_TITLE,
     PLAY_RECORDING,
     PAUSE_PLAYING,
-    DELETE_RECORDING
+    DELETE_RECORDING,
+    UNLOAD
 } from './types'
 import { Audio } from 'expo-av'
 import { v4 as uuidv4 } from 'uuid';
@@ -54,7 +55,6 @@ _onRecordingStatusUpdate = (status) => {
             }
         })
     }
-
 }
 
 _onPlaybackStatusUpdate = (status) => {
@@ -79,6 +79,25 @@ _onPlaybackStatusUpdate = (status) => {
     }
 }
 
+export function unloadCreatedInstance() {
+    return async function (dispatch, getState) {
+        const create = getState().create;
+        if (create.playbackInstance) {
+            create.playbackInstance.setOnPlaybackStatusUpdate(null);
+            await create.playbackInstance.unloadAsync()
+            dispatch({
+                type: UNLOAD,
+                payload: {
+                    isPlaying: false,
+                    playbackInstance: null,
+                    playbackInstanceDuration: null,
+                    playbackInstancePosition: null,
+                }
+            })
+        }
+    }
+}
+
 export function start_recording() {
     return async function (dispatch) {
         dispatch({
@@ -91,7 +110,7 @@ export function start_recording() {
                     allowsRecordingIOS: true
                 })
 
-                recording.setOnRecordingStatusUpdate(function(status) {
+                recording.setOnRecordingStatusUpdate(function (status) {
                     dispatch(_onRecordingStatusUpdate(status))
                 })
                 recording.setProgressUpdateInterval(1000);
@@ -125,7 +144,7 @@ export function end_recording() {
         try {
             await getState().create.recordingInstance.stopAndUnloadAsync()
             await Audio.setAudioModeAsync({ allowsRecordingIOS: false })
-            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({positionMillis: 0}, function(status) {
+            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({  }, function (status) {
                 dispatch(_onPlaybackStatusUpdate(status))
             })
 
@@ -204,7 +223,7 @@ export function cancel(navigation) {
 
             }
         })
-        
+
         navigation.goBack()
     }
 }

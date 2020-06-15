@@ -38,46 +38,42 @@ _onPlaybackStatusUpdate = (status) => {
     }
 }
 
-export function play(post={}) {
+export function unloadInstance() {
     return async function (dispatch, getState) {
+        const audio = getState().audio;
+        if (audio.playbackInstance) {
+            audio.playbackInstance.setOnPlaybackStatusUpdate(null);
+            await audio.playbackInstance.unloadAsync()
+            dispatch({
+                type: UNLOAD,
+                payload: {
+                    playbackInstance: null
+                }
+            })
+        }
+    }
+}
+
+export function play(post = {}) {
+    return async function (dispatch, getState) {
+        const sound = new Audio.Sound();
         dispatch({
             type: PLAY,
+            payload: {
+                playbackInstance: null,
+            }
         })
         const audio = getState().audio;
-        console.log('// PLAY')
-        if (audio.playbackInstance) {
-            if (!post || audio.post.p_id !== post.p_id) {
-                await audio.playbackInstance.stopAsync()
-                await audio.playbackInstance.unloadAsync()
-                dispatch({
-                    type: UNLOAD
-                })
-            } else if (audio.isPaused) {
-                console.log('// RESUME')
-                audio.playbackInstance.playAsync()
-                dispatch({
-                    type: RESUME
-                })
-                return;
-            } else if (!audio.isPaused && !audio.isPlaying) {
-                console.log('// REPLAY')
-                audio.playbackInstance.replayAsync()
-                dispatch({
-                    type: REPLAY
-                })
-                return;
-            }
-        }
-        const sound = new Audio.Sound();
+        dispatch(unloadInstance)
+        
         try {
             console.log('// LOAD AND PLAY NEW')
             await sound.loadAsync(
                 { uri: post.p_audio },
-                {},
+                { shouldPlay: true },
                 false
             );
             sound.setOnPlaybackStatusUpdate(function (status) { dispatch(_onPlaybackStatusUpdate(status)) });
-            await sound.playAsync();
             dispatch({
                 type: PLAY_SUCCESS,
                 payload: {

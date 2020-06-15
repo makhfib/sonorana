@@ -49,6 +49,7 @@ export default class BottomTab extends Component {
                         style={[{ width: iconSize, height: iconSize, resizeMode: 'contain', tintColor: color }]}
                     />),
                     tabBarVisible: false,
+                    unmountOnBlur: true,
                 }} />
                 <Tab.Screen name='Profile' component={Profile} options={{
                     tabBarIcon: ({ color, focused }) => (<Image
