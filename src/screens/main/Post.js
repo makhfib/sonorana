@@ -3,23 +3,29 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import Slider from "react-native-slider"
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
-
-import { colors } from '../../constants/Styles'
-import { layout } from '../../constants/Styles'
+import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { play_pause, start_seek, end_seek, forward, backward } from '../../modules/Audio/actions'
+import { formatTime } from '../../functions/utils'
+import * as Haptics from 'expo-haptics';
 
 const REPEAT_ICON = [
+    require('../../assets/icons/play_all_repeat.png'),
     require('../../assets/icons/play_all_repeat.png'), // repeat all
     require('../../assets/icons/shuffle_all.png'), // shuffle
     require('../../assets/icons/repeat_one.png'), // repeat one
 ]
 
-export default class Post extends Component {
+class Post extends Component {
     state = {
         u_liked: this.props.route.params.item.u_liked,
-        value: 0.2,
-        playing: false,
-        repeat: 0,
+        repeat: 0
+    }
+
+    componentDidUpdate(prevProps, prevStates) {
+        //console.log(this.props.uri)
     }
 
     _onBackPress() {
@@ -39,12 +45,34 @@ export default class Post extends Component {
         this.setState({ u_liked: !this.state.u_liked })
     }
 
-    _onPlayPausePress = () => {
-        this.setState({ playing: !this.state.playing })
+    _onPlayPausePress() {
+        let uri = this.props.route.params.item.p_audio
+        this.props.play_pause(uri)
     }
 
     _onRepeatPress() {
-        this.setState({ repeat: (this.state.repeat + 1) % 3 })
+        Haptics.selectionAsync()
+        //this.setState({ repeat: (this.state.repeat + 1) % 4 })
+    }
+
+    _onSliding(value) {
+        let uri = this.props.route.params.item.p_audio
+        this.props.start_seek(uri, value)
+    }
+
+    _onSlidingComplete(value) {
+        let uri = this.props.route.params.item.p_audio
+        this.props.end_seek(uri, value)
+    }
+
+    _onBackward() {
+        let uri = this.props.route.params.item.p_audio
+        this.props.backward(uri)
+    }
+
+    _onForward() {
+        let uri = this.props.route.params.item.p_audio
+        this.props.forward(uri)
     }
 
     render() {
@@ -52,7 +80,19 @@ export default class Post extends Component {
             item,
             feed
         } = this.props.route.params
-
+        const {
+            uri,
+            isPaused,
+            isPlaying,
+            isBuffering,
+            isProcessing,
+            didJustFinish,
+            playbackInstance,
+            playbackInstancePosition,
+            playbackInstanceDuration,
+            error,
+            errorMessage,
+        } = this.props
         return (
             <SafeAreaView style={styles.safe}>
                 <NavigationBar
@@ -61,6 +101,9 @@ export default class Post extends Component {
                     title={item.u_username}
                     titleOnPress={() => this._handleUsernameOnPress()}
                     rightIconImage={REPEAT_ICON[this.state.repeat]}
+                    rightIconStyle={{
+                        tintColor: this.state.repeat === 0 ? colors.gray : colors.tint
+                    }}
                     rightIconOnPress={() => this._onRepeatPress()}
                 />
                 <View style={styles.container}>
@@ -76,37 +119,64 @@ export default class Post extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{item.p_description}</Text>
+                        <Text style={styles.descriptionText}>
+                            {item.p_description}
+                        </Text>
                     </View>
                     <View style={styles.sliderContainer}>
-                        <Text style={styles.durationText}>0:45</Text>
+                        <Text style={styles.durationText}>{
+                            formatTime(
+                                uri === item.p_audio
+                                    ? playbackInstancePosition / 1000
+                                    : 0
+                            )
+                        }</Text>
                         <Slider
                             style={styles.slider}
-                            value={this.state.value}
-                            onValueChange={value => this.setState({ value })}
+                            value={
+                                uri === item.p_audio
+                                ? playbackInstancePosition
+                                : 0
+                            }
+                            onValueChange={(value) => this._onSliding(value)}
+                            onSlidingComplete={(value) => this._onSlidingComplete(value)}
+                            minimumValue={0}
+                            maximumValue={
+                                uri === item.p_audio && playbackInstanceDuration > 0
+                                    ? playbackInstanceDuration
+                                    : Number(item.p_duration) * 1000
+                            }
                             maximumTrackTintColor='lightgray'
                             minimumTrackTintColor={colors.pink}
                             thumbStyle={styles.thumb}
                             trackStyle={styles.track}
+
                         />
-                        <Text style={styles.durationText}>-{item.p_duration}</Text>
+                        <Text style={styles.durationText}>-{
+                            formatTime(
+                                uri === item.p_audio && playbackInstanceDuration > 0
+                                    ? (playbackInstanceDuration - playbackInstancePosition) / 1000
+                                    : item.p_duration
+                            )
+                        }</Text>
                     </View>
                     <View style={styles.controls}>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onBackward()}>
                             <Image
                                 source={require('../../assets/icons/rewind.png')}
                                 style={styles.buttonImage}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={this._onPlayPausePress}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onPlayPausePress()}>
                             <Image
-                                source={this.state.playing
-                                    ? require('../../assets/icons/pause_circle.png')
-                                    : require('../../assets/icons/play_circle.png')}
+                                source={
+                                    uri === item.p_audio && isPlaying
+                                        ? require('../../assets/icons/pause_circle.png')
+                                        : require('../../assets/icons/play_circle.png')}
                                 style={styles.playPauseImage}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => this._onForward()}>
                             <Image
                                 source={require('../../assets/icons/fastforward.png')}
                                 style={styles.buttonImage}
@@ -224,5 +294,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
-    // 75, 25, 17
 })
+
+Post.propTypes = {
+
+}
+
+const mapStateToProps = (state) => ({
+    uri: state.audio.uri,
+    isPaused: state.audio.isPaused,
+    isPlaying: state.audio.isPlaying,
+    isBuffering: state.audio.isBuffering,
+    isProcessing: state.audio.isProcessing,
+    didJustFinish: state.audio.didJustFinish,
+    playbackInstance: state.audio.playbackInstance,
+    playbackInstancePosition: state.audio.playbackInstancePosition,
+    playbackInstanceDuration: state.audio.playbackInstanceDuration,
+    error: state.audio.error,
+    errorMessage: state.audio.errorMessage,
+})
+
+const mapDispatchToProps = {
+    play_pause,
+    start_seek,
+    end_seek,
+    forward,
+    backward,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)

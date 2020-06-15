@@ -4,11 +4,13 @@ import { colors, layout } from '../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Haptics from 'expo-haptics';
 import { timeSince, formatTime } from '../functions/utils'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { play_pause } from '../modules/Audio/actions'
 
-export default class Post2 extends Component {
+class Post extends Component {
 
     state = {
-        playing: false,
         liked: this.props.item.u_liked,
         allowPress: true,
     }
@@ -44,7 +46,8 @@ export default class Post2 extends Component {
 
     _onPlayPausePress() {
         this._disablePress()
-        this.setState({ playing: !this.state.playing })
+        let uri = this.props.item.p_audio
+        this.props.play_pause(uri)
     }
 
     _onPostPress() {
@@ -71,6 +74,19 @@ export default class Post2 extends Component {
     }
 
     render() {
+        const {
+            uri,
+            isPaused,
+            isPlaying,
+            isBuffering,
+            isProcessing,
+            didJustFinish,
+            playbackInstance,
+            playbackInstancePosition,
+            playbackInstanceDuration,
+            error,
+            errorMessage,
+        } = this.props
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -134,13 +150,14 @@ export default class Post2 extends Component {
                         onPress={() => this._onPlayPausePress()}
                     >
                         <Image
-                            source={this.state.playing
-                                ? require('../assets/icons/pause_circle.png')
-                                : require('../assets/icons/play_circle.png')}
+                            source={
+                                uri === this.props.item.p_audio && isPlaying
+                                    ? require('../assets/icons/pause_circle.png')
+                                    : require('../assets/icons/play_circle.png')
+                            }
                             style={[{ tintColor: colors.tint, width: 40, height: 40 }]}
                         />
                     </TouchableOpacity>
-
                 </View>
                 <View
                     style={{
@@ -248,3 +265,27 @@ const styles = StyleSheet.create({
     },
 
 })
+
+Post.propTypes = {
+
+}
+
+const mapStateToProps = (state) => ({
+    uri: state.audio.uri,
+    isPaused: state.audio.isPaused,
+    isPlaying: state.audio.isPlaying,
+    isBuffering: state.audio.isBuffering,
+    isProcessing: state.audio.isProcessing,
+    didJustFinish: state.audio.didJustFinish,
+    playbackInstance: state.audio.playbackInstance,
+    playbackInstancePosition: state.audio.playbackInstancePosition,
+    playbackInstanceDuration: state.audio.playbackInstanceDuration,
+    error: state.audio.error,
+    errorMessage: state.audio.errorMessage,
+})
+
+const mapDispatchToProps = {
+    play_pause,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)

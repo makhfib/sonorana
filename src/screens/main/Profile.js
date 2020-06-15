@@ -109,16 +109,16 @@ export default class Profile extends Component {
 
                                 }
                                 <View style={{ flexDirection: 'row', marginBottom: 10, }}>
-                                    <Text style={{ fontWeight: 'bold' }}>
+                                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                                         {item.u_numFollowing}
                                     </Text>
-                                    <Text style={{ marginRight: 10, }} >
+                                    <Text style={{ fontSize: 15, marginRight: 10, color: colors.gray }} >
                                         {' following'}
                                     </Text>
-                                    <Text style={{ fontWeight: 'bold' }} >
+                                    <Text style={{ fontSize: 15, fontWeight: 'bold' }} >
                                         {item.u_numFollowers}
                                     </Text>
-                                    <Text style={{}} >
+                                    <Text style={{ fontSize: 15, color: colors.gray }} >
                                         {' following'}
                                     </Text>
                                 </View>

@@ -20,7 +20,8 @@ import {
     EDIT_TITLE,
     PLAY_RECORDING,
     PAUSE_PLAYING,
-    DELETE_RECORDING
+    DELETE_RECORDING,
+    UNLOAD
 } from './types'
 
 const INITIAL_STATE = {
@@ -154,6 +155,14 @@ export default function (state = INITIAL_STATE, action) {
                 playbackInstance: null,
                 playbackInstancePosition: 0,
                 error: false,
+            }
+        case UNLOAD:
+            return {
+                ...state,
+                isPlaying: action.payload.isPlaying,
+                playbackInstance: action.payload.playbackInstance,
+                playbackInstanceDuration: action.payload.playbackInstanceDuration,
+                playbackInstancePosition: action.payload.playbackInstancePosition,
             }
         default:
             return state

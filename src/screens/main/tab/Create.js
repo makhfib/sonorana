@@ -10,12 +10,22 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { isEmpty } from '../../../functions/input';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { send, cancel, start_recording, end_recording, delete_recording, play_pause, edit_title } from '../../../modules/Create/actions'
+import { unloadCreatedInstance, send, cancel, start_recording, end_recording, delete_recording, play_pause, edit_title } from '../../../modules/Create/actions'
+import { stopPlaybackInstance } from '../../../modules/Audio/actions'
 
 class Create extends Component {
     state = {
         textInput: null,
         isFocused: false,
+    }
+
+    componentDidMount() {
+        // stops playbackInstance from reproducing audio if there is any
+        this.props.stopPlaybackInstance()
+    }
+
+    componentWillUnmount() {
+        this.props.unloadCreatedInstance()
     }
 
     _canSubmit() {
@@ -312,8 +322,10 @@ const mapDispatchToProps = {
     start_recording,
     end_recording,
     delete_recording,
+    unloadCreatedInstance,
     play_pause,
     edit_title,
+    stopPlaybackInstance,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create)
