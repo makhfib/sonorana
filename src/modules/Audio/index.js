@@ -6,7 +6,9 @@ import {
     RESUME,
     PAUSE,
     UPDATE,
-    STOP
+    STOP,
+    FORWARD,
+    BACKWARD
 } from './types'
 
 const INITIAL_STATE = {
@@ -84,6 +86,14 @@ export default function (state = INITIAL_STATE, action) {
                 didJustFinish: action.payload.didJustFinish,
                 playbackInstancePosition: action.payload.playbackInstancePosition,
                 playbackInstanceDuration: action.payload.playbackInstanceDuration,
+            }
+        case FORWARD:
+            return {
+                ...state
+            }
+        case BACKWARD:
+            return {
+                ...state
             }
         default:
             return state

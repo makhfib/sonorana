@@ -7,10 +7,9 @@ import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { play_pause, start_seek, end_seek } from '../../modules/Audio/actions'
+import { play_pause, start_seek, end_seek, forward, backward } from '../../modules/Audio/actions'
 import { formatTime } from '../../functions/utils'
 import * as Haptics from 'expo-haptics';
-import { Audio } from 'expo-av';
 
 const REPEAT_ICON = [
     require('../../assets/icons/play_all_repeat.png'),
@@ -67,11 +66,13 @@ class Post extends Component {
     }
 
     _onBackward() {
-
+        let uri = this.props.route.params.item.p_audio
+        this.props.backward(uri)
     }
 
     _onForward() {
-
+        let uri = this.props.route.params.item.p_audio
+        this.props.forward(uri)
     }
 
     render() {
@@ -316,7 +317,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     play_pause,
     start_seek,
-    end_seek
+    end_seek,
+    forward,
+    backward,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

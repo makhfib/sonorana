@@ -11,6 +11,7 @@ import { isEmpty } from '../../../functions/input';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { unloadCreatedInstance, send, cancel, start_recording, end_recording, delete_recording, play_pause, edit_title } from '../../../modules/Create/actions'
+import { stopPlaybackInstance } from '../../../modules/Audio/actions'
 
 class Create extends Component {
     state = {
@@ -19,12 +20,12 @@ class Create extends Component {
     }
 
     componentDidMount() {
-        
+        // stops playbackInstance from reproducing audio if there is any
+        this.props.stopPlaybackInstance()
     }
 
     componentWillUnmount() {
         this.props.unloadCreatedInstance()
-        console.log('unmounted')
     }
 
     _canSubmit() {
@@ -324,6 +325,7 @@ const mapDispatchToProps = {
     unloadCreatedInstance,
     play_pause,
     edit_title,
+    stopPlaybackInstance,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create)

@@ -7,6 +7,8 @@ import {
     PAUSE,
     UPDATE,
     STOP,
+    FORWARD,
+    BACKWARD
 } from './types'
 import { Audio } from 'expo-av'
 
@@ -17,7 +19,7 @@ function _onPlaybackStatusUpdate(status) {
             dispatch({
                 type: UPDATE,
                 payload: {
-                    isPlaying: status.isPlaying || !audio.uri && !audio.isPaused ? true : status.isPlaying,
+                    isPlaying: status.isPlaying ? status.isPlaying : !audio.isPaused,
                     isBuffering: status.isBuffering,
                     didJustFinish: status.didJustFinish,
                     playbackInstancePosition: status.positionMillis,
@@ -27,7 +29,21 @@ function _onPlaybackStatusUpdate(status) {
             if (status.didJustFinish) {
                 audio.playbackInstance.stopAsync()
             }
-            console.log(status)
+        }
+    }
+}
+
+export function stopPlaybackInstance() {
+    return async function (dispatch, getState) {
+        const audio = getState().audio
+        if(audio.playbackInstance) {
+            dispatch({
+                type: PAUSE,
+                payload: {
+                    isPaused: true, // the only thing that changes is this
+                }
+            })
+            audio.playbackInstance.stopAsync()
         }
     }
 }
@@ -147,6 +163,32 @@ export function end_seek(uri, millis) {
                 console.log(error)
             }
 
+        }
+
+    }
+}
+
+export function forward(uri) {
+    return function (dispatch, getState) {
+        const audio = getState().audio
+        if (audio.playbackInstance && uri === audio.uri) {
+            dispatch({
+                type: FORWARD,
+            })
+            audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition+15000)
+        }
+
+    }
+}
+
+export function backward(uri) {
+    return async function (dispatch, getState) {
+        const audio = getState().audio
+        if (audio.playbackInstance && uri === audio.uri) {
+            dispatch({
+                type: BACKWARD,
+            })
+            audio.playbackInstance.setPositionAsync(audio.playbackInstancePosition-15000)
         }
 
     }
