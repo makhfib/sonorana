@@ -6,29 +6,12 @@ import * as Haptics from 'expo-haptics';
 import { timeSince, formatTime } from '../functions/utils'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { play, pause } from '../modules/Audio/actions'
 
 class Post extends Component {
 
     state = {
         liked: this.props.item.u_liked,
-        isPlaying: false,
         allowPress: true,
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('PLAYBACK INSTANCE: ' + this.props.playbackInstance)
-        console.log('CURRENT POST: ' + this.props.post)
-        console.log('POST: ' +  this.props.item)
-        console.log('PLAYING: ' + this.props.isPlaying)
-
-        if(prevProps.isPlaying !== this.props.isPlaying) {
-            if(this.props.playbackInstance && this.props.post.p_id === this.props.item.p_id && this.props.isPlaying) {
-                this.setState({ isPlaying: true })
-            } else {
-                this.setState({ isPlaying: false })
-            }
-        }
     }
 
     _disablePress() {
@@ -62,14 +45,6 @@ class Post extends Component {
 
     _onPlayPausePress() {
         this._disablePress()
-        if (!this.props.isPlaying) {
-            this.props.play({ ...this.props.item })
-        } else {
-            this.props.pause()
-            if (this.props.post.p_id !== this.props.item.p_id) {
-                this.props.play({ ...this.props.item })
-            }
-        }
     }
 
     _onPostPress() {
@@ -160,7 +135,7 @@ class Post extends Component {
                     >
                         <Image
                             source={
-                                this.state.isPlaying
+                                false
                                     ? require('../assets/icons/pause_circle.png')
                                     : require('../assets/icons/play_circle.png')
                             }
@@ -280,19 +255,13 @@ Post.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    post: state.audio.post,
-    isProcessing: state.audio.isProcessing,
-    isBuffering: state.audio.isBuffering,
-    isPaused: state.audio.isPaused,
-    isPlaying: state.audio.isPlaying,
-    playbackInstance: state.audio.playbackInstance,
+    
     error: state.audio.error,
     errorMessage: state.audio.errorMessage,
 })
 
 const mapDispatchToProps = {
-    play,
-    pause
+    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

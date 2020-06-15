@@ -119,7 +119,7 @@ export default [
         p_datetime: '2017-02-11T05:56:16Z',
         p_description: 'There is no major sin when it comes to repentance.',
         p_duration: '174',
-        p_audio: "https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Podington_Bear_-_Rubber_Robot.mp3",
+        p_audio: "https://siren-users-bucket.s3-eu-west-1.amazonaws.com/fi/Jocko+Motivation+GOOD+(From+Jocko+Podcast).mp3",
         p_numLikes: '13',
         u_liked: false,
     },

@@ -7,9 +7,10 @@ import { colors, layout } from '../../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { play, pause, forward, backward, start_seek, end_seek } from '../../modules/Audio/actions'
+import { play_pause, start_seek, end_seek } from '../../modules/Audio/actions'
 import { formatTime } from '../../functions/utils'
 import * as Haptics from 'expo-haptics';
+import { Audio } from 'expo-av';
 
 const REPEAT_ICON = [
     require('../../assets/icons/play_all_repeat.png'),
@@ -21,7 +22,11 @@ const REPEAT_ICON = [
 class Post extends Component {
     state = {
         u_liked: this.props.route.params.item.u_liked,
-        repeat: 0,
+        repeat: 0
+    }
+
+    componentDidUpdate(prevProps, prevStates) {
+        //console.log(this.props.uri)
     }
 
     _onBackPress() {
@@ -42,14 +47,8 @@ class Post extends Component {
     }
 
     _onPlayPausePress() {
-        if (this.props.isPlaying) {
-            this.props.pause()
-            if (this.props.post.p_id !== this.props.route.params.item.p_id) {
-                this.props.play({ ...this.props.route.params.item })
-            }
-        } else if (!this.props.isPlaying) {
-            this.props.play({ ...this.props.route.params.item })
-        }
+        let uri = this.props.route.params.item.p_audio
+        this.props.play_pause(uri)
     }
 
     _onRepeatPress() {
@@ -57,22 +56,22 @@ class Post extends Component {
         //this.setState({ repeat: (this.state.repeat + 1) % 4 })
     }
 
-    _onSliding() {
-        if (!this.props.isSeeking) {
-            this.props.start_seek()
-        }
+    _onSliding(value) {
+        let uri = this.props.route.params.item.p_audio
+        this.props.start_seek(uri, value)
     }
 
     _onSlidingComplete(value) {
-        this.props.end_seek(value)
+        let uri = this.props.route.params.item.p_audio
+        this.props.end_seek(uri, value)
     }
 
     _onBackward() {
-        this.props.backward()
+
     }
 
     _onForward() {
-        this.props.forward()
+
     }
 
     render() {
@@ -80,7 +79,19 @@ class Post extends Component {
             item,
             feed
         } = this.props.route.params
-
+        const {
+            uri,
+            isPaused,
+            isPlaying,
+            isBuffering,
+            isProcessing,
+            didJustFinish,
+            playbackInstance,
+            playbackInstancePosition,
+            playbackInstanceDuration,
+            error,
+            errorMessage,
+        } = this.props
         return (
             <SafeAreaView style={styles.safe}>
                 <NavigationBar
@@ -114,25 +125,25 @@ class Post extends Component {
                     <View style={styles.sliderContainer}>
                         <Text style={styles.durationText}>{
                             formatTime(
-                                this.props.post && this.props.post.p_id === item.p_id
-                                    ? this.props.playbackInstancePosition / 1000
+                                uri === item.p_audio
+                                    ? playbackInstancePosition / 1000
                                     : 0
                             )
                         }</Text>
                         <Slider
                             style={styles.slider}
                             value={
-                                this.props.post && this.props.post.p_id === item.p_id
-                                    ? this.props.playbackInstancePosition
-                                    : 0
+                                uri === item.p_audio
+                                ? playbackInstancePosition
+                                : 0
                             }
-                            onValueChange={() => this._onSliding()}
+                            onValueChange={(value) => this._onSliding(value)}
                             onSlidingComplete={(value) => this._onSlidingComplete(value)}
                             minimumValue={0}
                             maximumValue={
-                                this.props.playbackInstanceDuration && this.props.post.p_id === item.p_id
-                                    ? this.props.playbackInstanceDuration
-                                    : item.p_duration * 1000
+                                uri === item.p_audio && playbackInstanceDuration > 0
+                                    ? playbackInstanceDuration
+                                    : Number(item.p_duration) * 1000
                             }
                             maximumTrackTintColor='lightgray'
                             minimumTrackTintColor={colors.pink}
@@ -142,8 +153,8 @@ class Post extends Component {
                         />
                         <Text style={styles.durationText}>-{
                             formatTime(
-                                this.props.post && this.props.post.p_id === item.p_id
-                                    ? (this.props.playbackInstanceDuration - this.props.playbackInstancePosition) / 1000
+                                uri === item.p_audio && playbackInstanceDuration > 0
+                                    ? (playbackInstanceDuration - playbackInstancePosition) / 1000
                                     : item.p_duration
                             )
                         }</Text>
@@ -157,9 +168,10 @@ class Post extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={() => this._onPlayPausePress()}>
                             <Image
-                                source={this.props.post && this.props.post.p_id === item.p_id && this.props.isPlaying
-                                    ? require('../../assets/icons/pause_circle.png')
-                                    : require('../../assets/icons/play_circle.png')}
+                                source={
+                                    uri === item.p_audio && isPlaying
+                                        ? require('../../assets/icons/pause_circle.png')
+                                        : require('../../assets/icons/play_circle.png')}
                                 style={styles.playPauseImage}
                             />
                         </TouchableOpacity>
@@ -281,7 +293,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
-    // 75, 25, 17
 })
 
 Post.propTypes = {
@@ -289,23 +300,21 @@ Post.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    post: state.audio.post,
-    isSeeking: state.audio.isSeeking,
+    uri: state.audio.uri,
     isPaused: state.audio.isPaused,
     isPlaying: state.audio.isPlaying,
     isBuffering: state.audio.isBuffering,
+    isProcessing: state.audio.isProcessing,
+    didJustFinish: state.audio.didJustFinish,
     playbackInstance: state.audio.playbackInstance,
-    playbackInstanceDuration: state.audio.playbackInstanceDuration,
     playbackInstancePosition: state.audio.playbackInstancePosition,
+    playbackInstanceDuration: state.audio.playbackInstanceDuration,
     error: state.audio.error,
     errorMessage: state.audio.errorMessage,
 })
 
 const mapDispatchToProps = {
-    play,
-    pause,
-    forward,
-    backward,
+    play_pause,
     start_seek,
     end_seek
 }

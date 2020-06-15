@@ -1,117 +1,89 @@
 import {
     PLAY,
-    PLAY_SUCCESS,
     PLAY_ERROR,
+    PLAY_SUCCESS,
+    PROCESSING,
     RESUME,
-    REPLAY,
     PAUSE,
-    FORWARD,
-    BACKWARD,
-    PLAYBACK_STATUS_UPDATE,
-    PLAYBACK_STATUS_UPDATE_SUCCESS,
-    PLAYBACK_STATUS_UPDATE_ERROR,
-    SEEK_POSITION,
-    UNLOAD
+    UPDATE,
+    STOP
 } from './types'
 
 const INITIAL_STATE = {
-    post: null, // current post id
-    isProcessing: false,
-    isSeeking: false,
+    uri: '',
     isPaused: false,
     isPlaying: false,
     isBuffering: false,
+    isProcessing: false,
+    didJustFinish: false,
     playbackInstance: null,
-    playbackInstanceDuration: null,
-    playbackInstancePosition: null,
+    playbackInstancePosition: 0,
+    playbackInstanceDuration: 0,
     error: false,
     errorMessage: null,
 }
 
 export default function (state = INITIAL_STATE, action) {
+    console.log(action.type)
     switch (action.type) {
         case PLAY:
             return {
                 ...state,
                 error: false,
-                playbackInstance: action.payload.playbackInstance,
-            }
-        case PLAY_SUCCESS:
-            console.log('SUCCESS')
-            return {
-                ...state,
-                error: false,
-                post: action.payload.post,
-                playbackInstance: action.payload.playbackInstance,
-                isPaused: action.payload.isPaused,
+                uri: action.payload.uri,
                 isPlaying: action.payload.isPlaying,
-                isBuffering: action.payload.isBuffering,
-                playbackInstanceDuration: action.payload.playbackInstanceDuration,
-                playbackInstancePosition: action.payload.playbackInstancePosition,
             }
         case PLAY_ERROR:
             return {
                 ...state,
                 error: true,
+                uri: action.payload.uri,
+                isPlaying: action.payload.isPlaying
             }
-        case REPLAY:
+        case PLAY_SUCCESS:
             return {
                 ...state,
                 error: false,
+                playbackInstance: action.payload.playbackInstance,
+            }
+        case PROCESSING:
+            return {
+                ...state,
+                error: false,
+                isProcessing: action.payload.isProcessing
             }
         case RESUME:
             return {
                 ...state,
                 error: false,
-                isPaused: false,
+                isPaused: action.payload.isPaused
             }
         case PAUSE:
             return {
                 ...state,
                 error: false,
-                isPaused: true
+                isPaused: action.payload.isPaused
             }
-        case FORWARD:
-            return {
-                ...state,
-                error: false,
-            }
-        case BACKWARD:
-            return {
-                ...state,
-                error: false,
-            }
-        case PLAYBACK_STATUS_UPDATE:
-            return {
-                ...state,
-                error: false,
-            }
-        case PLAYBACK_STATUS_UPDATE_SUCCESS:
+        case UPDATE:
             return {
                 ...state,
                 error: false,
                 isPlaying: action.payload.isPlaying,
                 isBuffering: action.payload.isBuffering,
+                didJustFinish: action.payload.didJustFinish,
+                playbackInstancePosition: action.payload.playbackInstancePosition,
                 playbackInstanceDuration: action.payload.playbackInstanceDuration,
-                playbackInstancePosition: action.payload.playbackInstancePosition
             }
-        case PLAYBACK_STATUS_UPDATE_ERROR:
-            return {
-                ...state,
-                error: true,
-            }
-        case SEEK_POSITION:
+        case STOP:
             return {
                 ...state,
                 error: false,
-                isPaused: action.payload.isPaused,
-                isSeeking: action.payload.isSeeking,
-            }
-        case UNLOAD:
-            return {
-                ...state,
-                error: false,
+                uri: action.payload.uri,
                 playbackInstance: action.payload.playbackInstance,
+                isBuffering: action.payload.isBuffering,
+                didJustFinish: action.payload.didJustFinish,
+                playbackInstancePosition: action.payload.playbackInstancePosition,
+                playbackInstanceDuration: action.payload.playbackInstanceDuration,
             }
         default:
             return state
