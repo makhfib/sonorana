@@ -125,7 +125,7 @@ export function start_recording() {
         dispatch({
             type: START_RECORDING
         })
-        if (_permission) {
+        if (_permission()) {
             const recording = new Audio.Recording()
             try {
                 await Audio.setAudioModeAsync({
@@ -156,6 +156,7 @@ export function start_recording() {
                         errorMessage: error.message
                     }
                 })
+                console.log(error)
                 if (error.message) {
                     _alertPermissionDenied()
                 }

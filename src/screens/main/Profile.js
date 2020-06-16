@@ -5,9 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import ActionButton from '../../components/ActionButton'
 import FollowButton from '../../components/FollowButton'
+import IllustrationMessage from '../../components/IllustrationMessage'
 import Separator from '../../components/Separator';
 import Post from '../../components/Post';
-import Feed from '../../data/clipsList'
+import { feed } from '../../data/clipsList'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { goToURL } from '../../functions/utils'
 import { connect } from 'react-redux';
@@ -126,7 +127,7 @@ class Profile extends Component {
                                 </View>
                                 <View style={styles.buttonsContainer}>
                                     {
-                                        this.props.CognitoUser && item.u_username === this.props.CognitoUser['username']
+                                        item.u_username === this.props.current_username
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/edit.png')}
                                                 title={'Edit profile'}
@@ -145,7 +146,7 @@ class Profile extends Component {
                                     }
 
                                     {
-                                        this.props.CognitoUser && item.u_username === this.props.CognitoUser['username']
+                                        item.u_username === this.props.current_username
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/configuration.png')}
                                                 title={'Settings'}
@@ -169,7 +170,7 @@ class Profile extends Component {
                             <Separator />
                         </>
                     }
-                    data={Feed}
+                    data={feed}
                     renderItem={({ item }) => (
                         item.u_username === this._props().item.u_username
                             ? <Post
@@ -179,6 +180,17 @@ class Profile extends Component {
                             : <></>
                     )}
                     keyExtractor={post => post.p_id}
+                    ListFooterComponent={
+                        feed.filter(function(item){ return item.u_username === this._props().item.u_username; }.bind(this)).length > 0
+                            ? <></>
+                            : <IllustrationMessage
+                            illustration={require('../../assets/illustrations/egg-media-player.png')}
+                            title={item.u_username === this.props.current_username ? 'Record your first clip' : item.u_username + ' haven\'t posted recorded yet'}
+                            buttonText={item.u_username === this.props.current_username ? 'Record' : null}
+                            onPress={item.u_username === this.props.current_username ? () => this.props.navigation.navigate('Create') : null}
+                        />
+
+                    }
                 />
             </SafeAreaView>
         )
@@ -233,11 +245,11 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    CognitoUser: state.auth.CognitoUser,
+    current_username: state.profile.u_username,
 })
 
 const mapDispatchToProps = {
-    
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -4,8 +4,9 @@ import { colors, layout } from '../constants/Styles'
 import FollowButton from './FollowButton'
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 
-export default class Profile extends Component {
+class Profile extends Component {
     state = {
         onFollow: false,
     }
@@ -43,7 +44,7 @@ export default class Profile extends Component {
                     numberOfLines={1}
                 >{this.props.item.u_username}</Text>
                 {
-                    this.props.item.u_username !== 'freshlygrounded'
+                    this.props.item.u_username !== this.props.current_username
                         ? <FollowButton
                             u_following={this.props.item.u_following}
                             onPress={() => this._onFollowPressed()}
@@ -54,10 +55,6 @@ export default class Profile extends Component {
             </TouchableOpacity>
         )
     }
-}
-
-Profile.propTypes = {
-    item: PropTypes.object, // contains u_photo, u_username, u_following
 }
 
 const styles = StyleSheet.create({
@@ -83,3 +80,17 @@ const styles = StyleSheet.create({
     },
 
 })
+
+Profile.propTypes = {
+    item: PropTypes.object, // contains u_photo, u_username, u_following
+}
+
+const mapStateToProps = (state) => ({
+    current_username: state.profile.u_username
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

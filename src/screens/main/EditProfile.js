@@ -39,10 +39,8 @@ class EditProfile extends Component {
     async _permission(PERMISSION_TYPE) {
         // read more https://docs.expo.io/versions/latest/sdk/permissions/
         const { status } = await Permissions.getAsync(PERMISSION_TYPE);
-        console.log(status)
         if (status !== 'granted') {
             const { status } = await Permissions.askAsync(PERMISSION_TYPE)
-            console.log(status)
             if (status === 'granted') {
                 return true;
             }
@@ -89,7 +87,7 @@ class EditProfile extends Component {
                         if (isPhoto) {
                             this.setState({ u_photo: 'https://sonorana-assets-bucket.s3-eu-west-1.amazonaws.com/eggs/' + index + '.png' })
                         } else {
-                            this.setState({ u_header: '' })
+                            this.setState({ u_header: null })
                         }
                     },
                     style: 'destructive'

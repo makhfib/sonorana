@@ -1,4 +1,4 @@
-export default [
+export const feed = [
     {
         p_id: '0',
         u_photo: 'https://nuflux.net/wp-content/uploads/2020/03/20170518183800-gary-vaynerchuk-hero1.jpeg',

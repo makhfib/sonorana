@@ -5,7 +5,7 @@ import NavigationBar from '../../../components/NavigationBar'
 import SimpleActivityIndicator from '../../../components/SimpleActivityIndicator'
 import Separator from '../../../components/Separator'
 import Post from '../../../components/Post'
-import Feed from '../../../data/clipsList'
+import { feed } from '../../../data/clipsList'
 import { colors, layout } from '../../../constants/Styles'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'

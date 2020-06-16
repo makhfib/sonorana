@@ -113,7 +113,7 @@ class Create extends Component {
                         <View>
                             <Image
                                 style={styles.photo}
-                                source={{ uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fis2-ssl.mzstatic.com%2Fimage%2Fthumb%2FMusic128%2Fv4%2Fc9%2F6a%2F40%2Fc96a40d4-bb93-9bed-c9a6-8519cca482c7%2Fsource%2F1200x630bb.jpg&f=1&nofb=1' }}
+                                source={{ uri: this.props.u_photo }}
                             />
                         </View>
                         <View
@@ -304,6 +304,7 @@ Create.propTypes = {
 
 
 const mapStateToProps = (state) => ({
+    u_photo: state.profile.u_photo,
     maxDuration: state.create.maxDuration,
     isRecording: state.create.isRecording,
     recordingInstance: state.create.recordingInstance,
