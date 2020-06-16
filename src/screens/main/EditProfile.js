@@ -383,13 +383,13 @@ class EditProfile extends Component {
                                 style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
                                 maxLength={30}
                                 placeholder={'* Your name'}
-                                placeholderTextColor={this.state.emptyName ? colors.red : colors.lightgray}
+                                placeholderTextColor={this.state.emptyName ? colors.red : colors.gray}
                                 value={u_name}
                                 onChangeText={(text) => this._onChangeText(text, 'u_name')}
                                 clear={this.state.clear}
                             />
                             <Text
-                                style={[styles.counter, { alignSelf: 'center', color: this.state.emptyName ? colors.red : null }]}
+                                style={[styles.counter, { alignSelf: 'center', color: this.state.emptyName ? colors.red : colors.gray }]}
                             >{this.state.currentNameLength}/{this.state.nameMaxLength}</Text>
                         </View>
 

@@ -114,7 +114,7 @@ class Profile extends Component {
                                     <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                                         {item.u_numFollowing}
                                     </Text>
-                                    <Text style={{ fontSize: 15, marginRight: 30, color: colors.gray }} >
+                                    <Text style={{ fontSize: 15, marginRight: 20, color: colors.gray }} >
                                         {' Following '}
                                     </Text>
                                     <Text style={{ fontSize: 15, fontWeight: 'bold' }} >
@@ -126,7 +126,7 @@ class Profile extends Component {
                                 </View>
                                 <View style={styles.buttonsContainer}>
                                     {
-                                        item.u_username === this.props.CognitoUser['username']
+                                        this.props.CognitoUser && item.u_username === this.props.CognitoUser['username']
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/edit.png')}
                                                 title={'Edit profile'}
@@ -145,7 +145,7 @@ class Profile extends Component {
                                     }
 
                                     {
-                                        item.u_username === 'freshlygrounded'
+                                        this.props.CognitoUser && item.u_username === this.props.CognitoUser['username']
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/configuration.png')}
                                                 title={'Settings'}
