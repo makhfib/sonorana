@@ -36,7 +36,7 @@ export default class NavigationBar extends Component {
                     <View
                         style={styles.middleItemContainer}>
                         {
-                            this.props.title !== undefined ?
+                            this.props.title ?
                                 <>
                                     {
                                         // read more https://stackoverflow.com/questions/332422/get-the-name-of-an-objects-type

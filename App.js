@@ -3,6 +3,7 @@ import { store, persistor } from './src/modules'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Root from './src/navigation'
@@ -36,11 +37,13 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor} >
                     <SafeAreaProvider>
-                        <NavigationContainer>
-                            <Application.Navigator headerMode='none'>
-                                <Application.Screen name='Root' component={Root} />
-                            </Application.Navigator>
-                        </NavigationContainer>
+                        <ActionSheetProvider>
+                            <NavigationContainer>
+                                <Application.Navigator headerMode='none'>
+                                    <Application.Screen name='Root' component={Root} />
+                                </Application.Navigator>
+                            </NavigationContainer>
+                        </ActionSheetProvider>
                     </SafeAreaProvider>
                 </PersistGate>
             </Provider>

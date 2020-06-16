@@ -24,6 +24,7 @@ import {
 import { Audio } from 'expo-av'
 import { v4 as uuidv4 } from 'uuid';
 import * as Permissions from 'expo-permissions';
+import { Linking, Alert } from 'react-native'
 
 async function _permission() {
     // read more https://docs.expo.io/versions/latest/sdk/permissions/
@@ -36,6 +37,27 @@ async function _permission() {
     } else {
         return true
     }
+
+}
+
+function _alertPermissionDenied() {
+    Alert.alert(
+        'Sonorana does not have access to your microphone. To enable access, tap Settings and turn on microphone.',
+        null,
+        [
+            {
+                text: 'Done',
+                onPress: () => null,
+                style: 'OK'
+            },
+            {
+                text: 'Settings',
+                onPress: () => Linking.openSettings(),
+                style: 'default',
+            }
+        ],
+        { cancelable: false }
+    );
 }
 
 _onRecordingStatusUpdate = (status) => {
@@ -103,7 +125,7 @@ export function start_recording() {
         dispatch({
             type: START_RECORDING
         })
-        if (_permission) {
+        if (_permission()) {
             const recording = new Audio.Recording()
             try {
                 await Audio.setAudioModeAsync({
@@ -128,10 +150,20 @@ export function start_recording() {
 
             } catch (error) {
                 dispatch({
-                    type: START_RECORDING_ERROR
+                    type: START_RECORDING_ERROR,
+                    payload: {
+                        error: true,
+                        errorMessage: error.message
+                    }
                 })
+                console.log(error)
+                if (error.message) {
+                    _alertPermissionDenied()
+                }
             }
         }
+
+
     }
 }
 
@@ -144,7 +176,7 @@ export function end_recording() {
         try {
             await getState().create.recordingInstance.stopAndUnloadAsync()
             await Audio.setAudioModeAsync({ allowsRecordingIOS: false })
-            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({  }, function (status) {
+            const { sound, status } = await getState().create.recordingInstance.createNewLoadedSoundAsync({}, function (status) {
                 dispatch(_onPlaybackStatusUpdate(status))
             })
 
@@ -162,6 +194,7 @@ export function end_recording() {
             dispatch({
                 type: END_RECORDING_ERROR
             })
+            console.log(error.message)
         }
     }
 }

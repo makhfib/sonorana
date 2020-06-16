@@ -12,6 +12,7 @@ export default class IllustrationMessage extends Component {
                     alignItems: 'center',
                     justifyContent: 'center',
                     paddingHorizontal: layout.paddingHorizontal * 2,
+                    paddingVertical: 20,
                 }}
                 refreshControl={
                     <RefreshControl

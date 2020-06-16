@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-import { Text, View, Image, ImageBackground, StyleSheet } from 'react-native'
+import { Text, View, Image, ImageBackground, StyleSheet, Alert, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, layout } from '../../constants/Styles'
+import { colors, layout, random_color } from '../../constants/Styles'
 import NavigationBar from '../../components/NavigationBar'
 import MultilineInput from '../../components/MultilineInput'
+import FloatingActivityIndicator from '../../components/FloatingActivityIndicator'
 import Separator from '../../components/Separator';
+import * as ImagePicker from 'expo-image-picker'
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connectActionSheet } from '@expo/react-native-action-sheet'
+import { connect } from 'react-redux';
+import * as Permissions from 'expo-permissions';
+import PropTypes from 'prop-types'
+import { save_changes } from '../../modules/Profile/actions'
+import { isEmpty } from '../../functions/input';
 
-export default class EditProfile extends Component {
+class EditProfile extends Component {
 
     _props() {
         return this.props.route.params
@@ -24,7 +32,69 @@ export default class EditProfile extends Component {
         currentDescriptionLength: this._props().item.u_description.length,
         nameMaxLength: 30,
         descriptionMaxLength: 140,
-        allowSave: true,
+        emptyName: false,
+        randomColor: random_color()
+    }
+
+    async _permission(PERMISSION_TYPE) {
+        // read more https://docs.expo.io/versions/latest/sdk/permissions/
+        const { status } = await Permissions.getAsync(PERMISSION_TYPE);
+        if (status !== 'granted') {
+            const { status } = await Permissions.askAsync(PERMISSION_TYPE)
+            if (status === 'granted') {
+                return true;
+            }
+        } else {
+            return true
+        }
+
+    }
+
+    _alertPermissionDenied() {
+        Alert.alert(
+            'Sonorana does not have access to your photos or camera. To enable access, tap Settings and turn on photos and camera.',
+            null,
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel'
+                },
+                {
+                    text: 'Settings',
+                    onPress: () => Linking.openSettings(),
+                    style: 'default',
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    _confirmDelete(isPhoto) {
+        let index = Math.floor(Math.random() * 15)
+        Alert.alert(
+            'Delete photo',
+            'Are you sure you want to delete your photo?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel'
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => {
+                        if (isPhoto) {
+                            this.setState({ u_photo: 'https://sonorana-assets-bucket.s3-eu-west-1.amazonaws.com/eggs/' + index + '.png' })
+                        } else {
+                            this.setState({ u_header: null })
+                        }
+                    },
+                    style: 'destructive'
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
     _handleBack() {
@@ -32,20 +102,163 @@ export default class EditProfile extends Component {
     }
 
     _handleDone() {
-        console.log('Done not handled')
+        if (this._allowSave()) {
+            this.props.save_changes({
+                u_username: this._props().item.u_username,
+                u_name: this.state.u_name,
+                u_photo: this.state.u_photo,
+                u_header: this.state.u_header,
+                u_description: this.state.u_description,
+                u_website: this.state.u_website,
+            }, this.props.navigation)
+        } else {
+            Alert.alert(
+                'Your name is required, you can\'t leave it empty.',
+                'This can be the name your parents gave you, or the name your friends call you with.',
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => null,
+                        style: 'OK'
+                    },
+                ],
+                { cancelable: false }
+            );
+        }
     }
 
     _changeHeader() {
-        console.log('Change header not handled')
+        // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
+        const options = ['Delete', 'Take photo', 'Choose from library', 'Cancel'];
+        const destructiveButtonIndex = 0;
+        const cancelButtonIndex = 3;
+
+        this.props.showActionSheetWithOptions(
+            {
+                options,
+                cancelButtonIndex,
+                destructiveButtonIndex,
+            },
+            async (buttonIndex) => {
+                switch (buttonIndex) {
+                    case 0:
+                        this._confirmDelete(false)
+                        break
+                    case 1:
+                        try {
+                            if (this._permission(Permissions.CAMERA_ROLL)) {
+                                if (this._permission(Permissions.CAMERA)) {
+                                    let result = await ImagePicker.launchCameraAsync({
+                                        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                        allowsEditing: false,
+                                        //aspect: [4, 3],
+                                        quality: 0.5,
+                                    })
+
+                                    if (!result.cancelled) {
+                                        this.setState({ u_header: result.uri })
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            this._alertPermissionDenied()
+                        }
+                        break;
+                    case 2:
+                        try {
+                            if (this._permission(Permissions.CAMERA_ROLL)) {
+                                let result = await ImagePicker.launchImageLibraryAsync({
+                                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                    allowsEditing: false,
+                                    allowsMultipleSelection: false,
+                                    quality: 0.5,
+                                })
+
+                                if (!result.cancelled) {
+                                    this.setState({ u_header: result.uri })
+                                }
+                            }
+                        } catch (error) {
+                            this._alertPermissionDenied()
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            },
+        );
     }
 
     _changePhoto() {
-        console.log('Change photo not handled')
+        // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
+        const options = ['Delete', 'Take photo', 'Choose from library', 'Cancel'];
+        const destructiveButtonIndex = 0;
+        const cancelButtonIndex = 3;
+
+        this.props.showActionSheetWithOptions(
+            {
+                options,
+                cancelButtonIndex,
+                destructiveButtonIndex,
+            },
+            async (buttonIndex) => {
+                switch (buttonIndex) {
+                    case 0:
+                        this._confirmDelete(true)
+                        break
+                    case 1:
+                        try {
+                            if (this._permission(Permissions.CAMERA_ROLL)) {
+                                if (this._permission(Permissions.CAMERA)) {
+                                    let result = await ImagePicker.launchCameraAsync({
+                                        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                        allowsEditing: false,
+                                        //aspect: [4, 3],
+                                        quality: 0.5,
+                                    })
+
+                                    if (!result.cancelled) {
+                                        this.setState({ u_photo: result.uri })
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            this._alertPermissionDenied()
+                        }
+                        break;
+                    case 2:
+                        try {
+                            if (this._permission(Permissions.CAMERA_ROLL)) {
+                                let result = await ImagePicker.launchImageLibraryAsync({
+                                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                    allowsEditing: false,
+                                    allowsMultipleSelection: false,
+                                    quality: 0.5,
+                                })
+
+                                if (!result.cancelled) {
+                                    this.setState({ u_photo: result.uri })
+                                }
+                            }
+                        } catch (error) {
+                            this._alertPermissionDenied()
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            },
+        );
     }
 
     _onChangeText = (text, field) => {
         switch (field) {
             case 'u_name':
+                if (isEmpty(text) && !this.state.emptyName) {
+                    this.setState({ emptyName: true })
+                } else if (this.state.emptyName && !isEmpty(text)) {
+                    this.setState({ emptyName: false })
+                }
                 this.setState({
                     u_name: text,
                     currentNameLength: text.length,
@@ -67,6 +280,14 @@ export default class EditProfile extends Component {
         }
     }
 
+    _allowSave() {
+        if (isEmpty(this.state.u_name)) {
+            return false
+        } else {
+            return true
+        }
+    }
+
     render() {
         const {
             u_name,
@@ -83,20 +304,23 @@ export default class EditProfile extends Component {
                     backgroundColor: colors.safearea
                 }}
             >
-                    <NavigationBar
-                        leftIconOnPress={() => this._handleBack()}
-                        leftIconImage={require('../../assets/icons/cancel.png')}
-                        rightIconOnPress={() => this._handleDone()}
-                        rightIconImage={require('../../assets/icons/done.png')}
-                    />
+                <NavigationBar
+                    leftIconOnPress={() => this._handleBack()}
+                    leftIconImage={require('../../assets/icons/cancel.png')}
+                    rightIconOnPress={() => this._handleDone()}
+                    rightIconStyle={{
+                        tintColor: this._allowSave() ? colors.tint : colors.gray
+                    }}
+                    rightIconImage={require('../../assets/icons/done.png')}
+                />
                 <KeyboardAwareScrollView>
                     <Separator />
                     <View
                         style={styles.images}
                     >
                         <ImageBackground
-                            style={styles.profileHeader}
-                            source={{ uri: u_header }}
+                            style={[styles.profileHeader, { backgroundColor: u_header ? null : this.state.randomColor }]}
+                            source={u_header ? { uri: u_header } : null}
                         >
                             <TouchableOpacity
                                 activeOpacity={0.5}
@@ -156,13 +380,14 @@ export default class EditProfile extends Component {
                             <TextInput
                                 style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
                                 maxLength={30}
-                                placeholder={'Your name'}
+                                placeholder={'* Your name'}
+                                placeholderTextColor={this.state.emptyName ? colors.red : colors.gray}
                                 value={u_name}
                                 onChangeText={(text) => this._onChangeText(text, 'u_name')}
                                 clear={this.state.clear}
                             />
                             <Text
-                                style={[styles.counter, { alignSelf: 'center' }]}
+                                style={[styles.counter, { alignSelf: 'center', color: this.state.emptyName ? colors.red : colors.gray }]}
                             >{this.state.currentNameLength}/{this.state.nameMaxLength}</Text>
                         </View>
 
@@ -207,7 +432,7 @@ export default class EditProfile extends Component {
                                 source={require('../../assets/icons/link.png')}
                             />
                             <TextInput
-                                style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center'}]}
+                                style={[styles.textInput, { textAlignVertical: 'center', justifyContent: 'center' }]}
                                 maxLength={30}
                                 placeholder={'Your website'}
                                 value={u_website}
@@ -217,6 +442,11 @@ export default class EditProfile extends Component {
                         </View>
                     </View>
                 </KeyboardAwareScrollView>
+                {
+                    this.props.loading
+                    ?<FloatingActivityIndicator loading={this.props.loading}/>
+                    : <></>
+                }
             </SafeAreaView>
         )
     }
@@ -268,7 +498,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         textAlignVertical: "top",
         paddingLeft: 10,
-        minHeight: layout.paddingHorizontal*2,
+        minHeight: layout.paddingHorizontal * 2,
     },
     counter: {
         color: colors.gray,
@@ -304,3 +534,20 @@ const styles = StyleSheet.create({
         tintColor: colors.gray,
     }
 })
+
+EditProfile.propTypes = {
+
+}
+
+const mapStateToProps = (state) => ({
+    loading: state.profile.loading,
+    error: state.profile.error,
+    errorMessage: state.profile.errorMessage
+})
+
+const mapDispatchToProps = {
+    save_changes,
+}
+// connect your component which uses showActionSheetWithOptions
+// read more https://github.com/expo/react-native-action-sheet
+export default connect(mapStateToProps, mapDispatchToProps)(connectActionSheet(EditProfile))

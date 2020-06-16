@@ -9,8 +9,6 @@ import Users from '../../../data/usersList'
 import { colors, layout } from '../../../constants/Styles'
 import SectionHeader from '../../../components/SectionHeader';
 import Profile from '../../../components/Profile';
-import { ScrollView } from 'react-native-gesture-handler';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class Search extends React.Component {
 

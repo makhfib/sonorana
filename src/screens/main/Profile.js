@@ -5,13 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavigationBar from '../../components/NavigationBar'
 import ActionButton from '../../components/ActionButton'
 import FollowButton from '../../components/FollowButton'
+import IllustrationMessage from '../../components/IllustrationMessage'
 import Separator from '../../components/Separator';
 import Post from '../../components/Post';
-import Feed from '../../data/clipsList'
+import { feed } from '../../data/clipsList'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { goToURL } from '../../functions/utils'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
-export default class Profile extends Component {
+class Profile extends Component {
 
     _props() {
         if (this.props.route !== undefined) {
@@ -72,7 +75,7 @@ export default class Profile extends Component {
                             >
                                 <ImageBackground
                                     style={styles.profileHeader}
-                                    source={item.u_header !== null ? { uri: item.u_header } : null}
+                                    source={item.u_header ? { uri: item.u_header } : null}
                                 >
                                 </ImageBackground>
                                 <View
@@ -89,19 +92,19 @@ export default class Profile extends Component {
                                     {item.u_name}
                                 </Text>
                                 {
-                                    item.u_description !== undefined && item.u_description !== null
+                                    item.u_description.length > 0
                                         ? <Text style={{ marginBottom: 10, fontSize: 15, }}>
                                             {item.u_description}
                                         </Text>
                                         : <></>
                                 }
                                 {
-                                    item.u_website !== undefined && item.u_website !== null
+                                    item.u_website.length > 0
                                         ? <TouchableOpacity
                                             activeOpacity={0.5}
                                             onPress={() => goToURL(item.u_website)}
                                         >
-                                            <Text style={{ color: colors.blue, marginBottom: 10, fontSize: 15, }}>
+                                            <Text style={{ color: colors.blue, marginBottom: 10, fontSize: 15, }} numberOfLines={1}>
                                                 {item.u_website.replace(/https?:\/\//i, "")}
                                             </Text>
                                         </TouchableOpacity>
@@ -112,19 +115,19 @@ export default class Profile extends Component {
                                     <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                                         {item.u_numFollowing}
                                     </Text>
-                                    <Text style={{ fontSize: 15, marginRight: 10, color: colors.gray }} >
-                                        {' following'}
+                                    <Text style={{ fontSize: 15, marginRight: 20, color: colors.gray }} >
+                                        {' Following '}
                                     </Text>
                                     <Text style={{ fontSize: 15, fontWeight: 'bold' }} >
                                         {item.u_numFollowers}
                                     </Text>
                                     <Text style={{ fontSize: 15, color: colors.gray }} >
-                                        {' following'}
+                                        {' Following'}
                                     </Text>
                                 </View>
                                 <View style={styles.buttonsContainer}>
                                     {
-                                        item.u_username === 'freshlygrounded'
+                                        item.u_username === this.props.current_username
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/edit.png')}
                                                 title={'Edit profile'}
@@ -143,7 +146,7 @@ export default class Profile extends Component {
                                     }
 
                                     {
-                                        item.u_username === 'freshlygrounded'
+                                        item.u_username === this.props.current_username
                                             ? <ActionButton
                                                 icon={require('../../assets/icons/configuration.png')}
                                                 title={'Settings'}
@@ -167,7 +170,7 @@ export default class Profile extends Component {
                             <Separator />
                         </>
                     }
-                    data={Feed}
+                    data={feed}
                     renderItem={({ item }) => (
                         item.u_username === this._props().item.u_username
                             ? <Post
@@ -177,6 +180,17 @@ export default class Profile extends Component {
                             : <></>
                     )}
                     keyExtractor={post => post.p_id}
+                    ListFooterComponent={
+                        feed.filter(function(item){ return item.u_username === this._props().item.u_username; }.bind(this)).length > 0
+                            ? <></>
+                            : <IllustrationMessage
+                            illustration={require('../../assets/illustrations/egg-media-player.png')}
+                            title={item.u_username === this.props.current_username ? 'Record your first clip' : item.u_username + ' haven\'t posted recorded yet'}
+                            buttonText={item.u_username === this.props.current_username ? 'Record' : null}
+                            onPress={item.u_username === this.props.current_username ? () => this.props.navigation.navigate('Create') : null}
+                        />
+
+                    }
                 />
             </SafeAreaView>
         )
@@ -225,3 +239,17 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     }
 })
+
+Profile.propTypes = {
+
+}
+
+const mapStateToProps = (state) => ({
+    current_username: state.profile.u_username,
+})
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

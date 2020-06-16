@@ -77,7 +77,8 @@ export default function (state = INITIAL_STATE, action) {
         case START_RECORDING_ERROR:
             return {
                 ...state,
-                error: true,
+                error: action.payload.error,
+                errorMessage: action.payload.errorMessage
             }
         case END_RECORDING:
             return {

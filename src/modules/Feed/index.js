@@ -24,6 +24,7 @@ export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case TIMEOUT:
             return {
+                ...state,
                 loading: false,
                 refreshing: false,
                 error: true

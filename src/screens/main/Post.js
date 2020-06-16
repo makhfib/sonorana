@@ -25,7 +25,7 @@ class Post extends Component {
     }
 
     componentDidUpdate(prevProps, prevStates) {
-        //console.log(this.props.uri)
+        
     }
 
     _onBackPress() {
