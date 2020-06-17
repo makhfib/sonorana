@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Text, View, StyleSheet, Vibration } from 'react-native'
-import { colors, layout } from '../constants/Styles'
+import { colors, layout, random_color } from '../constants/Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as Haptics from 'expo-haptics';
 import { timeSince, formatTime } from '../functions/utils'

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         width: 30,
     },
     text: {
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: 'bold',
     },
 })
