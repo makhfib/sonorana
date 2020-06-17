@@ -7,7 +7,7 @@ export const AuthExceptionMessage = (err) => {
         console.log('----------------------------------------')
     switch (err.code) {
         case 'NotValidException':
-            return 'Invalid input :/'
+            return 'All fields are required :/'
 
         case 'UserNotConfirmedException':
             return 'Please, verify your email'
@@ -25,7 +25,10 @@ export const AuthExceptionMessage = (err) => {
             return 'Not able to send confirmation code' 
 
         case 'InvalidPasswordException':
-            return 'Password must contain at least 6 characters'
+            return 'Password must have a length >= 8 and must contain at least 1 lowercase character, 1 uppercase character, 1 number and 1 symbol'
+
+        case 'InvalidUsernameException':
+            return 'Username can only contain letters, numbers, underscore (_) and dot (.). Username must not start with a dot (.)'
 
         case 'UsernameExistsException':
             return 'Username exists'

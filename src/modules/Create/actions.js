@@ -22,7 +22,6 @@ import {
     UNLOAD
 } from './types'
 import { Audio } from 'expo-av'
-import { v4 as uuidv4 } from 'uuid';
 import * as Permissions from 'expo-permissions';
 import { Linking, Alert } from 'react-native'
 

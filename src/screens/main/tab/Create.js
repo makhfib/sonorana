@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { unloadCreatedInstance, send, cancel, start_recording, end_recording, delete_recording, play_pause, edit_title } from '../../../modules/Create/actions'
 import { stopPlaybackInstance } from '../../../modules/Audio/actions'
+import { Storage } from 'aws-amplify'
 
 class Create extends Component {
     state = {
@@ -35,10 +36,26 @@ class Create extends Component {
             return false
         }
     }
+    
+    uploadToStorage = async pathToImageFile => {
+                try {
+                  const response = await fetch(pathToImageFile)
+              
+                  const blob = await response.blob()
+              
+                  Storage.put(new Date().getTime() + '.mp3', blob, {
+                    level: 'public',
+                    contentType: 'audio/mpeg',
+                  })
+                } catch (err) {
+                  console.log(err)
+                }
+              }
 
     _sendPost() {
         if (this._canSubmit()) {
             this.props.send(this.props.navigation)
+            this.uploadToStorage(this.props.fileURI)
         }
     }
 
@@ -306,6 +323,8 @@ Create.propTypes = {
 const mapStateToProps = (state) => ({
     u_photo: state.profile.u_photo,
     maxDuration: state.create.maxDuration,
+    title: state.create.title,
+    fileURI: state.create.fileURI,
     isRecording: state.create.isRecording,
     recordingInstance: state.create.recordingInstance,
     isPaused: state.create.isPaused,

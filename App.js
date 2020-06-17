@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Root from './src/navigation'
 import Amplify from 'aws-amplify'
-import { awsconfig } from './aws-exports'
+import awsconfig from './aws-exports'
 import { enableScreens } from 'react-native-screens';
 import { Audio } from 'expo-av';
 

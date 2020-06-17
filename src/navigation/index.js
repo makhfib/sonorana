@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 const Stack = createStackNavigator();
 
 function Switcher(props) {
-    
     return (
         <Stack.Navigator headerMode='none'>
             {
